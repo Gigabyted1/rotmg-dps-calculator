@@ -1,0 +1,18 @@
+None/Ability/Shield/empty_shield/0/0/0/0/0/0/0/
+Wooden Shield/Ability/Shield/shield_t0/0/0/0/0/0/0/0/
+Iron Shield/Ability/Shield/shield_t1/0/0/0/0/0/0/0/
+Steel Shield/Ability/Shield/shield_t2/0/0/0/0/0/0/0/
+Reinforced Shield/Ability/Shield/shield_t3/0/0/0/0/0/0/0/
+Golden Shield/Ability/Shield/shield_t4/0/0/0/0/0/0/0/
+Mithril Shield/Ability/Shield/shield_t5/0/0/0/0/0/0/0/
+Colossus Shield/Ability/Shield/shield_t6/0/0/0/0/0/0/0/
+Snakeskin Shield/Ability/Shield/shield_ut1/0/0/0/0/0/0/0/
+Shield of Pogmur/Ability/Shield/shield_ut2/0/0/0/0/0/0/0/
+Spiteful Scutum/Ability/Shield/shield_ut3/2/0/0/0/0/0/0/
+Crystal Shield/Ability/Shield/shield_ut4/0/0/0/0/0/0/0/
+Shield of Ogmur/Ability/Shield/shield_ut5/0/0/0/0/0/0/0/
+Resounding Shield/Ability/Shield/shield_ut6/0/0/0/0/0/0/0/
+Shield of Flowing Clarity/Ability/Shield/shield_ut7/0/0/0/0/0/0/0/
+Champion's Bastion/Ability/Shield/shield_st1/0/0/0/0/0/0/0/
+Onyx Shield of the Mad God/Ability/Shield/shield_st2/0/0/0/0/0/0/0/
+Spriteful Shield/Ability/Shield/shield_st3/2/0/0/0/0/0/0/

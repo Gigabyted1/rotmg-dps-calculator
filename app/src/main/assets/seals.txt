@@ -1,0 +1,16 @@
+None/Ability/Seal/empty_seal/0/0/0/0/0/0/0/
+Seal of the Initiate/Ability/Seal/seal_t0/0/0/0/0/0/0/0/
+Seal of the Pilgrim/Ability/Seal/seal_t1/0/0/0/0/0/0/0/
+Seal of the Seeker/Ability/Seal/seal_t2/0/2/0/0/0/0/0/
+Seal of the Aspirant/Ability/Seal/seal_t3/0/2/0/0/0/0/0/
+Seal of the Divine/Ability/Seal/seal_t4/0/3/0/0/0/0/0/
+Seal of the Holy Warrior/Ability/Seal5/seal_t/0/3/0/0/0/0/0/
+Seal of the Blessed Champion/Ability/Seal/seal_t6/0/4/0/0/0/0/0/
+Seal of Eternal Life/Ability/Seal/seal_ut1/0/0/0/0/0/0/0/
+Scholar's Seal/Ability/Seal/seal_ut2/0/4/0/0/0/0/0/
+Seal of Blasphemous Prayer/Ability/Seal/seal_ut3/0/0/0/0/0/0/0/
+Marble Seal/Ability/Seal/seal_ut4/0/0/0/0/0/0/0/
+Advent Seal/Ability/Seal/seal_ut5/0/4/0/0/0/0/0/
+Seal of the Enchanted Forest/Ability/Seal/seal_st1/9/0/0/0/0/0/0/
+Legacy Seal of the Enchanted Forest/Ability/Seal/seal_st2/2/0/0/0/0/0/0/
+Sacrilege Seal/Ability/Seal/seal_st3/9/0/0/0/0/0/0/

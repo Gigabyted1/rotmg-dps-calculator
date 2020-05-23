@@ -1,0 +1,43 @@
+None/Armor/Light/empty_light/0/0/0/0/0/0/0/
+Wolfskin Armor/Armor/Light/light_t1/0/0/0/0/0/0/0/
+Leather Armor/Armor/Light/light_t2/0/0/0/0/0/0/0/
+Basilisk Hide Armor/Armor/Light/light_t3/0/0/0/0/0/0/0/
+Minotaur Hide Armor/Armor/Light/light_t4/0/2/0/0/0/0/0/
+Bearskin Armor/Armor/Light/light_t5/0/2/0/0/0/0/0/
+Chimera Hide Armor/Armor/Light/light_t6/0/2/0/0/0/0/0/
+Wyvern Skin Armor/Armor/Light/light_t7/0/2/0/0/0/0/0/
+Studded Leather Armor/Armor/Light/light_t8/0/3/0/0/0/0/0/
+Drake Hide Armor/Armor/Light/light_t9/0/3/0/0/0/0/0/
+Roc Leather Armor/Armor/Light/light_t10/0/4/0/0/0/0/0/
+Hippogriff Hide Armor/Armor/Light/light_t11/0/4/0/0/0/0/0/
+Griffon Hide Armor/Armor/Light/light_t12/0/4/0/0/0/0/0/
+Hydra Skin Armor/Armor/Light/light_t13/0/5/0/0/0/0/0/
+Wyrmhide Armor/Armor/Light/light_t14/0/6/0/0/0/0/0/
+Cheater Light Armor/Armor/Light/light_ut1/0/0/0/0/0/0/0/
+Snakeskin Armor/Armor/Light/light_ut2/0/3/0/0/0/0/0/
+Greaterhosen/Armor/Light/light_ut3/2/4/0/0/0/0/0/
+Spectral Cloth Armor/Armor/Light/light_ut4/3/3/0/0/0/0/0/
+Blue Beehemoth Armor/Armor/Light/light_ut5/0/0/0/0/0/0/0/
+Red Beehemoth Armor/Armor/Light/light_ut6/0/0/0/0/0/0/0/
+Yellow Beehemoth Armor/Armor/Light/light_ut7/0/0/0/0/0/0/0/
+Harlequin Armor/Armor/Light/light_ut8/0/0/0/0/0/0/0/
+Leaf Dragon Hide Armor/Armor/Light/light_ut9/0/0/0/0/0/0/0/
+Coral Silk Armor/Armor/Light/light_ut10/0/4/0/0/0/0/0/
+Armor of Nil/Armor/Light/light_ut11/0/0/0/0/0/0/0/
+Fitted Protective Matrix/Armor/Light/light_ut12/0/0/0/0/0/0/0/
+Frost Drake Hide Armor/Armor/Light/light_ut13/0/5/0/0/0/0/0/
+Squadron Sheathing/Armor/Light/light_ut14/0/0/0/0/0/0/0/
+Apiary Armor/Armor/Light/light_st1/3/0/0/0/0/0/0/
+Hollyhock Hide/Armor/Light/light_st2/0/8/0/0/0/0/0/
+Hirejou Tenne/Armor/Light/light_st3/8/8/0/0/0/0/0/
+Wraith's Brigandine/Armor/Light/light_st4/0/0/0/0/0/0/0/
+Rags of the Host/Armor/Light/light_st5/6/0/0/0/0/0/0/
+Golem Garments/Armor/Light/light_st6/8/0/0/0/0/0/0/
+Mantle of Skuld/Armor/Light/light_st7/0/0/0/0/0/0/0/
+Acidic Armor/Armor/Light/light_st8/0/0/0/0/0/0/0/
+Luminous Armor/Armor/Light/light_st9/0/0/0/0/0/0/0/
+Luxurious Leather/Armor/Light/light_st10/0/0/0/0/0/0/0/
+Legacy Mantle of Skuld/Armor/Light/light_st14/0/0/0/0/0/0/0/
+Torso Tunic/Armor/Light/light_st11/0/0/0/0/0/0/0/
+Withered Poncho/Armor/Light/light_st12/8/0/0/0/0/0/0/
+Cupid's Garments/Armor/Light/light_st13/0/4/0/0/0/0/0/

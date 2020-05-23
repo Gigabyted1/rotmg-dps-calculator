@@ -1,0 +1,40 @@
+None/Armor/Robe/empty_robe/0/0/0/0/0/0/0/
+Robe of the Neophyte/Armor/Robe/robe_t1/0/0/0/0/0/0/0/
+Robe of the Apprentice/Armor/Robe/robe_t2/0/0/0/0/0/0/0/
+Robe of the Acolyte/Armor/Robe/robe_t3/0/0/0/0/0/0/0/
+Robe of the Student/Armor/Robe/robe_t4/0/0/0/0/0/0/0/
+Robe of the Conjurer/Armor/Robe/robe_t5/0/0/0/0/0/0/0/
+Robe of the Adept/Armor/Robe/robe_t6/0/0/0/0/0/0/0/
+Robe of the Invoker/Armor/Robe/robe_t7/0/0/0/0/0/0/0/
+Robe of the Illusionist/Armor/Robe/robe_t8/1/0/0/0/0/0/0/
+Robe of the Master/Armor/Robe/robe_t9/2/0/0/0/0/0/0/
+Robe of the Shadow Magus/Armor/Robe/robe_t10/2/0/0/0/0/0/0/
+Robe of the Moon Wizard/Armor/Robe/robe_t11/3/0/0/0/0/0/0/
+Robe of the Elder Warlock/Armor/Robe/robe_t12/3/0/0/0/0/0/0/
+Robe of the Grand Sorcerer/Armor/Robe/robe_t13/4/0/0/0/0/0/0/
+Robe of the Star Mother/Armor/Robe/robe_t14/5/0/0/0/0/0/0/
+Cheater Robe/Armor/Robe/robe_ut1/0/0/0/0/0/0/0/
+Robe of the Tlatoani/Armor/Robe/robe_ut2/0/0/0/0/0/0/0/
+Woodland Robe/Armor/Robe/robe_ut3/0/0/0/0/0/0/0/
+Chasuble of Holy Light/Armor/Robe/robe_ut4/0/0/0/0/0/0/0/
+Tlatoani's Shroud/Armor/Robe/robe_ut5/0/0/0/0/0/0/0/
+Robe of the Mad Scientist/Armor/Robe/robe_ut6/4/0/0/0/0/0/0/
+Water Dragon Silk Robe/Armor/Robe/robe_ut7/6/0/0/0/0/0/0/
+Esben's Shaman Attire/Armor/Robe/robe_ut8/5/0/0/0/0/0/0/
+Ritual Robe/Armor/Robe/robe_ut9/5/0/0/0/0/0/0/
+Magic Protective Matrix/Armor/Robe/robe_ut10/0/0/0/0/0/0/0/
+Robe of the Summer Solstice/Armor/Robe/robe_ut11/4/0/0/0/0/0/0/
+Frost Elementalist Robe/Armor/Robe/robe_ut12/4/0/0/0/0/0/0/
+Judge's Robe/Armor/Robe/robe_ut13/3/0/0/0/0/0/0/
+The Robe of Twilight/Armor/Robe/robe_st1/0/0/0/0/0/0/0/
+Garment of the Beast/Armor/Robe/robe_st2/0/-5/0/0/0/0/0/
+Shendyt of Geb/Armor/Robe/robe_st3/0/0/0/0/0/0/0/
+Soulless Robe/Armor/Robe/robe_st4/0/0/0/0/0/0/0/
+Toga Picta/Armor/Robe/robe_st5/0/-3/0/0/0/0/0/
+Anointed Robe/Armor/Robe/robe_st6/4/3/0/0/0/0/0/
+Molten Mantle/Armor/Robe/robe_st7/3/3/0/0/0/0/0/
+Magician's Robe/Armor/Robe/robe_st8/0/6/0/0/0/0/0/
+Oceanic Apparel/Armor/Robe/robe_st9/0/0/0/0/0/0/0/
+Legacy Robe of Twilight/Armor/Robe/robe_st10/0/6/0/0/0/0/0/
+Immortal Mantle/Armor/Robe/robe_st11/0/0/0/0/0/0/0/
+Robe of the Enchantress/Armor/Robe/robe_st12/0/0/0/0/0/0/0/
