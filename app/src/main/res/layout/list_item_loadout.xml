@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_loadout_black">
+
+    <TextView
+        android:id="@+id/total_dex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_dex_small"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/colorMaxedText"
+        android:textSize="25px"
+        app:fontFamily="@font/myfont"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/total_att"
+        app:layout_constraintTop_toBottomOf="@+id/item_view" />
+
+    <TextView
+        android:id="@+id/total_att"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_att_small"
+        android:gravity="center"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:textColor="@color/colorMaxedText"
+        android:textSize="25px"
+        app:fontFamily="@font/myfont"
+        app:layout_constraintEnd_toStartOf="@+id/total_dex"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/status"
+        app:layout_constraintTop_toBottomOf="@+id/item_view" />
+
+    <ImageView
+        android:id="@+id/class_view"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:background="@drawable/bg_char"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rogue" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_view"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:background="@drawable/bg_gear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/weapon_view"
+            android:layout_width="59dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/bg_item"
+            android:contentDescription="A view for the current weapon"
+            android:tag="wep"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/empty_dagger" />
+
+        <ImageView
+            android:id="@+id/ability_view"
+            android:layout_width="59dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/bg_item"
+            android:contentDescription="A view for the current ability"
+            android:tag="abil"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/weapon_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/empty_cloak" />
+
+        <ImageView
+            android:id="@+id/armor_view"
+            android:layout_width="59dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/bg_item"
+            android:contentDescription="A view for the current armor"
+            android:tag="armor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ability_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/empty_light" />
+
+        <ImageView
+            android:id="@+id/ring_view"
+            android:layout_width="59dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/bg_item"
+            android:contentDescription="A view for the current ring"
+            android:tag="ring"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/armor_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/empty_ring" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/baseline_delete_white_18dp"
+        app:layout_constraintEnd_toStartOf="@+id/status"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/class_view" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_status"
+        app:layout_constraintEnd_toStartOf="@+id/total_att"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/delete"
+        app:layout_constraintTop_toBottomOf="@+id/item_view">
+
+        <ImageView
+            android:id="@+id/berserk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/damaging"
+            app:layout_constraintRight_toLeftOf="@id/curse"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/berserk" />
+
+        <ImageView
+            android:id="@+id/damaging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/berserk"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/damaging" />
+
+        <ImageView
+            android:id="@+id/curse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/berserk"
+            app:layout_constraintRight_toLeftOf="@id/dazed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/curse" />
+
+        <ImageView
+            android:id="@+id/dazed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/curse"
+            app:layout_constraintRight_toLeftOf="@id/weak"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dazed" />
+
+        <ImageView
+            android:id="@+id/weak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/dazed"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/weak" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

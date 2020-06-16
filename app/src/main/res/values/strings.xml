@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RotMG DPS Calculator</string>
+    <string-array name="stat_effects">
+        <item>Damaging</item>
+        <item>Berserk</item>
+        <item>Curse</item>
+        <item>Dazed</item>
+        <item>Weak</item>
+    </string-array>
+</resources>
