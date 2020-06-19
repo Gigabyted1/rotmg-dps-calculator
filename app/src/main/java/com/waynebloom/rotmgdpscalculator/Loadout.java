@@ -9,11 +9,12 @@ public class Loadout {
     Context context;
     CharClass charClass;
     int classId;
+    int loadoutId;
     int baseAtt;
     int baseDex;
     int totalAtt;
     int totalDex;
-    ArrayList<Double> dpsTable = new ArrayList<>();
+    ArrayList<DpsEntry> dpsTable = new ArrayList<>();
     Item wep;
     int wepId;
     int wepAttr;
@@ -26,10 +27,11 @@ public class Loadout {
     String[] statusEffects;
     boolean[] checkedItems;
 
-    public Loadout (Context con, CharClass c, int cId, int a, int d, Item w, int wId, Item ab, int abId, Item ar, int arId, Item r, int rId, String stat) {
+    public Loadout (Context con, CharClass c, int cId, int a, int d, Item w, int wId, Item ab, int abId, Item ar, int arId, Item r, int rId, String stat, int lId) {
         context = con;
         charClass = c;
         classId = cId;
+        loadoutId = lId;
         baseAtt = a;
         baseDex = d;
         totalAtt = baseAtt;
@@ -75,7 +77,7 @@ public class Loadout {
         wepAttr = wep.attribute;
     }
 
-    public void generateDps () {
+    public ArrayList<DpsEntry> generateDps () {
         dpsTable = new ArrayList<>();
         updateStats();
 
@@ -112,11 +114,13 @@ public class Loadout {
             }
 
             if(temp > 0.85 * wep.avgDmg * wep.noOfShots) {      //Defense cap check
-                dpsTable.add(temp);
+                dpsTable.add(new DpsEntry(temp, loadoutId));
             }
             else {
-                dpsTable.add(0.85 * wep.avgDmg * wep.noOfShots);
+                dpsTable.add(new DpsEntry(0.85 * wep.avgDmg * wep.noOfShots, loadoutId));
             }
         }
+
+        return dpsTable;
     }
 }

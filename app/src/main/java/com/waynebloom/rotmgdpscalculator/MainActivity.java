@@ -472,7 +472,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     classes.get(temp).weps.get(0), 0,
                     classes.get(temp).abils.get(0), 0,
                     classes.get(temp).arms.get(0), 0,
-                    rings.get(0), 0, "00000"));
+                    rings.get(0), 0, "00000",
+                    loadouts.size()));
 
             loadAdpt = new LoadoutAdapter(this, itemSelView, loadouts, classes,this);
             loadoutView.setAdapter(loadAdpt);
@@ -484,18 +485,36 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     }
 
     public void generateDpsTable () {
-        ArrayList<ArrayList<Double>> dpsTables = new ArrayList<>();
+        ArrayList<ArrayList<DpsEntry>> dpsTables = new ArrayList<>();   //loadouts.size() arrays of 150
+        ArrayList<ArrayList<DpsEntry>> tempTable;
+        DpsEntry temp;
 
-        double temp = 0;
-        for(int i = 0; i <= 150; i++) {
-            dpsTables.add(new ArrayList<Double>());
-            for(int j = 0; j < loadouts.size(); j++) {
-                if(i == 0) {
-                    loadouts.get(j).generateDps();
+        for(int i = 0; i < loadouts.size(); i++) {                      //Load the unsorted data
+            dpsTables.add(loadouts.get(i).generateDps());
+        }
+
+        for(int i = 0; i <= 150; i++) {                                 //Insert sort on the data
+            for(int j = 1; j < loadouts.size(); j++) {
+                temp = dpsTables.get(j).get(i);
+                int k = j;
+                while(k > 0 && dpsTables.get(k - 1).get(i).dps > temp.dps) {
+                    dpsTables.get(k).set(i, dpsTables.get(k - 1).get(i));
+                    k--;
                 }
-                dpsTables.get(i).add(loadouts.get(j).dpsTable.get(i));
+                dpsTables.get(k).set(i, temp);
             }
         }
+
+        tempTable = dpsTables;
+        dpsTables = new ArrayList<>();
+
+        for(int i = 0; i <= 150; i++) {                                 //Inverts the array to 150 arrays of loadouts.size() since the adapter needs it that way
+            dpsTables.add(new ArrayList<DpsEntry>());
+            for(int j = loadouts.size() - 1; j >= 0; j--) {
+                dpsTables.get(i).add(tempTable.get(j).get(i));
+            }
+        }
+
         dpsTableAdpt = new DpsAdapter(this, dpsTables);
         dpsTableView.setAdapter(dpsTableAdpt);
     }
@@ -564,7 +583,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                             classes.get(temps[0]).abils.get(temps[2]), temps[2],
                             classes.get(temps[0]).arms.get(temps[3]), temps[3],
                             classes.get(temps[0]).rings.get(temps[4]), temps[4],
-                            lineData.get(5).toString()));
+                            lineData.get(5).toString(), loadouts.size()));
                 }
             }
         }

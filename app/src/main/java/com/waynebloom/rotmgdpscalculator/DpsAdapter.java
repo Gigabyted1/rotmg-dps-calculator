@@ -15,12 +15,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class DpsAdapter extends ArrayAdapter<ArrayList<Double>> {
+public class DpsAdapter extends ArrayAdapter<ArrayList<DpsEntry>> {
     private Context dContext;
-    private ArrayList<ArrayList<Double>> dpsTables = new ArrayList<>();
+    private ArrayList<ArrayList<DpsEntry>> dpsTables;
     private Typeface myFont;
 
-    public DpsAdapter(Context context, ArrayList<ArrayList<Double>> data) {
+    public DpsAdapter(Context context, ArrayList<ArrayList<DpsEntry>> data) {
         super(context, R.layout.list_item_dpstable, data);
         dContext = context;
         dpsTables = data;
@@ -34,7 +34,7 @@ public class DpsAdapter extends ArrayAdapter<ArrayList<Double>> {
             listItem = LayoutInflater.from(dContext).inflate(R.layout.list_item_dpstable, parent, false);
         }
 
-        ArrayList<Double> currDpsList = dpsTables.get(position);
+        ArrayList<DpsEntry> currDpsList = dpsTables.get(position);
 
         TextView[] dpsViews = { listItem.findViewById(R.id.dps1), listItem.findViewById(R.id.dps2), listItem.findViewById(R.id.dps3),
                                 listItem.findViewById(R.id.dps4), listItem.findViewById(R.id.dps5), listItem.findViewById(R.id.dps6),
@@ -45,7 +45,42 @@ public class DpsAdapter extends ArrayAdapter<ArrayList<Double>> {
         defense.setTextSize(17f);
 
         for(int i = 0; i < currDpsList.size(); i++) {
-            dpsViews[i].setText(String.format(Locale.US, "%.2f", currDpsList.get(i)));
+            dpsViews[i].setText(String.format(Locale.US, "%.2f", currDpsList.get(i).dps));
+
+            switch (currDpsList.get(i).color) {
+                case 0:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_red);
+                    break;
+
+                case 1:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_orange);
+                    break;
+
+                case 2:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_yellow);
+                    break;
+
+                case 3:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_green);
+                    break;
+
+                case 4:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_cyan);
+                    break;
+
+                case 5:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_blue);
+                    break;
+
+                case 6:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_pink);
+                    break;
+
+                case 7:
+                    dpsViews[i].setBackgroundResource(R.drawable.dps_black);
+                    break;
+            }
+
             dpsViews[i].setTypeface(myFont);
             dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
             dpsViews[i].setTextSize(8f);
