@@ -1,33 +1,52 @@
 package com.waynebloom.rotmgdpscalculator;
 
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Color;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
-public class Loadout {
+class Loadout {
     Context context;
+
     CharClass charClass;
-    int classId;
-    int loadoutId;
+    Item wep;
+    Item abil;
+    Item arm;
+    Item ring;
     int baseAtt;
     int baseDex;
     int totalAtt;
     int totalDex;
-    ArrayList<DpsEntry> dpsTable = new ArrayList<>();
-    Item wep;
-    int wepId;
-    int wepAttr;
-    Item abil;
-    int abilId;
-    Item arm;
-    int armId;
-    Item ring;
-    int ringId;
-    String[] statusEffects;
-    boolean[] checkedItems;
+    boolean[] activeEffects;    //Tracks active status effects
 
-    public Loadout (Context con, CharClass c, int cId, int a, int d, Item w, int wId, Item ab, int abId, Item ar, int arId, Item r, int rId, String stat, int lId) {
+    private int loadoutId;
+    int classId;
+    int wepId;
+    int abilId;
+    int armId;
+    int ringId;
+
+    ImageView classView;
+    ImageView wepView;
+    ImageView abilView;
+    ImageView armView;
+    ImageView ringView;
+    TextView attView;
+    TextView dexView;
+    ConstraintLayout statusView;
+        ImageView damagingView;
+        ImageView berserkView;
+        ImageView curseView;
+        ImageView dazedView;
+        ImageView weakView;
+    Button deleteView;
+
+    Loadout(Context con, CharClass c, int cId, int a, int d, Item w, int wId, Item ab, int abId, Item ar, int arId, Item r, int rId, String stat, int lId) {
         context = con;
         charClass = c;
         classId = cId;
@@ -38,27 +57,81 @@ public class Loadout {
         totalDex = baseDex;
         wep = w;
         wepId = wId;
-        wepAttr = w.attribute;
         abil = ab;
         abilId = abId;
         arm = ar;
         armId = arId;
         ring = r;
         ringId = rId;
-        statusEffects = context.getResources().getStringArray(R.array.stat_effects);
-        checkedItems = new boolean[statusEffects.length];
+        activeEffects = new boolean[5];
 
-        for(int i = 0; i < checkedItems.length; i++) {
-            if(stat.charAt(i) == '0') {
-                checkedItems[i] = false;
-            }
-            else {
-                checkedItems[i] = true;
-            }
+        for(int i = 0; i < activeEffects.length; i++) {
+            activeEffects[i] = stat.charAt(i) != '0';
         }
     }
 
-    public void updateStats () {
+    void setViews(ImageView cV, ImageView wV, ImageView aV, ImageView arV, ImageView rV, TextView atV, TextView dV, ConstraintLayout sV, Button delV) {
+        classView = cV;
+        wepView = wV;
+        abilView = aV;
+        armView = arV;
+        ringView = rV;
+        attView = atV;
+        dexView = dV;
+        statusView = sV;
+            damagingView = statusView.findViewById(R.id.damaging);
+            berserkView = statusView.findViewById(R.id.berserk);
+            curseView = statusView.findViewById(R.id.curse);
+            dazedView = statusView.findViewById(R.id.dazed);
+            weakView = statusView.findViewById(R.id.weak);
+        deleteView = delV;
+    }
+
+    void updateViews() {
+        classView.setImageResource(charClass.imageId);
+        wepView.setImageResource(wep.imageId);
+        abilView.setImageResource(abil.imageId);
+        armView.setImageResource(arm.imageId);
+        ringView.setImageResource(ring.imageId);
+
+        String temp = baseDex + "(" + totalDex + ")";
+        dexView.setText(temp);
+
+        temp = baseAtt + "(" + totalAtt + ")";
+        attView.setText(temp);
+
+        if(!activeEffects[0]) {
+            damagingView.setColorFilter(Color.parseColor("#777777"));
+        } else {
+            damagingView.setColorFilter(null);
+        }
+
+        if(!activeEffects[1]) {
+            berserkView.setColorFilter(Color.parseColor("#777777"));
+        } else {
+            berserkView.setColorFilter(null);
+        }
+
+        if(!activeEffects[2]) {
+            curseView.setColorFilter(Color.parseColor("#777777"));
+        } else {
+            curseView.setColorFilter(null);
+        }
+
+        if(!activeEffects[3]) {
+            dazedView.setColorFilter(Color.parseColor("#777777"));
+        } else {
+            dazedView.setColorFilter(null);
+        }
+
+        if(!activeEffects[4]) {
+            weakView.setColorFilter(Color.parseColor("#777777"));
+        } else {
+            weakView.setColorFilter(null);
+        }
+    }
+
+    void updateStats() {
         totalAtt = baseAtt;
         totalDex = baseDex;
 
@@ -73,12 +146,10 @@ public class Loadout {
 
         totalAtt += ring.addedAtt;
         totalDex += ring.addedDex;
-
-        wepAttr = wep.attribute;
     }
 
-    public ArrayList<DpsEntry> generateDps () {
-        dpsTable = new ArrayList<>();
+    ArrayList<DpsEntry> generateDps() {
+        ArrayList<DpsEntry> dpsTable = new ArrayList<>();
         updateStats();
 
         int realAtt = totalAtt;
@@ -87,29 +158,29 @@ public class Loadout {
         double damag = 1;
         double curse = 1;
 
-        if(checkedItems[0]) {
+        if(activeEffects[0]) {
             damag = 1.5;
         }
-        if(checkedItems[1]) {
+        if(activeEffects[1]) {
             bers = 1.5;
         }
-        if(checkedItems[2]) {
+        if(activeEffects[2]) {
             curse = 1.2;
         }
-        if(checkedItems[3]) {
+        if(activeEffects[3]) {
             realDex = 0;
         }
-        if(checkedItems[4]) {
+        if(activeEffects[4]) {
             realAtt = 0;
         }
 
         for(int i = 0; i <= 150; i++) {
             double temp = 0;
 
-            if(wepAttr == 0) {          //Regular equation
+            if(wep.attribute == 0) {          //Regular equation
                 temp = (((wep.avgDmg * (0.5 + realAtt / 50.0)) - i) * curse * damag * wep.noOfShots) * ((1.5 + 6.5 * (realDex / 75.0)) * bers * wep.rateOfFire);
             }
-            else if (wepAttr == 1) {    //For AP
+            else if (wep.attribute == 1) {    //For AP
                 temp = ((wep.avgDmg * (0.5 + realAtt / 50.0)) * curse * damag * wep.noOfShots) * ((1.5 + 6.5 * (realDex / 75.0)) * bers * wep.rateOfFire);
             }
 

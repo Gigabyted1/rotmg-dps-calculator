@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     ArrayList<Item> larms = new ArrayList<>();
     ArrayList<Item> harms = new ArrayList<>();
     ArrayList<Item> rings = new ArrayList<>();
+    String[] statusEffectNames;
     DpsAdapter dpsTableAdpt;
     LoadoutAdapter loadAdpt;
     boolean onLoadouts = true;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         setContentView(R.layout.activity_main);
 
         saveFile = new File(getApplicationContext().getFilesDir(), "loadouts.txt");
+        statusEffectNames = getResources().getStringArray(R.array.stat_effects);
 
         toolbar = findViewById(R.id.my_toolbar);
         dpsTableView = findViewById(R.id.dps_table_view);
@@ -162,8 +164,170 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     }
 
     @Override
-    public void onAttClicked (final TextView attView, final Loadout currLoadout) {
-        attView.setOnClickListener(new View.OnClickListener() {
+    public void setLoadoutViewListeners (final Loadout currLoadout) {
+        currLoadout.classView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClassAdapter classSelAdpt = new ClassAdapter(getApplicationContext(), classes);
+                itemSelView.setAdapter(classSelAdpt);
+                itemSelView.setVisibility(View.VISIBLE);
+
+                itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String temp;
+                        currLoadout.charClass = classes.get(position);
+                        currLoadout.classId = position;
+                        currLoadout.baseAtt = currLoadout.charClass.baseAtt;
+                        currLoadout.baseDex = currLoadout.charClass.baseDex;
+                        currLoadout.updateStats();
+                        temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
+                        currLoadout.attView.setText(temp);
+                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        currLoadout.dexView.setText(temp);
+
+                        if(!currLoadout.wep.subType.equals(currLoadout.charClass.weps.get(0).subType)) {
+                            currLoadout.wepView.setImageResource(currLoadout.charClass.weps.get(0).imageId);
+                            currLoadout.wep = currLoadout.charClass.weps.get(0);
+                            currLoadout.wepId = 0;
+                        }
+                        if(!currLoadout.abil.subType.equals(currLoadout.charClass.abils.get(0).subType)) {
+                            currLoadout.abilView.setImageResource(currLoadout.charClass.abils.get(0).imageId);
+                            currLoadout.abil = currLoadout.charClass.abils.get(0);
+                            currLoadout.abilId = 0;
+                        }
+                        if(!currLoadout.arm.subType.equals(currLoadout.charClass.arms.get(0).subType)) {
+                            currLoadout.armView.setImageResource(currLoadout.charClass.arms.get(0).imageId);
+                            currLoadout.arm = currLoadout.charClass.arms.get(0);
+                            currLoadout.armId = 0;
+                        }
+
+                        itemSelView.setVisibility(View.GONE);
+                        currLoadout.classView.setImageResource(classes.get(position).imageId);
+                    }
+                });
+            }
+        });
+
+        currLoadout.wepView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemListOffset = currLoadout.wepId;
+                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.weps);
+                itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setX(-1000f);
+                itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(500);
+                itemSelView.setSelectionFromTop(itemListOffset, 0);
+
+                itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String temp;
+                        currLoadout.wep = currLoadout.charClass.weps.get(position);
+                        currLoadout.wepId = position;
+                        currLoadout.updateStats();
+
+                        temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
+                        currLoadout.attView.setText(temp);
+                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        currLoadout.dexView.setText(temp);
+
+                        itemSelView.setVisibility(View.GONE);
+                        currLoadout.wepView.setImageResource(currLoadout.wep.imageId);
+                    }
+                });
+            }
+        });
+
+        currLoadout.abilView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemListOffset = currLoadout.abilId;
+                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.abils);
+                itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.setSelectionFromTop(itemListOffset, 0);
+
+                itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String temp;
+                        currLoadout.abil = currLoadout.charClass.abils.get(position);
+                        currLoadout.abilId = position;
+                        currLoadout.updateStats();
+
+                        temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
+                        currLoadout.attView.setText(temp);
+                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        currLoadout.dexView.setText(temp);
+
+                        itemSelView.setVisibility(View.GONE);
+                        currLoadout.abilView.setImageResource(currLoadout.abil.imageId);
+                    }
+                });
+            }
+        });
+
+        currLoadout.armView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemListOffset = currLoadout.armId;
+                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.arms);
+                itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.setSelectionFromTop(itemListOffset, 0);
+
+                itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String temp;
+                        currLoadout.arm = currLoadout.charClass.arms.get(position);
+                        currLoadout.armId = position;
+                        currLoadout.updateStats();
+
+                        temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
+                        currLoadout.attView.setText(temp);
+                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        currLoadout.dexView.setText(temp);
+
+                        itemSelView.setVisibility(View.GONE);
+                        currLoadout.armView.setImageResource(currLoadout.arm.imageId);
+                    }
+                });
+            }
+        });
+
+        currLoadout.ringView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int itemListOffset = currLoadout.ringId;
+                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.rings);
+                itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.setSelectionFromTop(itemListOffset, 0);
+
+                itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String temp;
+                        currLoadout.ring = currLoadout.charClass.rings.get(position);
+                        currLoadout.ringId = position;
+                        currLoadout.updateStats();
+
+                        temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
+                        currLoadout.attView.setText(temp);
+                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        currLoadout.dexView.setText(temp);
+
+                        itemSelView.setVisibility(View.GONE);
+                        currLoadout.ringView.setImageResource(currLoadout.ring.imageId);
+                    }
+                });
+            }
+        });
+
+        currLoadout.attView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String temp;
@@ -214,16 +378,13 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         statEditView.setVisibility(View.GONE);
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        attView.setText(temp);
+                        currLoadout.attView.setText(temp);
                     }
                 });
             }
         });
-    }
 
-    @Override
-    public void onDexClicked (final TextView dexView, final Loadout currLoadout) {
-        dexView.setOnClickListener(new View.OnClickListener() {
+        currLoadout.dexView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String temp;
@@ -274,76 +435,26 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         statEditView.setVisibility(View.VISIBLE);
                         currLoadout.updateStats();
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        dexView.setText(temp);
+                        currLoadout.dexView.setText(temp);
                     }
                 });
             }
         });
-    }
 
-    @Override
-    public void onDelClicked(Button view, final Loadout currLoadout) {
-        view.setOnClickListener(new View.OnClickListener() {
+        currLoadout.deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadAdpt.remove(currLoadout);
                 loadAdpt.notifyDataSetChanged();
             }
         });
-    }
 
-    @Override
-    public void onStatusClicked(ConstraintLayout view, final Loadout currLoadout) {
-        final ImageView damagingView = view.findViewById(R.id.damaging);
-        final ImageView berserkView = view.findViewById(R.id.berserk);
-        final ImageView curseView = view.findViewById(R.id.curse);
-        final ImageView dazedView = view.findViewById(R.id.dazed);
-        final ImageView weakView = view.findViewById(R.id.weak);
-
-        if(!currLoadout.checkedItems[0]) {
-            damagingView.setColorFilter(Color.parseColor("#777777"));
-        }
-        else {
-            damagingView.setColorFilter(null);
-        }
-
-        if(!currLoadout.checkedItems[1]) {
-            berserkView.setColorFilter(Color.parseColor("#777777"));
-        }
-        else {
-            berserkView.setColorFilter(null);
-        }
-
-        if(!currLoadout.checkedItems[2]) {
-            curseView.setColorFilter(Color.parseColor("#777777"));
-        }
-        else {
-            curseView.setColorFilter(null);
-        }
-
-        if(!currLoadout.checkedItems[3]) {
-            dazedView.setColorFilter(Color.parseColor("#777777"));
-        }
-        else {
-            dazedView.setColorFilter(null);
-        }
-
-        if(!currLoadout.checkedItems[4]) {
-            weakView.setColorFilter(Color.parseColor("#777777"));
-        }
-        else {
-            weakView.setColorFilter(null);
-        }
-
-        view.setOnClickListener(new View.OnClickListener() {
-
-            boolean[] temp = currLoadout.checkedItems;
-
+        currLoadout.statusView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 mBuilder.setTitle("Status Effects");
-                mBuilder.setMultiChoiceItems(currLoadout.statusEffects, currLoadout.checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                mBuilder.setMultiChoiceItems(statusEffectNames, currLoadout.activeEffects, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
@@ -353,41 +464,34 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //currLoadout.checkedItems = temp;
-
-                        if(!currLoadout.checkedItems[0]) {
-                            damagingView.setColorFilter(Color.parseColor("#777777"));
-                        }
-                        else {
-                            damagingView.setColorFilter(null);
+                        if(!currLoadout.activeEffects[0]) {
+                            currLoadout.damagingView.setColorFilter(Color.parseColor("#777777"));
+                        } else {
+                            currLoadout.damagingView.setColorFilter(null);
                         }
 
-                        if(!currLoadout.checkedItems[1]) {
-                            berserkView.setColorFilter(Color.parseColor("#777777"));
-                        }
-                        else {
-                            berserkView.setColorFilter(null);
-                        }
-
-                        if(!currLoadout.checkedItems[2]) {
-                            curseView.setColorFilter(Color.parseColor("#777777"));
-                        }
-                        else {
-                            curseView.setColorFilter(null);
+                        if(!currLoadout.activeEffects[1]) {
+                            currLoadout.berserkView.setColorFilter(Color.parseColor("#777777"));
+                        } else {
+                            currLoadout.berserkView.setColorFilter(null);
                         }
 
-                        if(!currLoadout.checkedItems[3]) {
-                            dazedView.setColorFilter(Color.parseColor("#777777"));
-                        }
-                        else {
-                            dazedView.setColorFilter(null);
+                        if(!currLoadout.activeEffects[2]) {
+                            currLoadout.curseView.setColorFilter(Color.parseColor("#777777"));
+                        } else {
+                            currLoadout.curseView.setColorFilter(null);
                         }
 
-                        if(!currLoadout.checkedItems[4]) {
-                            weakView.setColorFilter(Color.parseColor("#777777"));
+                        if(!currLoadout.activeEffects[3]) {
+                            currLoadout.dazedView.setColorFilter(Color.parseColor("#777777"));
+                        } else {
+                            currLoadout.dazedView.setColorFilter(null);
                         }
-                        else {
-                            weakView.setColorFilter(null);
+
+                        if(!currLoadout.activeEffects[4]) {
+                            currLoadout.weakView.setColorFilter(Color.parseColor("#777777"));
+                        } else {
+                            currLoadout.weakView.setColorFilter(null);
                         }
                     }
                 });
@@ -475,7 +579,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     rings.get(0), 0, "00000",
                     loadouts.size()));
 
-            loadAdpt = new LoadoutAdapter(this, itemSelView, loadouts, classes,this);
+            loadAdpt = new LoadoutAdapter(this, loadouts, this);
             loadoutView.setAdapter(loadAdpt);
         }
         else {
@@ -534,8 +638,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             saveStr.append("/");
             saveStr.append(i.ringId);
             saveStr.append("/");
-            for(int j = 0; j < i.checkedItems.length; j++) {
-                if(i.checkedItems[j]) {
+            for(int j = 0; j < i.activeEffects.length; j++) {
+                if(i.activeEffects[j]) {
                     saveStr.append("1");
                 }
                 else {
@@ -588,7 +692,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             }
         }
 
-        loadAdpt = new LoadoutAdapter(this, itemSelView, loadouts, classes, this);
+        loadAdpt = new LoadoutAdapter(this, loadouts, this);
         loadoutView.setAdapter(loadAdpt);
 
         loadReader.close();
