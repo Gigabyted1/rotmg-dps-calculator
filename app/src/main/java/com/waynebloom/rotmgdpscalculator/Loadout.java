@@ -87,7 +87,9 @@ class Loadout {
         deleteView = delV;
     }
 
-    void updateViews() {
+    public void updateViews() {
+        updateStats();
+
         classView.setImageResource(charClass.imageId);
         wepView.setImageResource(wep.imageId);
         abilView.setImageResource(abil.imageId);
@@ -99,6 +101,18 @@ class Loadout {
 
         temp = baseAtt + "(" + totalAtt + ")";
         attView.setText(temp);
+
+        if(baseDex < charClass.baseDex) {
+            dexView.setTextColor(context.getResources().getColor(R.color.colorUnmaxedText));
+        } else {
+            dexView.setTextColor(context.getResources().getColor(R.color.colorMaxedText));
+        }
+
+        if(baseAtt < charClass.baseAtt) {
+            attView.setTextColor(context.getResources().getColor(R.color.colorUnmaxedText));
+        } else {
+            attView.setTextColor(context.getResources().getColor(R.color.colorMaxedText));
+        }
 
         if(!activeEffects[0]) {
             damagingView.setColorFilter(Color.parseColor("#777777"));

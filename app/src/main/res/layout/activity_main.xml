@@ -15,6 +15,7 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:fontFamily="@font/myfont"
+        app:layout_constraintBottom_toTopOf="@+id/loadout_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -37,11 +38,12 @@
     <ListView
         android:id="@+id/loadout_view"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
     </ListView>
 
@@ -256,4 +258,20 @@
             app:layout_constraintTop_toBottomOf="@+id/arm_stat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadout_view" />
+
+        <!--        app:adUnitId="ca-app-pub-1507290914426110/2593373825" (for live) -->
 </androidx.constraintlayout.widget.ConstraintLayout>

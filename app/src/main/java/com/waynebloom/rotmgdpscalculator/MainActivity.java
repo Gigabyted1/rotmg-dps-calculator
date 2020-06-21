@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,11 +17,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     TextView ringStatView;
     Button statConfirm;
     Button addBuild;
+    AdView mAdView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         ringStatView = findViewById(R.id.ring_stat);
         statConfirm = findViewById(R.id.confirm);
         addBuild = findViewById(R.id.add_button);
+        mAdView = findViewById(R.id.adView);
 
         readData(daggers, "daggers.txt");
         readData(bows, "bows.txt");
@@ -152,6 +158,14 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         classes.add(new CharClass("Ninja", katanas, stars, larms, rings, R.drawable.ninja, 70, 70));
         classes.add(new CharClass("Samurai", katanas, wakis, harms, rings, R.drawable.samurai, 75, 50));
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         try {
             loadBuilds();
         } catch (IOException e) {
@@ -164,7 +178,14 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     }
 
     @Override
-    public void setLoadoutViewListeners (final Loadout currLoadout) {
+    public void setLoadoutViews (ImageView c, ImageView w, ImageView ab, ImageView ar, ImageView r, TextView at, TextView dex, ConstraintLayout s, Button del, int p) {
+        loadouts.get(p).setViews(c, w, ab, ar, r, at, dex, s, del);
+    }
+
+    @Override
+    public void setLoadoutViewListeners (int p) {
+        final Loadout currLoadout = loadouts.get(p);
+
         currLoadout.classView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,7 +201,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.classId = position;
                         currLoadout.baseAtt = currLoadout.charClass.baseAtt;
                         currLoadout.baseDex = currLoadout.charClass.baseDex;
-                        currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
                         currLoadout.attView.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
@@ -203,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         }
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.classView.setImageResource(classes.get(position).imageId);
+                        currLoadout.updateViews();
                     }
                 });
             }
@@ -226,7 +246,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         String temp;
                         currLoadout.wep = currLoadout.charClass.weps.get(position);
                         currLoadout.wepId = position;
-                        currLoadout.updateStats();
 
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
                         currLoadout.attView.setText(temp);
@@ -234,9 +253,10 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.dexView.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.wepView.setImageResource(currLoadout.wep.imageId);
+                        currLoadout.updateViews();
                     }
                 });
+                currLoadout.updateViews();
             }
         });
 
@@ -255,7 +275,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         String temp;
                         currLoadout.abil = currLoadout.charClass.abils.get(position);
                         currLoadout.abilId = position;
-                        currLoadout.updateStats();
 
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
                         currLoadout.attView.setText(temp);
@@ -263,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.dexView.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.abilView.setImageResource(currLoadout.abil.imageId);
+                        currLoadout.updateViews();
                     }
                 });
             }
@@ -284,7 +303,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         String temp;
                         currLoadout.arm = currLoadout.charClass.arms.get(position);
                         currLoadout.armId = position;
-                        currLoadout.updateStats();
 
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
                         currLoadout.attView.setText(temp);
@@ -292,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.dexView.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.armView.setImageResource(currLoadout.arm.imageId);
+                        currLoadout.updateViews();
                     }
                 });
             }
@@ -313,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         String temp;
                         currLoadout.ring = currLoadout.charClass.rings.get(position);
                         currLoadout.ringId = position;
-                        currLoadout.updateStats();
 
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
                         currLoadout.attView.setText(temp);
@@ -321,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.dexView.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.ringView.setImageResource(currLoadout.ring.imageId);
+                        currLoadout.updateViews();
                     }
                 });
             }
@@ -332,6 +349,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             public void onClick(View v) {
                 String temp;
                 final int bonusAtt = currLoadout.totalAtt - currLoadout.baseAtt;
+
+
 
                 statEditView.setVisibility(View.VISIBLE);
                 statSeekView.setMax(currLoadout.charClass.baseAtt);
@@ -389,8 +408,28 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             public void onClick(View v) {
                 String temp;
                 final int bonusDex = currLoadout.totalDex - currLoadout.baseDex;
+                String[] baseStatRange = new String[currLoadout.charClass.baseDex + 1];
 
-                statEditView.setVisibility(View.VISIBLE);
+                for(int i = 0; i < baseStatRange.length; i++) {
+                    baseStatRange[i] = Integer.toString(i);
+                }
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                mBuilder.setTitle("Change Base Dexterity");
+                mBuilder.setItems(baseStatRange, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        currLoadout.baseDex = which;
+                        currLoadout.updateViews();
+                    }
+                });
+
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+
+
+
+                /*statEditView.setVisibility(View.VISIBLE);
                 statSeekView.setMax(currLoadout.charClass.baseDex);
                 statSeekView.setProgress(currLoadout.baseDex);
                 titleView.setText("Dexterity");
@@ -437,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
                         currLoadout.dexView.setText(temp);
                     }
-                });
+                });*/
             }
         });
 
@@ -517,6 +556,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         }
     }
 
+    @Override
     protected void onStop () {
         super.onStop();
 
@@ -534,6 +574,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_switch:

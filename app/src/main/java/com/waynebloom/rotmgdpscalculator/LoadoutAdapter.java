@@ -39,16 +39,15 @@ public class LoadoutAdapter extends ArrayAdapter<Loadout> {
             currLoadout = loadouts.get(position);
 
             //Assign the elements of each loadout to the corresponding class object
-            loadouts.get(position).setViews((ImageView)listItem.findViewById(R.id.class_view), (ImageView)listItem.findViewById(R.id.weapon_view),
+            myActivityInterface.setLoadoutViews((ImageView)listItem.findViewById(R.id.class_view), (ImageView)listItem.findViewById(R.id.weapon_view),
                     (ImageView)listItem.findViewById(R.id.ability_view), (ImageView)listItem.findViewById(R.id.armor_view),
                     (ImageView)listItem.findViewById(R.id.ring_view), (TextView)listItem.findViewById(R.id.total_att),
                     (TextView)listItem.findViewById(R.id.total_dex), (ConstraintLayout)listItem.findViewById(R.id.status),
-                    (Button)listItem.findViewById(R.id.delete));
+                    (Button)listItem.findViewById(R.id.delete), position);
 
-            myActivityInterface.setLoadoutViewListeners(currLoadout);
+            myActivityInterface.setLoadoutViewListeners(position);
 
             //Initial setting of loadout elements to reflect stats loaded from file
-            currLoadout.updateStats();
             currLoadout.updateViews();
         }
 
