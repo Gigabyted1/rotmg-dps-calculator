@@ -131,7 +131,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/baseline_delete_white_18dp"
+        android:background="@drawable/grave"
         app:layout_constraintEnd_toStartOf="@+id/status"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,13 +140,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/status"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="31.5dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/bg_status"
         app:layout_constraintEnd_toStartOf="@+id/total_att"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/delete"
-        app:layout_constraintTop_toBottomOf="@+id/item_view">
+        app:layout_constraintTop_toTopOf="@+id/total_att">
 
         <ImageView
             android:id="@+id/berserk"

@@ -10,15 +10,27 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:alpha=".5"
+        app:layout_constraintBottom_toBottomOf="@+id/defense"
+        app:layout_constraintEnd_toEndOf="@+id/defense"
+        app:layout_constraintStart_toStartOf="@+id/defense"
+        app:layout_constraintTop_toTopOf="@+id/defense"
+        app:srcCompat="@drawable/def_potion" />
+
     <TextView
         android:id="@+id/defense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:ems="3"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:ems="1"
         android:gravity="center"
-        android:text="Def"
+        android:text="A"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,89 +38,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dps1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/dps_red"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/dps5"
-        app:layout_constraintEnd_toStartOf="@+id/dps2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/dps2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dps_orange"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/dps5"
-        app:layout_constraintEnd_toStartOf="@+id/dps3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/dps3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dps_yellow"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/dps5"
-        app:layout_constraintEnd_toStartOf="@+id/dps4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/dps4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dps_green"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/dps5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dps3"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/dps5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/dps_cyan"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dps6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dps1" />
-
-    <TextView
         android:id="@+id/dps6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/dps_blue"
         android:gravity="center"
         android:text="9999"
@@ -117,14 +50,58 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dps7"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps5"
-        app:layout_constraintTop_toBottomOf="@id/dps1" />
+        app:layout_constraintStart_toEndOf="@+id/dps5" />
+
+    <TextView
+        android:id="@+id/dps1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dps_red"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/dps2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dps2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dps_orange"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/dps3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dps1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dps4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dps_green"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dps3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dps7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/dps_pink"
         android:gravity="center"
         android:text="9999"
@@ -133,14 +110,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dps8"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps6"
-        app:layout_constraintTop_toBottomOf="@id/dps1" />
+        app:layout_constraintStart_toEndOf="@+id/dps6" />
+
+    <TextView
+        android:id="@+id/dps3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dps_yellow"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/dps4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dps2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dps8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/dps_black"
         android:gravity="center"
         android:text="9999"
@@ -151,4 +143,158 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dps7"
         app:layout_constraintTop_toBottomOf="@id/dps1" />
+
+    <TextView
+        android:id="@+id/dps5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/dps_cyan"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dps6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dps1_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps1"
+        app:layout_constraintEnd_toEndOf="@id/dps1"
+        app:layout_constraintLeft_toLeftOf="@id/dps1"
+        app:layout_constraintRight_toRightOf="@id/dps1"
+        app:layout_constraintStart_toStartOf="@id/dps1"
+        app:layout_constraintTop_toTopOf="@id/dps1" />
+
+    <TextView
+        android:id="@+id/dps2_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps2"
+        app:layout_constraintEnd_toEndOf="@id/dps2"
+        app:layout_constraintLeft_toLeftOf="@id/dps2"
+        app:layout_constraintRight_toRightOf="@id/dps2"
+        app:layout_constraintStart_toStartOf="@id/dps2"
+        app:layout_constraintTop_toTopOf="@id/dps2" />
+
+    <TextView
+        android:id="@+id/dps3_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps3"
+        app:layout_constraintEnd_toEndOf="@id/dps3"
+        app:layout_constraintLeft_toLeftOf="@id/dps1"
+        app:layout_constraintRight_toRightOf="@id/dps3"
+        app:layout_constraintStart_toStartOf="@id/dps3"
+        app:layout_constraintTop_toTopOf="@id/dps3" />
+
+    <TextView
+        android:id="@+id/dps4_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps4"
+        app:layout_constraintEnd_toEndOf="@id/dps4"
+        app:layout_constraintLeft_toLeftOf="@id/dps4"
+        app:layout_constraintRight_toRightOf="@id/dps4"
+        app:layout_constraintStart_toStartOf="@id/dps4"
+        app:layout_constraintTop_toTopOf="@id/dps4" />
+
+    <TextView
+        android:id="@+id/dps5_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps5"
+        app:layout_constraintEnd_toEndOf="@id/dps5"
+        app:layout_constraintLeft_toLeftOf="@id/dps5"
+        app:layout_constraintRight_toRightOf="@id/dps5"
+        app:layout_constraintStart_toStartOf="@id/dps5"
+        app:layout_constraintTop_toTopOf="@id/dps5" />
+
+    <TextView
+        android:id="@+id/dps6_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps6"
+        app:layout_constraintEnd_toEndOf="@id/dps6"
+        app:layout_constraintLeft_toLeftOf="@id/dps6"
+        app:layout_constraintRight_toRightOf="@id/dps6"
+        app:layout_constraintStart_toStartOf="@id/dps6"
+        app:layout_constraintTop_toTopOf="@id/dps6" />
+
+    <TextView
+        android:id="@+id/dps7_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps7"
+        app:layout_constraintEnd_toEndOf="@id/dps7"
+        app:layout_constraintLeft_toLeftOf="@id/dps7"
+        app:layout_constraintRight_toRightOf="@id/dps7"
+        app:layout_constraintStart_toStartOf="@id/dps7"
+        app:layout_constraintTop_toTopOf="@id/dps7" />
+
+    <TextView
+        android:id="@+id/dps8_s"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dps8"
+        app:layout_constraintEnd_toEndOf="@id/dps8"
+        app:layout_constraintLeft_toLeftOf="@id/dps8"
+        app:layout_constraintRight_toRightOf="@id/dps8"
+        app:layout_constraintStart_toStartOf="@id/dps8"
+        app:layout_constraintTop_toTopOf="@id/dps8" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

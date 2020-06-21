@@ -15,7 +15,6 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:fontFamily="@font/myfont"
-        app:layout_constraintBottom_toTopOf="@+id/loadout_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -51,10 +50,10 @@
         android:id="@+id/item_selection_view"
         style="@style/Widget.AppCompat.ListView.DropDown"
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
         android:background="#FFFFFF"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
@@ -62,63 +61,14 @@
 
     <ListView
         android:id="@+id/dps_table_view"
-        android:layout_width="409dp"
-        android:layout_height="563dp"
-        android:layout_marginTop="25dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
-
-    </ListView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/switch_view1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/bg_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="addLoadout"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/desc_view"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="0dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
-        <ImageView
-            android:id="@+id/desc_dmg"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="159dp"
-            android:layout_marginRight="159dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/damage_icon" />
-
-        <ImageView
-            android:id="@+id/desc_def"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginLeft="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/def_potion" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ListView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/stat_edit"
@@ -270,8 +220,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loadout_view" />
+        app:layout_constraintStart_toStartOf="parent" />
 
         <!--        app:adUnitId="ca-app-pub-1507290914426110/2593373825" (for live) -->
 </androidx.constraintlayout.widget.ConstraintLayout>

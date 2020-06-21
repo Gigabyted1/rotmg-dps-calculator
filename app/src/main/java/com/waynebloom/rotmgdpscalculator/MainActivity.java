@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     ListView itemSelView;
     ListView loadoutView;
     ConstraintLayout statEditView;
-    ConstraintLayout descView;
     SeekBar statSeekView;
     TextView titleView;
     TextView baseStatView;
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         itemSelView = findViewById(R.id.item_selection_view);
         loadoutView = findViewById(R.id.loadout_view);
         statEditView = findViewById(R.id.stat_edit);
-        descView = findViewById(R.id.desc_view);
         statSeekView = findViewById(R.id.stat_seekbar);
         titleView = findViewById(R.id.title);
         baseStatView = findViewById(R.id.base_stat);
@@ -177,21 +175,17 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance);
     }
 
-    @Override
-    public void setLoadoutViews (ImageView c, ImageView w, ImageView ab, ImageView ar, ImageView r, TextView at, TextView dex, ConstraintLayout s, Button del, int p) {
-        loadouts.get(p).setViews(c, w, ab, ar, r, at, dex, s, del);
-    }
-
-    @Override
-    public void setLoadoutViewListeners (int p) {
+    public void setupLoadoutViews(final ImageView c, final ImageView w, final ImageView ab, final ImageView ar, final ImageView r, final TextView at, final TextView dex, final ConstraintLayout s, final Button del, final int p) {
         final Loadout currLoadout = loadouts.get(p);
 
-        currLoadout.classView.setOnClickListener(new View.OnClickListener() {
+        c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClassAdapter classSelAdpt = new ClassAdapter(getApplicationContext(), classes);
                 itemSelView.setAdapter(classSelAdpt);
+                itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -201,10 +195,12 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.classId = position;
                         currLoadout.baseAtt = currLoadout.charClass.baseAtt;
                         currLoadout.baseDex = currLoadout.charClass.baseDex;
+
+                        currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        currLoadout.attView.setText(temp);
+                        at.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        currLoadout.dexView.setText(temp);
+                        dex.setText(temp);
 
                         if(!currLoadout.wep.subType.equals(currLoadout.charClass.weps.get(0).subType)) {
                             currLoadout.wepView.setImageResource(currLoadout.charClass.weps.get(0).imageId);
@@ -223,13 +219,13 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         }
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.updateViews();
+                        c.setImageResource(currLoadout.charClass.imageId);
                     }
                 });
             }
         });
 
-        currLoadout.wepView.setOnClickListener(new View.OnClickListener() {
+        w.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.wepId;
@@ -237,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 itemSelView.setAdapter(itemSelAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
-                itemSelView.animate().translationXBy(1000f).setDuration(500);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -247,26 +243,28 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.wep = currLoadout.charClass.weps.get(position);
                         currLoadout.wepId = position;
 
+                        currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        currLoadout.attView.setText(temp);
+                        at.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        currLoadout.dexView.setText(temp);
+                        dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.updateViews();
+                        w.setImageResource(currLoadout.wep.imageId);
                     }
                 });
-                currLoadout.updateViews();
             }
         });
 
-        currLoadout.abilView.setOnClickListener(new View.OnClickListener() {
+        ab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.abilId;
                 ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.abils);
                 itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -276,25 +274,28 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.abil = currLoadout.charClass.abils.get(position);
                         currLoadout.abilId = position;
 
+                        currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        currLoadout.attView.setText(temp);
+                        at.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        currLoadout.dexView.setText(temp);
+                        dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.updateViews();
+                        ab.setImageResource(currLoadout.abil.imageId);
                     }
                 });
             }
         });
 
-        currLoadout.armView.setOnClickListener(new View.OnClickListener() {
+        ar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.armId;
                 ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.arms);
                 itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -304,25 +305,28 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.arm = currLoadout.charClass.arms.get(position);
                         currLoadout.armId = position;
 
+                        currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        currLoadout.attView.setText(temp);
+                        at.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        currLoadout.dexView.setText(temp);
+                        dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        currLoadout.updateViews();
+                        ar.setImageResource(currLoadout.arm.imageId);
                     }
                 });
             }
         });
 
-        currLoadout.ringView.setOnClickListener(new View.OnClickListener() {
+        r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.ringId;
                 ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.rings);
                 itemSelView.setAdapter(itemSelAdpt);
+                itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -332,82 +336,55 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         currLoadout.ring = currLoadout.charClass.rings.get(position);
                         currLoadout.ringId = position;
 
-                        temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        currLoadout.attView.setText(temp);
-                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        currLoadout.dexView.setText(temp);
-
-                        itemSelView.setVisibility(View.GONE);
-                        currLoadout.updateViews();
-                    }
-                });
-            }
-        });
-
-        currLoadout.attView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String temp;
-                final int bonusAtt = currLoadout.totalAtt - currLoadout.baseAtt;
-
-
-
-                statEditView.setVisibility(View.VISIBLE);
-                statSeekView.setMax(currLoadout.charClass.baseAtt);
-                statSeekView.setProgress(currLoadout.baseAtt);
-                titleView.setText("Attack");
-                temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                baseStatView.setText(temp);
-                temp = "+" + currLoadout.wep.addedAtt;
-                wepStatView.setText(temp);
-                temp = "+" + currLoadout.abil.addedAtt;
-                abilStatView.setText(temp);
-                temp = "+" + currLoadout.arm.addedAtt;
-                armStatView.setText(temp);
-                temp = "+" + currLoadout.ring.addedAtt;
-                ringStatView.setText(temp);
-
-                statSeekView.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    String temp;
-
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        int tempAtt = progress + bonusAtt;
-                        temp = progress + "(" + tempAtt + ")";
-                        baseStatView.setText(temp);
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                    }
-                });
-
-                statConfirm.setOnClickListener(new View.OnClickListener() {
-                    String temp;
-
-                    @Override
-                    public void onClick(View v) {
-                        currLoadout.baseAtt = statSeekView.getProgress();
-                        statEditView.setVisibility(View.GONE);
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        currLoadout.attView.setText(temp);
+                        at.setText(temp);
+                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        dex.setText(temp);
+
+                        itemSelView.setVisibility(View.GONE);
+                        r.setImageResource(currLoadout.ring.imageId);
                     }
                 });
             }
         });
 
-        currLoadout.dexView.setOnClickListener(new View.OnClickListener() {
+        at.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String temp;
-                final int bonusDex = currLoadout.totalDex - currLoadout.baseDex;
+                String[] baseStatRange = new String[currLoadout.charClass.baseAtt + 1];
+
+                for(int i = 0; i < baseStatRange.length; i++) {
+                    baseStatRange[i] = Integer.toString(i);
+                }
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                mBuilder.setTitle("Change Base Attack");
+                mBuilder.setItems(baseStatRange, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        currLoadout.baseAtt = which;
+
+                        currLoadout.updateStats();
+                        String temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
+                        at.setText(temp);
+
+                        if(currLoadout.baseAtt < currLoadout.charClass.baseAtt) {
+                            at.setTextColor(getResources().getColor(R.color.colorUnmaxedText));
+                        } else {
+                            at.setTextColor(getResources().getColor(R.color.colorMaxedText));
+                        }
+                    }
+                });
+
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
+        });
+
+        dex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String[] baseStatRange = new String[currLoadout.charClass.baseDex + 1];
 
                 for(int i = 0; i < baseStatRange.length; i++) {
@@ -420,77 +397,53 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         currLoadout.baseDex = which;
-                        currLoadout.updateViews();
+
+                        currLoadout.updateStats();
+                        String temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
+                        dex.setText(temp);
+
+                        if(currLoadout.baseDex < currLoadout.charClass.baseDex) {
+                            dex.setTextColor(getResources().getColor(R.color.colorUnmaxedText));
+                        } else {
+                            dex.setTextColor(getResources().getColor(R.color.colorMaxedText));
+                        }
                     }
                 });
 
                 AlertDialog mDialog = mBuilder.create();
                 mDialog.show();
+            }
+        });
 
-
-
-                /*statEditView.setVisibility(View.VISIBLE);
-                statSeekView.setMax(currLoadout.charClass.baseDex);
-                statSeekView.setProgress(currLoadout.baseDex);
-                titleView.setText("Dexterity");
-                temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                baseStatView.setText(temp);
-                temp = "+" + currLoadout.wep.addedDex;
-                wepStatView.setText(temp);
-                temp = "+" + currLoadout.abil.addedDex;
-                abilStatView.setText(temp);
-                temp = "+" + currLoadout.arm.addedDex;
-                armStatView.setText(temp);
-                temp = "+" + currLoadout.ring.addedDex;
-                ringStatView.setText(temp);
-
-                statSeekView.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    String temp;
-
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                mBuilder.setTitle("Confirm Delete");
+                mBuilder.setMessage("Are you sure you want to delete this loadout?");
+                mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        int tempDex = progress + bonusDex;
-                        temp = progress + "(" + tempDex + ")";
-                        baseStatView.setText(temp);
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
+                    public void onClick(DialogInterface dialog, int which) {
+                        loadAdpt.remove(currLoadout);
+                        loadAdpt.notifyDataSetChanged();
                     }
                 });
+                mBuilder.setNegativeButton("Cancel", null);
 
-                statConfirm.setOnClickListener(new View.OnClickListener() {
-                    String temp;
-
-                    @Override
-                    public void onClick(View v) {
-                        currLoadout.baseDex = statSeekView.getProgress();
-                        statEditView.setVisibility(View.VISIBLE);
-                        currLoadout.updateStats();
-                        temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
-                        currLoadout.dexView.setText(temp);
-                    }
-                });*/
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
             }
         });
 
-        currLoadout.deleteView.setOnClickListener(new View.OnClickListener() {
+        s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadAdpt.remove(currLoadout);
-                loadAdpt.notifyDataSetChanged();
-            }
-        });
+                final ImageView d = s.findViewById(R.id.damaging);
+                final ImageView b = s.findViewById(R.id.berserk);
+                final ImageView c = s.findViewById(R.id.curse);
+                final ImageView z = s.findViewById(R.id.dazed);
+                final ImageView w = s.findViewById(R.id.weak);
 
-        currLoadout.statusView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 mBuilder.setTitle("Status Effects");
                 mBuilder.setMultiChoiceItems(statusEffectNames, currLoadout.activeEffects, new DialogInterface.OnMultiChoiceClickListener() {
@@ -504,33 +457,33 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(!currLoadout.activeEffects[0]) {
-                            currLoadout.damagingView.setColorFilter(Color.parseColor("#777777"));
+                            d.setColorFilter(Color.parseColor("#777777"));
                         } else {
-                            currLoadout.damagingView.setColorFilter(null);
+                            d.setColorFilter(null);
                         }
 
                         if(!currLoadout.activeEffects[1]) {
-                            currLoadout.berserkView.setColorFilter(Color.parseColor("#777777"));
+                            b.setColorFilter(Color.parseColor("#777777"));
                         } else {
-                            currLoadout.berserkView.setColorFilter(null);
+                            b.setColorFilter(null);
                         }
 
                         if(!currLoadout.activeEffects[2]) {
-                            currLoadout.curseView.setColorFilter(Color.parseColor("#777777"));
+                            c.setColorFilter(Color.parseColor("#777777"));
                         } else {
-                            currLoadout.curseView.setColorFilter(null);
+                            c.setColorFilter(null);
                         }
 
                         if(!currLoadout.activeEffects[3]) {
-                            currLoadout.dazedView.setColorFilter(Color.parseColor("#777777"));
+                            z.setColorFilter(Color.parseColor("#777777"));
                         } else {
-                            currLoadout.dazedView.setColorFilter(null);
+                            z.setColorFilter(null);
                         }
 
                         if(!currLoadout.activeEffects[4]) {
-                            currLoadout.weakView.setColorFilter(Color.parseColor("#777777"));
+                            z.setColorFilter(Color.parseColor("#777777"));
                         } else {
-                            currLoadout.weakView.setColorFilter(null);
+                            z.setColorFilter(null);
                         }
                     }
                 });
@@ -539,6 +492,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 mDialog.show();
             }
         });
+
+        currLoadout.setViews(c, w, ab, ar, r, at, dex, s, del);
     }
 
     @Override
@@ -547,12 +502,12 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             loadoutView.setVisibility(View.VISIBLE);
             dpsTableView.setVisibility(View.GONE);
             addBuild.setVisibility(View.VISIBLE);
-            descView.setVisibility(View.GONE);
             setTitle("Loadouts");
             onLoadouts = true;
         }
-        else {
 
+        if(itemSelView.getVisibility() == View.VISIBLE) {
+            itemSelView.setVisibility(View.GONE);
         }
     }
 
@@ -582,7 +537,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     loadoutView.setVisibility(View.GONE);
                     dpsTableView.setVisibility(View.VISIBLE);
                     addBuild.setVisibility(View.GONE);
-                    descView.setVisibility(View.VISIBLE);
                     setTitle("DPS Table");
                     generateDpsTable();
                     onLoadouts = false;
@@ -591,7 +545,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     loadoutView.setVisibility(View.VISIBLE);
                     dpsTableView.setVisibility(View.GONE);
                     addBuild.setVisibility(View.VISIBLE);
-                    descView.setVisibility(View.GONE);
                     setTitle("Loadouts");
                     onLoadouts = true;
                 }
