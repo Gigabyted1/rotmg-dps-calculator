@@ -1,5 +1,9 @@
 package com.waynebloom.rotmgdpscalculator;
 
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -94,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        AppCenter.start(getApplication(), "5b1fb4f9-62fe-4eb6-a98e-581fb668b5f8",
+                Analytics.class, Crashes.class);
 
         saveFile = new File(getApplicationContext().getFilesDir(), "loadouts.txt");
         statusEffectNames = getResources().getStringArray(R.array.stat_effects);
