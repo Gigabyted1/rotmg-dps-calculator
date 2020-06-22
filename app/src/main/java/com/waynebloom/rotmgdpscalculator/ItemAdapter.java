@@ -1,7 +1,6 @@
 package com.waynebloom.rotmgdpscalculator;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private ArrayList<Item> itemList;
     private Typeface myFont;
 
-    public ItemAdapter(Context context, ArrayList<Item> data) {     //TODO: Class subtypes
+    ItemAdapter(Context context, ArrayList<Item> data) {
         super(context, R.layout.list_item_itemsel, data);
         dContext = context;
         itemList = data;

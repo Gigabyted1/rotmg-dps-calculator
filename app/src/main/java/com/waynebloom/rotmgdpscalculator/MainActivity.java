@@ -203,17 +203,17 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         dex.setText(temp);
 
                         if(!currLoadout.wep.subType.equals(currLoadout.charClass.weps.get(0).subType)) {
-                            currLoadout.wepView.setImageResource(currLoadout.charClass.weps.get(0).imageId);
+                            w.setImageResource(currLoadout.charClass.weps.get(0).imageId);
                             currLoadout.wep = currLoadout.charClass.weps.get(0);
                             currLoadout.wepId = 0;
                         }
                         if(!currLoadout.abil.subType.equals(currLoadout.charClass.abils.get(0).subType)) {
-                            currLoadout.abilView.setImageResource(currLoadout.charClass.abils.get(0).imageId);
+                            ab.setImageResource(currLoadout.charClass.abils.get(0).imageId);
                             currLoadout.abil = currLoadout.charClass.abils.get(0);
                             currLoadout.abilId = 0;
                         }
                         if(!currLoadout.arm.subType.equals(currLoadout.charClass.arms.get(0).subType)) {
-                            currLoadout.armView.setImageResource(currLoadout.charClass.arms.get(0).imageId);
+                            ar.setImageResource(currLoadout.charClass.arms.get(0).imageId);
                             currLoadout.arm = currLoadout.charClass.arms.get(0);
                             currLoadout.armId = 0;
                         }
@@ -481,9 +481,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         }
 
                         if(!currLoadout.activeEffects[4]) {
-                            z.setColorFilter(Color.parseColor("#777777"));
+                            w.setColorFilter(Color.parseColor("#777777"));
                         } else {
-                            z.setColorFilter(null);
+                            w.setColorFilter(null);
                         }
                     }
                 });
@@ -561,7 +561,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     public void addLoadout (View view) {
         Random ran1 = new Random();
         int temp = ran1.nextInt(15);
-        String[] seTemp = getResources().getStringArray(R.array.stat_effects);
 
         if(loadouts.size() < 8) {
             loadouts.add(new Loadout(getApplicationContext(), classes.get(temp), temp,

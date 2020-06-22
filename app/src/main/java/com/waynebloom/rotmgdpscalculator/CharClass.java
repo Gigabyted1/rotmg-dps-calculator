@@ -2,7 +2,7 @@ package com.waynebloom.rotmgdpscalculator;
 
 import java.util.ArrayList;
 
-public class CharClass {
+class CharClass {
     String name;
     ArrayList<Item> weps;
     ArrayList<Item> abils;
@@ -12,7 +12,7 @@ public class CharClass {
     int baseAtt;
     int baseDex;
 
-    public CharClass (String n, ArrayList<Item> w, ArrayList<Item> ab, ArrayList<Item> ar, ArrayList<Item> r, int id, int a, int d) {
+    CharClass (String n, ArrayList<Item> w, ArrayList<Item> ab, ArrayList<Item> ar, ArrayList<Item> r, int id, int a, int d) {
         name = n;
         weps = w;
         abils = ab;

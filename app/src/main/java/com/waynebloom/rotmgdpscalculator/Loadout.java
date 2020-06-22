@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 
 class Loadout {
-    Context context;
+    private Context context;
 
     CharClass charClass;
     Item wep;
@@ -31,20 +31,20 @@ class Loadout {
     int armId;
     int ringId;
 
-    ImageView classView;
-    ImageView wepView;
-    ImageView abilView;
-    ImageView armView;
-    ImageView ringView;
-    TextView attView;
-    TextView dexView;
-    ConstraintLayout statusView;
-        ImageView damagingView;
-        ImageView berserkView;
-        ImageView curseView;
-        ImageView dazedView;
-        ImageView weakView;
-    Button deleteView;
+    private ImageView classView;
+    private ImageView wepView;
+    private ImageView abilView;
+    private ImageView armView;
+    private ImageView ringView;
+    private TextView attView;
+    private TextView dexView;
+    private ConstraintLayout statusView;
+    private ImageView damagingView;
+    private ImageView berserkView;
+    private ImageView curseView;
+    private ImageView dazedView;
+    private ImageView weakView;
+    private Button deleteView;
 
     Loadout(Context con, CharClass c, int cId, int a, int d, Item w, int wId, Item ab, int abId, Item ar, int arId, Item r, int rId, String stat, int lId) {
         context = con;

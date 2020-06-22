@@ -2,7 +2,7 @@ package com.waynebloom.rotmgdpscalculator;
 
 import android.graphics.drawable.Drawable;
 
-public class Item {
+class Item {
     String name;
     String type;
     String subType;
@@ -15,7 +15,7 @@ public class Item {
     double range;
     int attribute;
 
-    public Item (String n, String t, String s, int id, int a, int d, double dmg, int shots, double rof, double r, int attr) {
+    Item (String n, String t, String s, int id, int a, int d, double dmg, int shots, double rof, double r, int attr) {
         name = n;
         type = t;
         subType = s;
