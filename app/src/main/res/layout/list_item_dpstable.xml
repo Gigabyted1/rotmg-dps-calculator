@@ -38,26 +38,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dps6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/dps_blue"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dps7"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps5" />
-
-    <TextView
         android:id="@+id/dps1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/dps_red"
         android:gravity="center"
@@ -65,7 +50,7 @@
         android:textColor="#000000"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/dps2"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/defense"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -84,6 +69,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/dps3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/dps_yellow"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/dps4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dps2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/dps4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,6 +96,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dps3"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dps5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/dps_cyan"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dps6"
+        app:layout_constraintStart_toEndOf="@id/defense" />
+
+    <TextView
+        android:id="@+id/dps6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/dps_blue"
+        android:gravity="center"
+        android:text="9999"
+        android:textColor="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dps7"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dps5" />
 
     <TextView
         android:id="@+id/dps7"
@@ -111,21 +142,6 @@
         app:layout_constraintEnd_toStartOf="@+id/dps8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dps6" />
-
-    <TextView
-        android:id="@+id/dps3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/dps_yellow"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/dps4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps2"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dps8"
@@ -145,28 +161,9 @@
         app:layout_constraintTop_toBottomOf="@id/dps1" />
 
     <TextView
-        android:id="@+id/dps5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/dps_cyan"
-        android:gravity="center"
-        android:text="9999"
-        android:textColor="#000000"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dps6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
         android:id="@+id/dps1_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -182,8 +179,6 @@
         android:id="@+id/dps2_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -199,8 +194,6 @@
         android:id="@+id/dps3_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -216,8 +209,6 @@
         android:id="@+id/dps4_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -233,8 +224,6 @@
         android:id="@+id/dps5_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -250,8 +239,6 @@
         android:id="@+id/dps6_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -267,8 +254,6 @@
         android:id="@+id/dps7_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"
@@ -284,8 +269,6 @@
         android:id="@+id/dps8_s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="1dp"
         android:gravity="center"
         android:text="9999"
         android:textColor="#000000"

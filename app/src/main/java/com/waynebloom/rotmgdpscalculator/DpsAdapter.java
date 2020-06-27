@@ -3,6 +3,7 @@ package com.waynebloom.rotmgdpscalculator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,9 @@ class DpsAdapter extends ArrayAdapter<ArrayList<DpsEntry>> {
                                 listItem.findViewById(R.id.dps4), listItem.findViewById(R.id.dps5), listItem.findViewById(R.id.dps6),
                                 listItem.findViewById(R.id.dps7), listItem.findViewById(R.id.dps8) };
 
-        TextView[] shadows = { listItem.findViewById(R.id.dps1_s), listItem.findViewById(R.id.dps2_s), listItem.findViewById(R.id.dps3_s),
-                                listItem.findViewById(R.id.dps4_s), listItem.findViewById(R.id.dps5_s), listItem.findViewById(R.id.dps6_s),
-                                listItem.findViewById(R.id.dps7_s), listItem.findViewById(R.id.dps8_s) };
+        //TextView[] shadows = { listItem.findViewById(R.id.dps1_s), listItem.findViewById(R.id.dps2_s), listItem.findViewById(R.id.dps3_s),
+        //                        listItem.findViewById(R.id.dps4_s), listItem.findViewById(R.id.dps5_s), listItem.findViewById(R.id.dps6_s),
+        //                        listItem.findViewById(R.id.dps7_s), listItem.findViewById(R.id.dps8_s) };
 
         TextView defense = listItem.findViewById(R.id.defense);
         defense.setTypeface(myFont);
@@ -48,7 +49,7 @@ class DpsAdapter extends ArrayAdapter<ArrayList<DpsEntry>> {
 
         for(int i = 0; i < currDpsList.size(); i++) {
             dpsViews[i].setText(String.format(Locale.US, "%.2f", currDpsList.get(i).dps));
-            shadows[i].setText(String.format(Locale.US, "%.2f", currDpsList.get(i).dps));
+            //shadows[i].setText(String.format(Locale.US, "%.2f", currDpsList.get(i).dps));
 
             switch (currDpsList.get(i).color) {
                 case 0:
@@ -85,13 +86,13 @@ class DpsAdapter extends ArrayAdapter<ArrayList<DpsEntry>> {
             }
 
             dpsViews[i].setTypeface(myFont);
-            shadows[i].setTypeface(myFont);
-            dpsViews[i].setTextColor(Color.parseColor("#333333"));
-            shadows[i].setTextColor(Color.parseColor("#EEEEEE"));
-            dpsViews[i].setTextSize(8f);
-            shadows[i].setTextSize(8f);
+            //shadows[i].setTypeface(myFont);
+            dpsViews[i].setTextColor(Color.parseColor("#444444"));
+            //shadows[i].setTextColor(Color.parseColor("#EEEEEE"));
+            dpsViews[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+            //shadows[i].setTextSize(TypedValue.COMPLEX_UNIT_SP,8);
             dpsViews[i].setVisibility(View.VISIBLE);
-            shadows[i].setVisibility(View.VISIBLE);
+            //shadows[i].setVisibility(View.VISIBLE);
         }
 
         defense.setText(String.format(Locale.US, "%d", position));
