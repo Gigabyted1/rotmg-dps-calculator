@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     AdView mAdView;
 
     ConsentForm form;
-    AdRequest request = new AdRequest.Builder().build();
+    AdRequest request;
     Bundle extras;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -117,29 +117,33 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
         String[] publisherIds = {"pub-1507290914426110"};
 
-        Log.i("Consent debug", "Before req");
-
         consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
             @Override
             public void onConsentInfoUpdated(ConsentStatus consentStatus) {
                 // User's consent status successfully updated.
-
-                Log.i("Consent debug", "Req success");
                 if(ConsentInformation.getInstance(MainActivity.this).isRequestLocationInEeaOrUnknown()) {
-                    Log.i("Consent debug", "Req success - EEA");
                     if(consentStatus == ConsentStatus.PERSONALIZED) {
-                        Log.i("Consent debug", "Req success - EEA P");
                         request = new AdRequest.Builder().build();
+                        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
+                            @Override
+                            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                            }
+                        });
+                        mAdView.loadAd(request);
                     } else
                     if(consentStatus == ConsentStatus.NON_PERSONALIZED) {
-                        Log.i("Consent debug", "Req success - EEA NP");
                         extras.putString("npa", "1");
                         request = new AdRequest.Builder()
                                 .addNetworkExtrasBundle(AdMobAdapter.class, extras)
                                 .build();
+                        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
+                            @Override
+                            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                            }
+                        });
+                        mAdView.loadAd(request);
                     } else {
-                        Log.i("Consent debug", "Req success - EEA none");
-                        URL privacyUrl;
+                        URL privacyUrl = null;
                         try {
                             // TODO: Replace with your app's privacy policy URL.
                             privacyUrl = new URL("https://www.google.com/");
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                             e.printStackTrace();
                             // Handle error.
                         }
-                        form = new ConsentForm.Builder(MainActivity.this, null)
+                        form = new ConsentForm.Builder(MainActivity.this, privacyUrl)
                                 .withListener(new ConsentFormListener() {
                                     @Override
                                     public void onConsentFormLoaded() {
@@ -167,11 +171,23 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                                         if (consentStatus == ConsentStatus.NON_PERSONALIZED) {
                                             extras.putString("npa", "1");
+                                            MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
+                                                @Override
+                                                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                                                }
+                                            });
                                             request = new AdRequest.Builder()
                                                     .addNetworkExtrasBundle(AdMobAdapter.class, extras)
                                                     .build();
+                                            mAdView.loadAd(request);
                                         } else if (consentStatus == ConsentStatus.PERSONALIZED) {
+                                            MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
+                                                @Override
+                                                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                                                }
+                                            });
                                             request = new AdRequest.Builder().build();
+                                            mAdView.loadAd(request);
                                         } else {
                                             AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                                             mBuilder.setMessage("Sorry! An ad-free version is an upcoming feature, but for now is unavailable. " +
@@ -183,9 +199,10 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                                                     finish();
                                                 }
                                             });
+
+                                            AlertDialog mDialog = mBuilder.create();
+                                            mDialog.show();
                                         }
-
-
                                     }
 
                                     @Override
@@ -201,23 +218,26 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         form.load();
                     }
                 } else {
+                    MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
+                        @Override
+                        public void onInitializationComplete(InitializationStatus initializationStatus) {
+                        }
+                    });
                     request = new AdRequest.Builder().build();
+                    mAdView.loadAd(request);
                 }
             }
 
             @Override
             public void onFailedToUpdateConsentInfo(String errorDescription) {
                 // User's consent status failed to update.
-
-                Log.i("Consent debug", "Req fail");
-
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 mBuilder.setTitle("Consent status update failed.");
                 mBuilder.setMessage("\"" + errorDescription + "\"" + "\n\nPlease ensure you are connected to the internet or a mobile network and try again.");
                 mBuilder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MainActivity.this.finishAffinity();
+                        finish();
                     }
                 });
 
@@ -289,13 +309,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         classes.add(new CharClass("Sorcerer", wands, scepters, robes, rings, R.drawable.sorcerer, 70, 60));
         classes.add(new CharClass("Ninja", katanas, stars, larms, rings, R.drawable.ninja, 70, 70));
         classes.add(new CharClass("Samurai", katanas, wakis, harms, rings, R.drawable.samurai, 75, 50));
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        mAdView.loadAd(request);
 
         try {
             loadBuilds();
@@ -645,7 +658,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     }
 
     @Override
-    protected void onStop () {
+    protected void onStop() {
         super.onStop();
 
         try {
@@ -691,7 +704,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         }
     }
 
-    public void addLoadout (View view) {
+    public void addLoadout(View view) {
         Random ran1 = new Random();
         int temp = ran1.nextInt(15);
 
@@ -714,7 +727,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
     }
 
-    public void generateDpsTable () {
+    public void generateDpsTable() {
         ArrayList<ArrayList<DpsEntry>> dpsTables = new ArrayList<>();   //loadouts.size() arrays of 150
         ArrayList<ArrayList<DpsEntry>> tempTable;
         DpsEntry temp;
@@ -773,8 +786,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 }
             }
             saveStr.append("/\n");
-
-            Log.i("Save debug", saveStr.toString());
         }
         writer.write(saveStr.toString());
         writer.close();
@@ -825,7 +836,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void readData (ArrayList<Item> storage, String fileName) {
+    private void readData(ArrayList<Item> storage, String fileName) {
         final int NO_OF_INFO = 11;
         ArrayList<StringBuilder> lineData;
         char fileChar;

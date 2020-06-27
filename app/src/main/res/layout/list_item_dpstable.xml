@@ -103,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/dps_cyan"
         android:gravity="center"
@@ -111,12 +112,14 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dps6"
-        app:layout_constraintStart_toEndOf="@id/defense" />
+        app:layout_constraintStart_toEndOf="@id/defense"
+        app:layout_constraintTop_toBottomOf="@id/dps1" />
 
     <TextView
         android:id="@+id/dps6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/dps_blue"
         android:gravity="center"
@@ -126,12 +129,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dps7"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps5" />
+        app:layout_constraintStart_toEndOf="@+id/dps5"
+        app:layout_constraintTop_toBottomOf="@id/dps2" />
 
     <TextView
         android:id="@+id/dps7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/dps_pink"
         android:gravity="center"
@@ -141,7 +146,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dps8"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dps6" />
+        app:layout_constraintStart_toEndOf="@+id/dps6"
+        app:layout_constraintTop_toBottomOf="@id/dps3" />
 
     <TextView
         android:id="@+id/dps8"
@@ -158,7 +164,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dps7"
-        app:layout_constraintTop_toBottomOf="@id/dps1" />
+        app:layout_constraintTop_toBottomOf="@id/dps4" />
 
     <TextView
         android:id="@+id/dps1_s"
