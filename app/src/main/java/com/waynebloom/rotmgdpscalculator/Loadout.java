@@ -182,9 +182,11 @@ class Loadout {
             curse = 1.2;
         }
         if(activeEffects[3]) {
+            bers = 0;
             realDex = 0;
         }
         if(activeEffects[4]) {
+            damag = 0;
             realAtt = 0;
         }
 
