@@ -1,0 +1,13 @@
+None/Ability/Lutes/empty_lute/0/0/0/0/0/0/0/
+Novice's Lute/Ability/Lutes/lute_t0/0/0/0/0/0/0/0/
+Oakwood Lute/Ability/Lutes/lute_t1/0/0/0/0/0/0/0/
+Iron Lute/Ability/Lutes/lute_t2/0/0/0/0/0/0/0/
+Silver Lute/Ability/Lutes/lute_t3/0/0/0/0/0/0/0/
+Battle Lute/Ability/Lutes/lute_t4/0/0/0/0/0/0/0/
+Regal Lute/Ability/Lutes/lute_t5/0/0/0/0/0/0/0/
+Skyward Lute/Ability/Lutes/lute_t6/0/0/0/0/0/0/0/
+Snake Charmer Pungi/Ability/Lutes/lute_ut1/0/0/0/0/0/0/0/
+Wavecrest Concertina/Ability/Lutes/lute_ut2/4/4/0/0/0/0/0/
+Pharaoh's Requiem/Ability/Lutes/lute_ut3/0/0/0/0/0/0/0/
+Chief's War Horn/Ability/Lutes/lute_ut4/0/3/0/0/0/0/0/
+Angel's Fanfare/Ability/Lutes/lute_st1/0/0/0/0/0/0/0/

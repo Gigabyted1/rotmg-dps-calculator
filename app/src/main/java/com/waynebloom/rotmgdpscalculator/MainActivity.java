@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     ArrayList<Item> scepters = new ArrayList<>();
     ArrayList<Item> stars = new ArrayList<>();
     ArrayList<Item> wakis = new ArrayList<>();
+    ArrayList<Item> lutes = new ArrayList<>();
     ArrayList<Item> robes = new ArrayList<>();
     ArrayList<Item> larms = new ArrayList<>();
     ArrayList<Item> harms = new ArrayList<>();
@@ -256,6 +258,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         dpsTableView = findViewById(R.id.dps_table_view);
         itemSelView = findViewById(R.id.item_selection_view);
         loadoutView = findViewById(R.id.loadout_view);
+            View footer = new View(MainActivity.this);
+            footer.setLayoutParams( new AbsListView.LayoutParams( Toolbar.LayoutParams.FILL_PARENT, 250 ));
+            loadoutView.addFooterView(footer, null, false);
         statEditView = findViewById(R.id.stat_edit);
         statSeekView = findViewById(R.id.stat_seekbar);
         titleView = findViewById(R.id.title);
@@ -289,6 +294,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         readData(scepters, "scepters.txt");
         readData(stars, "stars.txt");
         readData(wakis, "wakis.txt");
+        readData(lutes, "lutes.txt");
         readData(larms, "larms.txt");
         readData(harms, "harms.txt");
         readData(robes, "robes.txt");
@@ -309,6 +315,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         classes.add(new CharClass("Sorcerer", wands, scepters, robes, rings, R.drawable.sorcerer, 70, 60));
         classes.add(new CharClass("Ninja", katanas, stars, larms, rings, R.drawable.ninja, 70, 70));
         classes.add(new CharClass("Samurai", katanas, wakis, harms, rings, R.drawable.samurai, 75, 50));
+        classes.add(new CharClass("Bard", bows, lutes, robes, rings, R.drawable.bard, 55, 70));
 
         try {
             loadBuilds();
@@ -706,7 +713,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
     public void addLoadout(View view) {
         Random ran1 = new Random();
-        int temp = ran1.nextInt(15);
+        int temp = ran1.nextInt(16);
 
         if(loadouts.size() < 8) {
             loadouts.add(new Loadout(getApplicationContext(), classes.get(temp), temp,
