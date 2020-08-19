@@ -87,7 +87,7 @@ class Loadout {
         deleteView = delV;
     }
 
-    public void updateViews() {
+    void updateViews() {
         updateStats();
 
         classView.setImageResource(charClass.imageId);

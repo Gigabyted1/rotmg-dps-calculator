@@ -37,6 +37,7 @@ Sentient Staff/Weapon/Staff/staff_st1/0/0/80/2/1.0/8.3/0/
 The Phylactery/Weapon/Staff/staff_st2/0/0/90/2/0.8/7.2/0/
 Edictum Praetoris/Weapon/Staff/staff_st3/0/0/72.5/3/0.75/8.55/0/
 Staff of Eruption/Weapon/Staff/staff_st4/0/0/535/2/0.25/4.5/0/
-Legacy Sentient Staff/Weapon/Staff/staff_st5/0/0/80/2/1.0/8.3/0/
-Supernatural Staff/Weapon/Staff/staff_st6/0/0/80/2/1.0/8.3/0/
+Tideturner Trident/Weapon/Staff/staff_st5/0/0/87.5/3/0.7/7.5/0/
+Legacy Sentient Staff/Weapon/Staff/staff_st1/0/0/80/2/1.0/8.3/0/
 Stygian Torch/Weapon/Staff/staff_st7/0/0/90/2/0.8/7.2/0/
+Supernatural Staff/Weapon/Staff/staff_st6/0/0/80/2/1.0/8.3/0/

@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,6 +54,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements ClickListeners {
     ArrayList<Loadout> loadouts = new ArrayList<>(8);
@@ -102,151 +105,12 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     TextView ringStatView;
     Button statConfirm;
     Button addBuild;
-    AdView mAdView;
-
-    ConsentForm form;
-    AdRequest request;
-    Bundle extras;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ConsentInformation consentInformation = ConsentInformation.getInstance(MainActivity.this);
-        ConsentInformation.getInstance(MainActivity.this).setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
-
-        String[] publisherIds = {"pub-1507290914426110"};
-
-        consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
-            @Override
-            public void onConsentInfoUpdated(ConsentStatus consentStatus) {
-                // User's consent status successfully updated.
-                if(ConsentInformation.getInstance(MainActivity.this).isRequestLocationInEeaOrUnknown()) {
-                    if(consentStatus == ConsentStatus.PERSONALIZED) {
-                        request = new AdRequest.Builder().build();
-                        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-                            @Override
-                            public void onInitializationComplete(InitializationStatus initializationStatus) {
-                            }
-                        });
-                        mAdView.loadAd(request);
-                    } else
-                    if(consentStatus == ConsentStatus.NON_PERSONALIZED) {
-                        extras.putString("npa", "1");
-                        request = new AdRequest.Builder()
-                                .addNetworkExtrasBundle(AdMobAdapter.class, extras)
-                                .build();
-                        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-                            @Override
-                            public void onInitializationComplete(InitializationStatus initializationStatus) {
-                            }
-                        });
-                        mAdView.loadAd(request);
-                    } else {
-                        URL privacyUrl = null;
-                        try {
-                            // TODO: Replace with your app's privacy policy URL.
-                            privacyUrl = new URL("https://www.google.com/");
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                            // Handle error.
-                        }
-                        form = new ConsentForm.Builder(MainActivity.this, privacyUrl)
-                                .withListener(new ConsentFormListener() {
-                                    @Override
-                                    public void onConsentFormLoaded() {
-                                        // Consent form loaded successfully.
-                                        form.show();
-                                    }
-
-                                    @Override
-                                    public void onConsentFormOpened() {
-                                        // Consent form was displayed.
-                                    }
-
-                                    @Override
-                                    public void onConsentFormClosed(
-                                            ConsentStatus consentStatus, Boolean userPrefersAdFree) {
-                                        extras = new Bundle();
-
-                                        if (consentStatus == ConsentStatus.NON_PERSONALIZED) {
-                                            extras.putString("npa", "1");
-                                            MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-                                                @Override
-                                                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                                                }
-                                            });
-                                            request = new AdRequest.Builder()
-                                                    .addNetworkExtrasBundle(AdMobAdapter.class, extras)
-                                                    .build();
-                                            mAdView.loadAd(request);
-                                        } else if (consentStatus == ConsentStatus.PERSONALIZED) {
-                                            MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-                                                @Override
-                                                public void onInitializationComplete(InitializationStatus initializationStatus) {
-                                                }
-                                            });
-                                            request = new AdRequest.Builder().build();
-                                            mAdView.loadAd(request);
-                                        } else {
-                                            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                                            mBuilder.setMessage("Sorry! An ad-free version is an upcoming feature, but for now is unavailable. " +
-                                                    "Without consent for ads, we can't display them to you. Ad revenue is how we are able to " +
-                                                    "provide this app free of charge.");
-                                            mBuilder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    finish();
-                                                }
-                                            });
-
-                                            AlertDialog mDialog = mBuilder.create();
-                                            mDialog.show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onConsentFormError(String errorDescription) {
-                                        // Consent form error.
-                                    }
-                                })
-                                .withPersonalizedAdsOption()
-                                .withNonPersonalizedAdsOption()
-                                .withAdFreeOption()
-                                .build();
-
-                        form.load();
-                    }
-                } else {
-                    MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-                        @Override
-                        public void onInitializationComplete(InitializationStatus initializationStatus) {
-                        }
-                    });
-                    request = new AdRequest.Builder().build();
-                    mAdView.loadAd(request);
-                }
-            }
-
-            @Override
-            public void onFailedToUpdateConsentInfo(String errorDescription) {
-                // User's consent status failed to update.
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                mBuilder.setTitle("Consent status update failed.");
-                mBuilder.setMessage("\"" + errorDescription + "\"" + "\n\nPlease ensure you are connected to the internet or a mobile network and try again.");
-                mBuilder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                AlertDialog mDialog = mBuilder.create();
-                mDialog.show();
-            }
-        });
 
         AppCenter.start(getApplication(), "5b1fb4f9-62fe-4eb6-a98e-581fb668b5f8",
                 Analytics.class, Crashes.class);
@@ -271,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         ringStatView = findViewById(R.id.ring_stat);
         statConfirm = findViewById(R.id.confirm);
         addBuild = findViewById(R.id.add_button);
-        mAdView = findViewById(R.id.adView);
 
         readData(daggers, "daggers.txt");
         readData(bows, "bows.txt");
@@ -702,9 +565,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     onLoadouts = true;
                 }
                 return true;
-
-            case R.id.action_delete:
-
 
             default:
                 return super.onOptionsItemSelected(item);

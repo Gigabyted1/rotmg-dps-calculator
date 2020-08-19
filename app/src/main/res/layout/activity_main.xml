@@ -26,19 +26,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/bg_button"
         android:fontFamily="@font/myfont"
         android:onClick="addLoadout"
         android:text="+"
-        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
         android:id="@+id/loadout_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +52,6 @@
         android:layout_height="0dp"
         android:background="#FFFFFF"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
@@ -64,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
@@ -209,18 +206,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-        <!--        app:adUnitId="ca-app-pub-1507290914426110/2593373825" (for live) -->
+    <!--        app:adUnitId="ca-app-pub-1507290914426110/2593373825" (for live) -->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,5 +4,6 @@
     <style name="MyFontAppearance">
         <item name="android:fontFamily">@font/myfont</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>
