@@ -13,14 +13,17 @@ Archon Sword/Weapon/Sword/sword_t10/0/0/232.5/1/1.0/3.5/0/
 Skysplitter Sword/Weapon/Sword/sword_t11/0/0/240/1/1.0/3.5/0/
 Sword of Acclaim/Weapon/Sword/sword_t12/0/0/247.5/1/1.0/3.5/0/
 Sword of Splendor/Weapon/Sword/sword_t13/0/0/262.5/1/1.0/3.5/0/
+Sword of Majesty/Weapon/Sword/sword_t14/0/0/277.5/1/1.0/3.5/0/
 MMace MMurderer/Weapon/Sword/sword_ut1/0/0/277.5/2/0.40/2.84/0/
 Crystal Sword/Weapon/Sword/sword_ut2/0/0/195/1/1.0/4.5/0/
 Ancient Stone Sword/Weapon/Sword/sword_ut3/0/0/365/1/0.60/4/0/
+Arcane Rapier/Weapon/Sword/sword_ut22/0/0/192.5/1/1/4/0/
 Pirate King's Cutlass/Weapon/Sword/sword_ut4/0/0/205/1/1.30/3.3/0/
 Demon Blade/Weapon/Sword/sword_ut5/0/0/162.5/2/1.0/1.37/0/
 Sword of the Colossus/Weapon/Sword/sword_ut6/0/0/287.5/1/1.0/4.5/0/
 Acidic Slasher/Weapon/Sword/sword_ut7/0/0/365/1/0.60/4/0/
 Gaseous Glaive/Weapon/Sword/sword_ut8/0/0/205/1/1.30/3.3/0/
+Divinity/Weapon/Sword/sword_ut23/0/0/300/1/0.6/4/0/
 Doctor Swordsworth/Weapon/Sword/sword_ut9/0/0/55/3/0.33/2.57/0/
 Unstable Anomaly/Weapon/Sword/sword_ut10/0/0/12.5/10/0.25/0/0/
 Vinesword/Weapon/Sword/sword_ut11/0/0/225/1/1.0/3.5/0/

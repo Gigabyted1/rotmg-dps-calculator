@@ -13,6 +13,7 @@ Hippogriff Hide Armor/Armor/Light/light_t11/0/4/0/0/0/0/0/
 Griffon Hide Armor/Armor/Light/light_t12/0/4/0/0/0/0/0/
 Hydra Skin Armor/Armor/Light/light_t13/0/5/0/0/0/0/0/
 Wyrmhide Armor/Armor/Light/light_t14/0/6/0/0/0/0/0/
+Leviathan Armor/Armor/Light/light_t15/0/7/0/0/0/0/0/
 Cheater Light Armor/Armor/Light/light_ut1/0/0/0/0/0/0/0/
 Snakeskin Armor/Armor/Light/light_ut2/0/3/0/0/0/0/0/
 Greaterhosen/Armor/Light/light_ut3/2/4/0/0/0/0/0/
@@ -25,6 +26,8 @@ Leaf Dragon Hide Armor/Armor/Light/light_ut9/0/0/0/0/0/0/0/
 Coral Silk Armor/Armor/Light/light_ut10/0/4/0/0/0/0/0/
 Armor of Nil/Armor/Light/light_ut11/0/0/0/0/0/0/0/
 Fitted Protective Matrix/Armor/Light/light_ut12/0/0/0/0/0/0/0/
+Turncoat Cape/Armor/Light/light_ut15/0/0/0/0/0/0/0/
+Centaur's Shielding/Armor/Light/light_ut16/5/7/0/0/0/0/0/
 Frost Drake Hide Armor/Armor/Light/light_ut13/0/5/0/0/0/0/0/
 Squadron Sheathing/Armor/Light/light_ut14/0/0/0/0/0/0/0/
 Apiary Armor/Armor/Light/light_st1/3/0/0/0/0/0/0/

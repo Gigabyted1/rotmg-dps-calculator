@@ -13,6 +13,7 @@ Robe of the Moon Wizard/Armor/Robe/robe_t11/3/0/0/0/0/0/0/
 Robe of the Elder Warlock/Armor/Robe/robe_t12/3/0/0/0/0/0/0/
 Robe of the Grand Sorcerer/Armor/Robe/robe_t13/4/0/0/0/0/0/0/
 Robe of the Star Mother/Armor/Robe/robe_t14/5/0/0/0/0/0/0/
+Robe of the Ancient Intellect/Armor/Robe/robe_t15/6/0/0/0/0/0/0/
 Cheater Robe/Armor/Robe/robe_ut1/0/0/0/0/0/0/0/
 Robe of the Tlatoani/Armor/Robe/robe_ut2/0/0/0/0/0/0/0/
 Woodland Robe/Armor/Robe/robe_ut3/0/0/0/0/0/0/0/
@@ -23,6 +24,8 @@ Water Dragon Silk Robe/Armor/Robe/robe_ut7/6/0/0/0/0/0/0/
 Esben's Shaman Attire/Armor/Robe/robe_ut8/5/0/0/0/0/0/0/
 Ritual Robe/Armor/Robe/robe_ut9/5/0/0/0/0/0/0/
 Magic Protective Matrix/Armor/Robe/robe_ut10/0/0/0/0/0/0/0/
+Diplomatic Robe/Armor/Robe/robe_ut14/10/0/0/0/0/0/0/
+Vesture of Duality/Armor/Robe/robe_ut15/5/0/0/0/0/0/0/
 Robe of the Summer Solstice/Armor/Robe/robe_ut11/4/0/0/0/0/0/0/
 Frost Elementalist Robe/Armor/Robe/robe_ut12/4/0/0/0/0/0/0/
 Judge's Robe/Armor/Robe/robe_ut13/3/0/0/0/0/0/0/
@@ -35,6 +38,7 @@ Anointed Robe/Armor/Robe/robe_st6/4/3/0/0/0/0/0/
 Molten Mantle/Armor/Robe/robe_st7/3/3/0/0/0/0/0/
 Magician's Robe/Armor/Robe/robe_st8/0/6/0/0/0/0/0/
 Oceanic Apparel/Armor/Robe/robe_st9/0/0/0/0/0/0/0/
+Wings of Sanctity/Armor/Robe/robe_st13/0/5/0/0/0/0/0/
 Legacy Robe of Twilight/Armor/Robe/robe_st10/0/6/0/0/0/0/0/
 Immortal Mantle/Armor/Robe/robe_st11/0/0/0/0/0/0/0/
 Robe of the Enchantress/Armor/Robe/robe_st12/0/0/0/0/0/0/0/

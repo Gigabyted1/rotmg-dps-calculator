@@ -12,7 +12,9 @@ Tome of Pain/Ability/Tome/tome_ut3/4/0/0/0/0/0/0/
 Tome of the Mushroom Tribes/Ability/Tome/tome_ut4/0/0/0/0/0/0/0/
 Tome of Purification/Ability/Tome/tome_ut5/0/0/0/0/0/0/0/
 Tome of Holy Protection/Ability/Tome/tome_ut6/0/0/0/0/0/0/0/
+Chaotic Scripture/Ability/Tome/tome_ut11/0/0/0/0/0/0/0/
 Nativity Tome/Ability/Tome/tome_ut7/0/0/0/0/0/0/0/
+Tome of the Tarnished Gods/Ability/Tome/tome_ut12/0/0/0/0/0/0/0/
 Tome of Holy Furor/Ability/Tome/tome_ut8/0/0/0/0/0/0/0/
 Tome of Frigid Protection/Ability/Tome/tome_ut9/0/0/0/0/0/0/0/
 Botany Book/Ability/Tome/tome_ut10/0/0/0/0/0/0/0/

@@ -13,6 +13,7 @@ Staff of Diabolic Secrets/Weapon/Staff/staff_t10/0/0/75/2/1.0/8.55/0/
 Staff of Astral Knowledge/Weapon/Staff/staff_t11/0/0/77.5/2/1.0/8.55/0/
 Staff of the Cosmic Whole/Weapon/Staff/staff_t12/0/0/80/2/1.0/8.55/0/
 Staff of the Vital Unity/Weapon/Staff/staff_t13/0/0/87.5/2/1.0/8.55/0/
+Staff of the Fundamental Core/Weapon/Staff/staff_t14/0/0/95/2/1.0/8.55/0/
 Staff of the Crystal Serpent/Weapon/Staff/staff_ut1/0/0/65/2/1.1/9/0/
 K.I.D.D. Force/Weapon/Staff/staff_ut2/0/0/105/2/0.8/10/0/
 Spirit Staff/Weapon/Staff/staff_ut3/0/0/50/2/1.65/8.5/0/
@@ -22,6 +23,7 @@ Staff of Esben/Weapon/Staff/staff_ut6/0/0/80/2/0.8/7.2/0/
 Staff of Unholy Sacrifice/Weapon/Staff/staff_ut7/0/0/142.5/2/0.55/8.05/0/
 Comet of Calamity/Weapon/Staff/staff_ut8/0/0/185/2/0.33/9/1/
 Foramite Staff/Weapon/Staff/staff_ut9/0/0/50/2/1.65/8.5/0/
+Superior/Weapon/Staff/staff_ut21/0/0/60/4/1/6.22/0/
 KoalaPOW/Weapon/Staff/staff_ut10/0/0/40/2/0.4/0/0/
 Barely Attuned Magic Thingy/Weapon/Staff/staff_ut11/0/0/15/2/0.3/0/0/
 Staff of Adoration/Weapon/Staff/staff_ut12/0/0/72.5/2/1.0/8.55/0/

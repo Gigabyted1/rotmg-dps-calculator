@@ -1,7 +1,5 @@
 package com.waynebloom.rotmgdpscalculator;
 
-import android.graphics.drawable.Drawable;
-
 class Item {
     String name;
     String type;

@@ -69,6 +69,11 @@ The Forgotten Crown/Ring/Ring/ring_ut19/6/6/0/0/0/0/0/
 Magical Lodestone/Ring/Ring/ring_ut20/6/6/0/0/0/0/0/
 Bloodshed Ring/Ring/Ring/ring_ut21/0/0/0/0/0/0/0/
 Sourcestone/Ring/Ring/ring_ut22/0/0/0/0/0/0/0/
+Chancellor's Cranium/Ring/Ring/ring_ut50/0/3/0/0/0/0/0/
+Collector's Monocle/Ring/Ring/ring_ut46/8/0/0/0/0/0/0/
+Divine Coronation/Ring/Ring/ring_ut47/0/8/0/0/0/0/0/
+Battalion Banner/Ring/Ring/ring_ut48/0/4/0/0/0/0/0/
+Exalted God's Horn/Ring/Ring/ring_ut49/0/4/0/0/0/0/0/
 Omnipotence Ring/Ring/Ring/ring_ut23/4/4/0/0/0/0/0/
 Bronze Medal/Ring/Ring/ring_ut24/0/1/0/0/0/0/0/
 Silver Medal/Ring/Ring/ring_ut25/0/2/0/0/0/0/0/
@@ -116,6 +121,7 @@ Ring of the Inferno/Ring/Ring/ring_st22/4/0/0/0/0/0/0/
 Radiant Heart/Ring/Ring/ring_st23/5/0/0/0/0/0/0/
 Imperial Keepsake/Ring/Ring/ring_st24/0/0/0/0/0/0/0/
 Performer's Hat/Ring/Ring/ring_st25/0/4/0/0/0/0/0/
+Heavenly Halo/Ring/Ring/ring_st45/0/0/0/0/0/0/0/
 Regal Ring/Ring/Ring/ring_st26/0/1/0/0/0/0/0/
 Phantom Pendant/Ring/Ring/ring_st27/0/7/0/0/0/0/0/
 Collarbone Collar/Ring/Ring/ring_st28/3/0/0/0/0/0/0/

@@ -6,12 +6,14 @@ Savage Trap/Ability/Trap/trap_t3/2/0/0/0/0/0/0/
 Demonhunter Trap/Ability/Trap/trap_t4/3/0/0/0/0/0/0/
 Dragonstalker Trap/Ability/Trap/trap_t5/4/0/0/0/0/0/0/
 Giantcatcher Trap/Ability/Trap/trap_t6/5/0/0/0/0/0/0/
+Depthchaser Trap/Ability/Trap/trap_t7/6/0/0/0/0/0/0/
 Helium Trap/Ability/Trap/trap_ut1/0/0/0/0/0/0/0/
 Coral Venom Trap/Ability/Trap/trap_ut2/0/2/0/0/0/0/0/
 Cave Dweller Trap/Ability/Trap/trap_ut3/6/0/0/0/0/0/0/
 Trap of the Vile Spirit/Ability/Trap/trap_ut4/3/0/0/0/0/0/0/
 Painbow/Ability/Trap/trap_ut5/0/0/0/0/0/0/0/
 Greedsnatcher Trap/Ability/Trap/trap_ut6/5/0/0/0/0/0/0/
+Blacklight Artifice/Ability/Trap/trap_ut9/0/0/0/0/0/0/0/
 Mimicry Trap/Ability/Trap/trap_ut7/0/5/0/0/0/0/0/
 Trap of the Blood Spirit/Ability/Trap/trap_ut8/3/0/0/0/0/0/0/
 Honeytomb Snare/Ability/Trap/trap_st1/0/0/0/0/0/0/0/

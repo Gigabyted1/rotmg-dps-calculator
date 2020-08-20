@@ -6,14 +6,17 @@ Scorching Blast Spell/Ability/Spell/spell_t3/0/0/0/0/0/0/0/
 Destruction Sphere Spell/Ability/Spell/spell_t4/0/0/0/0/0/0/0/
 Magic Nova Spell/Ability/Spell/spell_t5/0/0/0/0/0/0/0/
 Elemental Detonation Spell/Ability/Spell/spell_t6/0/0/0/0/0/0/0/
+Burning Retribution Spell/Ability/Spell/spell_t7/0/0/0/0/0/0/0/
 Spelling Spell/Ability/Spell/spell_ut1/0/0/0/0/0/0/0/
 Recurring Terror Spell/Ability/Spell/spell_ut2/2/4/0/0/0/0/0/
 Sporous Spray Spell/Ability/Spell/spell_ut3/0/0/0/0/0/0/0/
 Penetrating Blast Spell/Ability/Spell/spell_ut4/2/0/0/0/0/0/0/
 Tablet of the King's Avatar/Ability/Spell/spell_ut5/0/0/0/0/0/0/0/
+Genesis Spell/Ability/Spell/spell_ut11/0/0/0/0/0/0/0/
 Thousand Suns Spell/Ability/Spell/spell_ut6/0/0/0/0/0/0/0/
 Vigil Spell/Ability/Spell/spell_ut7/0/0/0/0/0/0/0/
 Vitamine Buster/Ability/Spell/spell_ut8/0/0/0/0/0/0/0/
+Cursed Spire Spell/Ability/Spell/spell_ut12/0/0/0/0/0/0/0/
 Random Spell Extraction Device/Ability/Spell/spell_ut9/0/0/0/0/0/0/0/
 Jade Storm/Ability/Spell/spell_ut10/0/0/0/0/0/0/0/
 Ancient Spell: Pierce/Ability/Spell/spell_st1/0/0/0/0/0/0/0/

@@ -12,7 +12,8 @@ Wand of Deep Sorcery/Weapon/Wand/wand_t9/0/0/107.5/1/1.0/9/0/
 Wand of Shadow/Weapon/Wand/wand_t10/0/0/112.5/1/1.0/9/0/
 Wand of Ancient Warning/Weapon/Wand/wand_t11/0/0/115/1/1.0/9/0/
 Wand of Recompense/Weapon/Wand/wand_t12/0/0/117.5/1/1.0/9/0/
-Wand of Evocation/Weapon/Wand/wand_t13/0/0/120/1/1.0/9/0/
+Wand of Evocation/Weapon/Wand/wand_t13/0/0/125/1/1.0/9/0/
+Wand of Retribution/Weapon/Wand/wand_t14/0/0/132.5/1/1.0/9/0/
 Sprite Wand/Weapon/Wand/wand_ut1/0/0/115/1/1.0/9/0/
 Caduceus of Current Craziness/Weapon/Wand/wand_ut2/0/0/77.5/2/1.0/9/0/
 St. Abraham's Wand/Weapon/Wand/wand_ut3/0/0/105/1/1.0/9/0/
@@ -23,6 +24,7 @@ Wand of the Bulwark/Weapon/Wand/wand_ut7/0/0/400/1/0.33/9/0/
 Soul's Guidance/Weapon/Wand/wand_ut8/0/0/107.5/1/1.0/9/0/
 Snowblind Wand/Weapon/Wand/wand_ut9/0/0/167.5/1/0.85/9/0/
 Warlord Wand/Weapon/Wand/wand_ut10/0/0/90/1/1.1/9/1/
+Lumiaire/Weapon/Wand/wand_ut22/0/0/100/2/1.5/9/0/
 Spicy Wand of Spice/Weapon/Wand/wand_ut11/0/0/40/1/1.0/9/0/
 Lethargic Sentience/Weapon/Wand/wand_ut12/0/0/30/4/0.25/9/0/
 Wand of Budding Romance/Weapon/Wand/wand_ut13/0/0/107.5/1/1.0/9/0/

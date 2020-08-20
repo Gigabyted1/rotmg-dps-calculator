@@ -1,12 +1,5 @@
 package com.waynebloom.rotmgdpscalculator;
 
-import com.google.ads.consent.ConsentForm;
-import com.google.ads.consent.ConsentFormListener;
-import com.google.ads.consent.ConsentInfoUpdateListener;
-import com.google.ads.consent.ConsentInformation;
-import com.google.ads.consent.ConsentStatus;
-import com.google.ads.consent.DebugGeography;
-import com.google.ads.mediation.admob.AdMobAdapter;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -18,11 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,26 +26,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements ClickListeners {
     ArrayList<Loadout> loadouts = new ArrayList<>(8);
@@ -123,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         itemSelView = findViewById(R.id.item_selection_view);
         loadoutView = findViewById(R.id.loadout_view);
             View footer = new View(MainActivity.this);
-            footer.setLayoutParams( new AbsListView.LayoutParams( Toolbar.LayoutParams.FILL_PARENT, 250 ));
+            footer.setLayoutParams( new AbsListView.LayoutParams( Toolbar.LayoutParams.FILL_PARENT, 350));
             loadoutView.addFooterView(footer, null, false);
         statEditView = findViewById(R.id.stat_edit);
         statSeekView = findViewById(R.id.stat_seekbar);

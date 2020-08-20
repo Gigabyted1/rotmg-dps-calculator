@@ -6,6 +6,7 @@ Elvencraft Quiver/Ability/Quiver/quiver_t3/0/3/0/0/0/0/0/
 Magesteel Quiver/Ability/Quiver/quiver_t4/0/4/0/0/0/0/0/
 Golden Quiver/Ability/Quiver/quiver_t5/0/5/0/0/0/0/0/
 Quiver of Elvish Mastery/Ability/Quiver/quiver_t6/0/6/0/0/0/0/0/
+Quiver of the Autumn King/Ability/Quiver/quiver_t7/0/7/0/0/0/0/0/
 Archerang/Ability/Quiver/quiver_ut1/0/0/0/0/0/0/0/
 Blue Beehemoth Quiver/Ability/Quiver/quiver_ut2/3/3/0/0/0/0/0/
 Red Beehemoth Quiver/Ability/Quiver/quiver_ut3/3/3/0/0/0/0/0/
@@ -13,6 +14,7 @@ Yellow Beehemoth Quiver/Ability/Quiver/quiver_ut4/3/3/0/0/0/0/0/
 Quiver of Thunder/Ability/Quiver/quiver_ut5/5/0/0/0/0/0/0/
 Quiver of the Shadows/Ability/Quiver/quiver_ut6/0/0/0/0/0/0/0/
 Coalbearing Quiver/Ability/Quiver/quiver_ut7/0/6/0/0/0/0/0/
+Mad Javelin/Ability/Quiver/quiver_ut9/10/-3/0/0/0/0/0/
 Freezing Quiver/Ability/Quiver/quiver_ut8/3/3/0/0/0/0/0/
 Quiver of Shrieking Specters/Ability/Quiver/quiver_st1/0/0/0/0/0/0/0/
 Quintessential Quiver/Ability/Quiver/quiver_st2/0/0/0/0/0/0/0/

@@ -12,7 +12,8 @@ Ragetalon Dagger/Weapon/Dagger/dagger_t9/0/0/125/1/1.0/5.6/0/
 Emeraldshard Dagger/Weapon/Dagger/dagger_t10/0/0/130/1/1.0/5.6/0/
 Agateclaw Dagger/Weapon/Dagger/dagger_t11/0/0/132.5/1/1.0/5.6/0/
 Dagger of Foul Malevolence/Weapon/Dagger/dagger_t12/0/0/135/1/1.0/5.6/0/
-Dagger of Sinister Deeds/Weapon/Dagger/dagger_t13/0/0/137.5/1/1.0/5.6/0/
+Dagger of Sinister Deeds/Weapon/Dagger/dagger_t13/0/0/150/1/1.0/5.6/0/
+Dagger of Dire Hatred/Weapon/Dagger/dagger_t14/0/0/165/1/1.0/5.6/0/
 Poison Fang Dagger/Weapon/Dagger/dagger_ut1/0/0/87.5/1/1.0/5.6/0/
 Mister Mango/Weapon/Dagger/dagger_ut2/0/0/275/1/0.45/6.0/0/
 Bone Dagger/Weapon/Dagger/dagger_ut3/0/0/100/1/1.0/4.48/0/
@@ -21,6 +22,7 @@ Corruption Cutter/Weapon/Dagger/dagger_ut5/0/0/82.5/2/1.3/2.84/0/
 Dirk of Cronus/Weapon/Dagger/dagger_ut6/0/0/190/1/0.9/4.5/0/
 Queen's Stinger Dagger/Weapon/Dagger/dagger_ut7/0/0/110/1/1.0/5.0/1/
 Corrosion Cutter/Weapon/Dagger/dagger_ut8/0/0/110/1/1.0/5.0/1/
+Avarice/Weapon/Dagger/dagger_ut22/0/0/175/1/1.0/6.0/0/
 Dueling Daggers/Weapon/Dagger/dagger_ut9/0/0/82.5/2/1.3/2.84/0/
 Sunshine Shiv/Weapon/Dagger/dagger_ut10/0/0/22.5/1/0.5/4.5/0/
 Toy Knife/Weapon/Dagger/dagger_ut11/0/0/50/1/0.75/5.0/0/

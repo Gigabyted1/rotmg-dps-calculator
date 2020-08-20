@@ -12,7 +12,8 @@ Verdant Bow/Weapon/Bow/bow_t9/0/0/53.5/3/1.0/3.56/0/
 Bow of Fey Magic/Weapon/Bow/bow_t10/0/0/56.5/3/1.0/3.56/0/
 Bow of Innocent Blood/Weapon/Bow/bow_t11/0/0/59.5/3/1.0/3.56/0/
 Bow of Covert Havens/Weapon/Bow/bow_t12/0/0/62.5/3/1.0/3.56/0/
-Bow of Mystical Energy/Weapon/Bow/bow_t13/0/0/65/3/1.0/3.56/0/
+Bow of Mystical Energy/Weapon/Bow/bow_t13/0/0/70/3/1.0/3.56/0/
+Bow of Deep Enchantment/Weapon/Bow/bow_t14/0/0/77.5/3/1.0/3.56/0/
 Butter Bow/Weapon/Bow/bow_ut1/0/0/32.5/5/1.2/0.48/0/
 Leaf Bow/Weapon/Bow/bow_ut2/0/0/142.5/1/1.4/7.2/0/
 Thousand Shot/Weapon/Bow/bow_ut5/0/0/85/1/2.0/7.59/0/
@@ -35,6 +36,7 @@ Sunny Side Bow/Weapon/Bow/bow_ut19/0/0/85/1/2.0/7.59/0/
 Deathless Crossbow/Weapon/Bow/bow_st1/0/0/202.5/1/0.95/5.6/0/
 Nectar Crossfire/Weapon/Bow/bow_st2/0/0/52.5/4/1.0/2/0/
 Bergenia Bow/Weapon/Bow/bow_st3/0/0/177.5/1/0.9/8/1/
+Harmonious Harp/Weapon/Bow/bow_st7/0/0/125/2/0.8/6/0/
 Brilliance Bow/Weapon/Bow/bow_st4/0/0/5.5/3/1.0/3.56/0/
 Bone Bow/Weapon/Bow/bow_st5/0/0/202.5/1/0.95/5.6/0/
 Heartstruck Bow/Weapon/Bow/bow_st6/0/0/142.5/1/1.4/7.2/0/

@@ -6,11 +6,13 @@ Cloak of the Night Thief/Ability/Cloak/cloak_t3/0/0/0/0/0/0/0/
 Cloak of the Red Agent/Ability/Cloak/cloak_t4/0/3/0/0/0/0/0/
 Cloak of Endless Twilight/Ability/Cloak/cloak_t5/0/4/0/0/0/0/0/
 Cloak of Ghostly Concealment/Ability/Cloak/cloak_t6/0/5/0/0/0/0/0/
+Cloak of Nightmares/Ability/Cloak/cloak_t7/0/6/0/0/0/0/0/
 Cloak of the Planewalker/Ability/Cloak/cloak_ut1/0/4/0/0/0/0/0/
 Cloak of Refraction/Ability/Cloak/cloak_ut2/0/0/0/0/0/0/0/
 Cloak of Bloody Surprises/Ability/Cloak/cloak_ut3/0/0/0/0/0/0/0/
 Mirror Cloak/Ability/Cloak/cloak_ut4/0/0/0/0/0/0/0/
 Cloak of Winter/Ability/Cloak/cloak_ut5/0/5/0/0/0/0/0/
+Cloak of the Darkened Sun/Ability/Cloak/cloak_ut7/0/5/0/0/0/0/0/
 Cloak of the Mad God/Ability/Cloak/cloak_ut6/0/0/0/0/0/0/0/
 Ghastly Drape/Ability/Cloak/cloak_st1/0/0/0/0/0/0/0/
 Legacy Ghastly Drape/Ability/Cloak/cloak_st2/0/0/0/0/0/0/0/
