@@ -7,9 +7,4 @@
         android:id="@+id/action_switch"
         android:icon="@drawable/icon_switch_foreground"
         app:showAsAction="ifRoom" />
-    <item
-        android:title="Settings"
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_menu_settings"
-        app:showAsAction="never" />
 </menu>
