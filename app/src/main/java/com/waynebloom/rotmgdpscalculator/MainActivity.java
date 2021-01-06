@@ -10,62 +10,50 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements ClickListeners {
     ArrayList<Loadout> loadouts = new ArrayList<>(8);
-    ArrayList<CharClass> classes = new ArrayList<>();
-    ArrayList<Item> daggers = new ArrayList<>();
-    ArrayList<Item> bows = new ArrayList<>();
-    ArrayList<Item> staves = new ArrayList<>();
-    ArrayList<Item> wands = new ArrayList<>();
-    ArrayList<Item> swords = new ArrayList<>();
-    ArrayList<Item> katanas = new ArrayList<>();
-    ArrayList<Item> cloaks = new ArrayList<>();
-    ArrayList<Item> quivers = new ArrayList<>();
-    ArrayList<Item> spells = new ArrayList<>();
-    ArrayList<Item> tomes = new ArrayList<>();
-    ArrayList<Item> helms = new ArrayList<>();
-    ArrayList<Item> shields = new ArrayList<>();
-    ArrayList<Item> seals = new ArrayList<>();
-    ArrayList<Item> poisons = new ArrayList<>();
-    ArrayList<Item> skulls = new ArrayList<>();
-    ArrayList<Item> traps = new ArrayList<>();
-    ArrayList<Item> orbs = new ArrayList<>();
-    ArrayList<Item> prisms = new ArrayList<>();
-    ArrayList<Item> scepters = new ArrayList<>();
-    ArrayList<Item> stars = new ArrayList<>();
-    ArrayList<Item> wakis = new ArrayList<>();
-    ArrayList<Item> lutes = new ArrayList<>();
-    ArrayList<Item> robes = new ArrayList<>();
-    ArrayList<Item> larms = new ArrayList<>();
-    ArrayList<Item> harms = new ArrayList<>();
-    ArrayList<Item> rings = new ArrayList<>();
+    JSONObject[] data = new JSONObject[2];
+    ArrayList<CharClass> classes;
+    ArrayList<ArrayList<Item>> items;
     String[] statusEffectNames;
     DpsAdapter dpsTableAdpt;
     LoadoutAdapter loadAdpt;
@@ -73,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     File saveFile;
 
     Toolbar toolbar;
+    View fade;
+    View header;
     ListView dpsTableView;
     ListView itemSelView;
     ListView loadoutView;
@@ -87,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     Button statConfirm;
     Button addBuild;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         statusEffectNames = getResources().getStringArray(R.array.stat_effects);
 
         toolbar = findViewById(R.id.my_toolbar);
+        fade = findViewById(R.id.fade);
+        header = findViewById(R.id.header);
         dpsTableView = findViewById(R.id.dps_table_view);
         itemSelView = findViewById(R.id.item_selection_view);
         loadoutView = findViewById(R.id.loadout_view);
@@ -117,65 +108,102 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         statConfirm = findViewById(R.id.confirm);
         addBuild = findViewById(R.id.add_button);
 
-        readData(daggers, "daggers.txt");
-        readData(bows, "bows.txt");
-        readData(staves, "staves.txt");
-        readData(wands, "wands.txt");
-        readData(swords, "swords.txt");
-        readData(katanas, "katanas.txt");
-        readData(cloaks, "cloaks.txt");
-        readData(quivers, "quivers.txt");
-        readData(spells, "spells.txt");
-        readData(tomes, "tomes.txt");
-        readData(helms, "helms.txt");
-        readData(shields, "shields.txt");
-        readData(seals, "seals.txt");
-        readData(poisons, "poisons.txt");
-        readData(skulls, "skulls.txt");
-        readData(traps, "traps.txt");
-        readData(orbs, "orbs.txt");
-        readData(prisms, "prisms.txt");
-        readData(scepters, "scepters.txt");
-        readData(stars, "stars.txt");
-        readData(wakis, "wakis.txt");
-        readData(lutes, "lutes.txt");
-        readData(larms, "larms.txt");
-        readData(harms, "harms.txt");
-        readData(robes, "robes.txt");
-        readData(rings, "rings.txt");
+        // Reads item data from file
+        readData(data);
 
-        classes.add(new CharClass("Rogue", daggers, cloaks, larms, rings, R.drawable.rogue, 50, 75));
-        classes.add(new CharClass("Archer", bows, quivers, larms,rings,  R.drawable.archer,  75, 50));
-        classes.add(new CharClass("Wizard", staves, spells, robes, rings, R.drawable.wizard, 75, 75));
-        classes.add(new CharClass("Priest", wands, tomes, robes, rings, R.drawable.priest, 50, 55));
-        classes.add(new CharClass("Warrior", swords, helms, harms, rings, R.drawable.warrior, 75, 75));
-        classes.add(new CharClass("Knight", swords, shields, harms, rings, R.drawable.knight, 50, 50));
-        classes.add(new CharClass("Paladin", swords, seals, harms, rings, R.drawable.paladin, 50, 45));
-        classes.add(new CharClass("Assassin", daggers, poisons, larms, rings, R.drawable.assassin, 50, 75));
-        classes.add(new CharClass("Necromancer", staves, skulls, robes, rings, R.drawable.necromancer, 75, 60));
-        classes.add(new CharClass("Huntress", bows, traps, larms, rings, R.drawable.huntress, 75, 50));
-        classes.add(new CharClass("Mystic", staves, orbs, robes, rings, R.drawable.mystic, 60, 55));
-        classes.add(new CharClass("Trickster", daggers, prisms, larms, rings, R.drawable.trickster, 65, 75));
-        classes.add(new CharClass("Sorcerer", wands, scepters, robes, rings, R.drawable.sorcerer, 70, 60));
-        classes.add(new CharClass("Ninja", katanas, stars, larms, rings, R.drawable.ninja, 70, 70));
-        classes.add(new CharClass("Samurai", katanas, wakis, harms, rings, R.drawable.samurai, 75, 50));
-        classes.add(new CharClass("Bard", bows, lutes, robes, rings, R.drawable.bard, 55, 70));
-
+        // Load previous builds
         try {
             loadBuilds();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // Adding a header
+        //ViewGroup headerView = (ViewGroup)getLayoutInflater().inflate(R.layout.header, itemSelView ,false);
+        //itemSelView.addHeaderView(headerView);
+
+        // Toolbar stuff
         setSupportActionBar(toolbar);
         setTitle("Builds");
         toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance);
     }
 
-    public void setupLoadoutViews(final ImageView c, final ImageView w, final ImageView ab, final ImageView ar, final ImageView r, final TextView at, final TextView dex, final ConstraintLayout s, final Button del, final int p) {
-        final Loadout currLoadout = loadouts.get(p);
+    @Override
+    public void onBackPressed() {
+        if(!onLoadouts) {
+            loadoutView.setVisibility(View.VISIBLE);
+            dpsTableView.setVisibility(View.GONE);
+            addBuild.setVisibility(View.VISIBLE);
+            setTitle("Loadouts");
+            onLoadouts = true;
+        }
 
-        c.setOnClickListener(new View.OnClickListener() {
+        if(itemSelView.getVisibility() == View.VISIBLE) {
+            itemSelView.setVisibility(View.GONE);
+            fade.setVisibility(View.GONE);
+            header.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        try {
+            saveBuilds();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //More action bar setup
+        getMenuInflater().inflate(R.menu.menubar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_switch:
+                if(onLoadouts) {
+                    loadoutView.setVisibility(View.GONE);
+                    dpsTableView.setVisibility(View.VISIBLE);
+                    addBuild.setVisibility(View.GONE);
+                    setTitle("DPS Table");
+                    generateDpsTable();
+                    onLoadouts = false;
+                }
+                else {
+                    loadoutView.setVisibility(View.VISIBLE);
+                    dpsTableView.setVisibility(View.GONE);
+                    addBuild.setVisibility(View.VISIBLE);
+                    setTitle("Loadouts");
+                    onLoadouts = true;
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Links with the LoadoutAdapter class through the ClickListeners interface to assign onClickListeners to each element in a loadout
+    public void setupLoadoutViews(final ImageView charClass,
+                                  final ImageView weapon,
+                                  final ImageView ability,
+                                  final ImageView armor,
+                                  final ImageView ring,
+                                  final TextView att,
+                                  final TextView dex,
+                                  final ConstraintLayout status,
+                                  final Button del,
+                                  final int position) {
+        final Loadout currLoadout = loadouts.get(position);
+
+        // Class
+        charClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClassAdapter classSelAdpt = new ClassAdapter(getApplicationContext(), classes);
@@ -183,6 +211,10 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
+                header.setX(-1000f);
+                header.setVisibility(View.VISIBLE);
+                header.animate().translationXBy(1000f).setDuration(200);
+                fade.setVisibility(View.VISIBLE);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -195,11 +227,12 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        at.setText(temp);
+                        att.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
                         dex.setText(temp);
 
-                        if(!currLoadout.wep.subType.equals(currLoadout.charClass.weps.get(0).subType)) {
+                        //TODO: Fix item saving between classes that share an item type
+                        /*if(!currLoadout.wep.subType.equals(currLoadout.charClass.weps.get(0).subType)) {
                             w.setImageResource(currLoadout.charClass.weps.get(0).imageId);
                             currLoadout.wep = currLoadout.charClass.weps.get(0);
                             currLoadout.wepId = 0;
@@ -213,16 +246,19 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                             ar.setImageResource(currLoadout.charClass.arms.get(0).imageId);
                             currLoadout.arm = currLoadout.charClass.arms.get(0);
                             currLoadout.armId = 0;
-                        }
+                        }*/
 
                         itemSelView.setVisibility(View.GONE);
-                        c.setImageResource(currLoadout.charClass.imageId);
+                        fade.setVisibility(View.GONE);
+                        header.setVisibility(View.GONE);
+                        charClass.setImageResource(currLoadout.charClass.imageId);
                     }
                 });
             }
         });
 
-        w.setOnClickListener(new View.OnClickListener() {
+        // Weapon
+        weapon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.wepId;
@@ -230,6 +266,11 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 itemSelView.setAdapter(itemSelAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
+                header.setX(-1000f);
+                header.setVisibility(View.VISIBLE);
+                header.animate().translationXBy(1000f).setDuration(200);
+                fade.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
@@ -242,18 +283,21 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        at.setText(temp);
+                        att.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
                         dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        w.setImageResource(currLoadout.wep.imageId);
+                        fade.setVisibility(View.GONE);
+                        header.setVisibility(View.GONE);
+                        weapon.setImageResource(currLoadout.wep.imageId);
                     }
                 });
             }
         });
 
-        ab.setOnClickListener(new View.OnClickListener() {
+        // Ability
+        ability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.abilId;
@@ -261,6 +305,11 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 itemSelView.setAdapter(itemSelAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
+                header.setX(-1000f);
+                header.setVisibility(View.VISIBLE);
+                header.animate().translationXBy(1000f).setDuration(200);
+                fade.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
@@ -273,18 +322,21 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        at.setText(temp);
+                        att.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
                         dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        ab.setImageResource(currLoadout.abil.imageId);
+                        fade.setVisibility(View.GONE);
+                        header.setVisibility(View.GONE);
+                        ability.setImageResource(currLoadout.abil.imageId);
                     }
                 });
             }
         });
 
-        ar.setOnClickListener(new View.OnClickListener() {
+        // Armor
+        armor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.armId;
@@ -292,6 +344,11 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 itemSelView.setAdapter(itemSelAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
+                header.setX(-1000f);
+                header.setVisibility(View.VISIBLE);
+                header.animate().translationXBy(1000f).setDuration(200);
+                fade.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
@@ -304,18 +361,21 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        at.setText(temp);
+                        att.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
                         dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        ar.setImageResource(currLoadout.arm.imageId);
+                        fade.setVisibility(View.GONE);
+                        header.setVisibility(View.GONE);
+                        armor.setImageResource(currLoadout.arm.imageId);
                     }
                 });
             }
         });
 
-        r.setOnClickListener(new View.OnClickListener() {
+        // Ring
+        ring.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.ringId;
@@ -323,6 +383,11 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 itemSelView.setAdapter(itemSelAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
+                itemSelView.animate().translationXBy(1000f).setDuration(200);
+                header.setX(-1000f);
+                header.setVisibility(View.VISIBLE);
+                header.animate().translationXBy(1000f).setDuration(200);
+                fade.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
                 itemSelView.setSelectionFromTop(itemListOffset, 0);
 
@@ -335,18 +400,21 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                         currLoadout.updateStats();
                         temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        at.setText(temp);
+                        att.setText(temp);
                         temp = currLoadout.baseDex + "(" + currLoadout.totalDex + ")";
                         dex.setText(temp);
 
                         itemSelView.setVisibility(View.GONE);
-                        r.setImageResource(currLoadout.ring.imageId);
+                        fade.setVisibility(View.GONE);
+                        header.setVisibility(View.GONE);
+                        ring.setImageResource(currLoadout.ring.imageId);
                     }
                 });
             }
         });
 
-        at.setOnClickListener(new View.OnClickListener() {
+        // Attack stat
+        att.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String[] baseStatRange = new String[currLoadout.charClass.baseAtt + 1];
@@ -364,12 +432,12 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
                         currLoadout.updateStats();
                         String temp = currLoadout.baseAtt + "(" + currLoadout.totalAtt + ")";
-                        at.setText(temp);
+                        att.setText(temp);
 
                         if(currLoadout.baseAtt < currLoadout.charClass.baseAtt) {
-                            at.setTextColor(getResources().getColor(R.color.colorUnmaxedText));
+                            att.setTextColor(getResources().getColor(R.color.colorUnmaxedText));
                         } else {
-                            at.setTextColor(getResources().getColor(R.color.colorMaxedText));
+                            att.setTextColor(getResources().getColor(R.color.colorMaxedText));
                         }
                     }
                 });
@@ -379,6 +447,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             }
         });
 
+        // Dexterity stat
         dex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -412,6 +481,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             }
         });
 
+        // Delete
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -432,14 +502,15 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             }
         });
 
-        s.setOnClickListener(new View.OnClickListener() {
+        // Status effects
+        status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ImageView d = s.findViewById(R.id.damaging);
-                final ImageView b = s.findViewById(R.id.berserk);
-                final ImageView c = s.findViewById(R.id.curse);
-                final ImageView z = s.findViewById(R.id.dazed);
-                final ImageView w = s.findViewById(R.id.weak);
+                final ImageView d = status.findViewById(R.id.damaging);
+                final ImageView b = status.findViewById(R.id.berserk);
+                final ImageView c = status.findViewById(R.id.curse);
+                final ImageView z = status.findViewById(R.id.dazed);
+                final ImageView w = status.findViewById(R.id.weak);
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 mBuilder.setTitle("Status Effects");
@@ -490,68 +561,11 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             }
         });
 
-        currLoadout.setViews(c, w, ab, ar, r, at, dex, s, del);
+        // Stores the references to the elements in each listView listing inside the corresponding loadout object
+        currLoadout.setViews(charClass, weapon, ability, armor, ring, att, dex, status, del);
     }
 
-    @Override
-    public void onBackPressed() {
-        if(!onLoadouts) {
-            loadoutView.setVisibility(View.VISIBLE);
-            dpsTableView.setVisibility(View.GONE);
-            addBuild.setVisibility(View.VISIBLE);
-            setTitle("Loadouts");
-            onLoadouts = true;
-        }
-
-        if(itemSelView.getVisibility() == View.VISIBLE) {
-            itemSelView.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        try {
-            saveBuilds();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //More action bar setup
-        getMenuInflater().inflate(R.menu.menubar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_switch:
-                if(onLoadouts) {
-                    loadoutView.setVisibility(View.GONE);
-                    dpsTableView.setVisibility(View.VISIBLE);
-                    addBuild.setVisibility(View.GONE);
-                    setTitle("DPS Table");
-                    generateDpsTable();
-                    onLoadouts = false;
-                }
-                else {
-                    loadoutView.setVisibility(View.VISIBLE);
-                    dpsTableView.setVisibility(View.GONE);
-                    addBuild.setVisibility(View.VISIBLE);
-                    setTitle("Loadouts");
-                    onLoadouts = true;
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
+    // Adds a new empty loadout to the loadouts listView
     public void addLoadout(View view) {
         Random ran1 = new Random();
         int temp = ran1.nextInt(16);
@@ -563,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                     classes.get(temp).weps.get(0), 0,
                     classes.get(temp).abils.get(0), 0,
                     classes.get(temp).arms.get(0), 0,
-                    rings.get(0), 0, "00000",
+                    items.get(16).get(0), 0, "00000",
                     loadouts.size()));
 
             loadAdpt = new LoadoutAdapter(this, loadouts, this);
@@ -575,16 +589,17 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
     }
 
+    // Generates an ascending order list of each current loadout's damage per second for each level of defense up to the maximum
     public void generateDpsTable() {
-        ArrayList<ArrayList<DpsEntry>> dpsTables = new ArrayList<>();   //loadouts.size() arrays of 150
+        ArrayList<ArrayList<DpsEntry>> dpsTables = new ArrayList<>();   // loadouts.size() arrays of 150
         ArrayList<ArrayList<DpsEntry>> tempTable;
         DpsEntry temp;
 
-        for(int i = 0; i < loadouts.size(); i++) {                      //Load the unsorted data
+        for(int i = 0; i < loadouts.size(); i++) {                      // Load the unsorted data
             dpsTables.add(loadouts.get(i).generateDps());
         }
 
-        for(int i = 0; i <= 150; i++) {                                 //Insert sort on the data
+        for(int i = 0; i <= 150; i++) {                                 // Insert sort on the data
             for(int j = 1; j < loadouts.size(); j++) {
                 temp = dpsTables.get(j).get(i);
                 int k = j;
@@ -683,46 +698,64 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         loadReader.close();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void readData(ArrayList<Item> storage, String fileName) {
-        final int NO_OF_INFO = 11;
-        ArrayList<StringBuilder> lineData;
-        char fileChar;
-        int lineLoc;
+    private void readData(JSONObject[] data) {
+        Log.i("Notification", "Reading data");
 
+        String[] fileNames = { "items.json", "classes.json" };
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getApplicationContext().getAssets().open(fileName), StandardCharsets.US_ASCII));
-
-            while(reader.ready()) {
-                lineData = new ArrayList<>(NO_OF_INFO);
-                lineLoc = 0;
-                for(int i = 0; i < NO_OF_INFO; i++) {
-                    lineData.add(new StringBuilder());
+            for(int i = 0; i < 2; i++) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open(fileNames[i])));
+                StringBuilder read = new StringBuilder();
+                while(reader.ready()) {
+                    read.append(reader.readLine());
                 }
-                while(reader.ready() && lineLoc < NO_OF_INFO) {
-                    fileChar = (char)reader.read();
-                    if(fileChar == '/') {
-                        lineLoc++;
-                    }
-                    else {
-                        lineData.get(lineLoc).append(fileChar);
-                    }
-
-                    if(lineLoc == NO_OF_INFO) {
-                        reader.read();
-                        storage.add(new Item(lineData.get(0).toString(), lineData.get(1).toString(), lineData.get(2).toString(),
-                                getResources().getIdentifier(lineData.get(3).toString() , "drawable", getPackageName()),
-                                Integer.parseInt(lineData.get(4).toString()), Integer.parseInt(lineData.get(5).toString()),
-                                Double.parseDouble(lineData.get(6).toString()), Integer.parseInt(lineData.get(7).toString()),
-                                Double.parseDouble(lineData.get(8).toString()), Double.parseDouble(lineData.get(9).toString()),
-                                Integer.parseInt(lineData.get(10).toString())));
-                    }
-                }
+                Log.i("JSON data", read.toString());
+                data[i] = new JSONObject(read.toString());
             }
-
-            reader.close();
-        } catch (IOException e) {
+            parseData(data);
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void parseData(JSONObject[] data) throws JSONException {
+        int classArraySize = data[1].getJSONArray("classes").length();
+        int itemOutsideSize = data[0].getJSONArray("item").length();
+        classes = new ArrayList<>();  // Create arraylist for character class objects
+        items = new ArrayList<>();     // Create arraylist for sub-types of items
+
+        for (int i = 0; i < itemOutsideSize; i++) {
+            int itemInsideSize = data[0].getJSONArray("item").getJSONArray(i).length();
+            items.add(i, new ArrayList<Item>());
+
+            for(int j = 0; j < itemInsideSize; j++) {
+                JSONObject currentItem = data[0].getJSONArray("item").getJSONArray(i).getJSONObject(j);
+                items.get(i).add(j, new Item(
+                        currentItem.getString("name"),
+                        getResources().getIdentifier(currentItem.getString("image"), "drawable", getPackageName()),
+                        currentItem.getInt("att"),
+                        currentItem.getInt("dex"),
+                        currentItem.getInt("shot_dmg"),
+                        currentItem.getInt("no_shots"),
+                        currentItem.getInt("rate_of_fire"),
+                        currentItem.getInt("range"),
+                        currentItem.getInt("ap"))
+                );
+            }
+        }
+
+        for (int i = 0; i < classArraySize; i++) {
+            JSONObject currentClass = data[1].getJSONArray("classes").getJSONObject(i);
+            classes.add(i, new CharClass(
+                    currentClass.getString("name"),
+                    items.get(currentClass.getInt("weapon")),
+                    items.get(currentClass.getInt("ability")),
+                    items.get(currentClass.getInt("armor")),
+                    items.get(16),  // Rings
+                    getResources().getIdentifier(currentClass.getString("name"), "drawable", getPackageName()), // Turn image name into id
+                    currentClass.getInt("att"),
+                    currentClass.getInt("dex"))
+            );
         }
     }
 }

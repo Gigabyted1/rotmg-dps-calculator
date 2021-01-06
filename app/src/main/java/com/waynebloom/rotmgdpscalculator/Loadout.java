@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 class Loadout {
@@ -69,6 +72,20 @@ class Loadout {
             activeEffects[i] = stat.charAt(i) != '0';
         }
     }
+    /*Loadout(Context con, int cId, int wId, int abId, int arId, int rId, String stat, int lId) {
+        context = con;
+        loadoutId = lId;
+        classId = cId;
+        wepId = wId;
+        abilId = abId;
+        armId = arId;
+        ringId = rId;
+        activeEffects = new boolean[5];
+
+        for (int i = 0; i < activeEffects.length; i++) {
+            activeEffects[i] = stat.charAt(i) != '0';
+        }
+    }*/
 
     void setViews(ImageView cV, ImageView wV, ImageView aV, ImageView arV, ImageView rV, TextView atV, TextView dV, ConstraintLayout sV, Button delV) {
         classView = cV;
@@ -162,9 +179,12 @@ class Loadout {
         totalDex += ring.addedDex;
     }
 
-    ArrayList<DpsEntry> generateDps() {
+    public ArrayList<DpsEntry> generateDps() {
         ArrayList<DpsEntry> dpsTable = new ArrayList<>();
         updateStats();
+
+        final float DEFENSE_DMG_REDUCTION_CAP = 0.85f;
+        final int MAX_ENEMY_DEFENSE = 150;
 
         int realAtt = totalAtt;
         int realDex = totalDex;
@@ -172,39 +192,41 @@ class Loadout {
         double damag = 1;
         double curse = 1;
 
-        if(activeEffects[0]) {
+        // Turns on status effects
+
+        if(activeEffects[0]) {  // Damaging
             damag = 1.5;
         }
-        if(activeEffects[1]) {
+        if(activeEffects[1]) {  // Berserk
             bers = 1.5;
         }
-        if(activeEffects[2]) {
+        if(activeEffects[2]) {  // Curse
             curse = 1.2;
         }
-        if(activeEffects[3]) {
+        if(activeEffects[3]) {  // Dazed (cancels berserk and sets dex to 0)
             bers = 0;
             realDex = 0;
         }
-        if(activeEffects[4]) {
+        if(activeEffects[4]) {  // Weak (cancels damaging and sets att to 0)
             damag = 0;
             realAtt = 0;
         }
 
-        for(int i = 0; i <= 150; i++) {
+        for(int i = 0; i <= MAX_ENEMY_DEFENSE; i++) {   // Generate a table row for every defense level up to the max
             double temp = 0;
 
-            if(wep.attribute == 0) {          //Regular equation
+            if(wep.attribute == 0) {          // Regular equation
                 temp = (((wep.avgDmg * (0.5 + realAtt / 50.0)) - i) * curse * damag * wep.noOfShots) * ((1.5 + 6.5 * (realDex / 75.0)) * bers * wep.rateOfFire);
             }
-            else if (wep.attribute == 1) {    //For AP
+            else if (wep.attribute == 1) {    // For armor piercing (removes enemy defense)
                 temp = ((wep.avgDmg * (0.5 + realAtt / 50.0)) * curse * damag * wep.noOfShots) * ((1.5 + 6.5 * (realDex / 75.0)) * bers * wep.rateOfFire);
             }
 
-            if(temp > 0.85 * wep.avgDmg * wep.noOfShots) {      //Defense cap check
+            if(temp > DEFENSE_DMG_REDUCTION_CAP * wep.avgDmg * wep.noOfShots) {      // Defense cap check (defense can only limit damage up to 85%)
                 dpsTable.add(new DpsEntry(temp, loadoutId));
             }
             else {
-                dpsTable.add(new DpsEntry(0.85 * wep.avgDmg * wep.noOfShots, loadoutId));
+                dpsTable.add(new DpsEntry(DEFENSE_DMG_REDUCTION_CAP * wep.avgDmg * wep.noOfShots, loadoutId));
             }
         }
 

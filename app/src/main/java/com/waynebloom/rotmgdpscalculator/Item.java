@@ -2,8 +2,8 @@ package com.waynebloom.rotmgdpscalculator;
 
 class Item {
     String name;
-    String type;
-    String subType;
+    /*String type;
+    String subType;*/
     int imageId;
     int addedAtt;
     int addedDex;
@@ -13,10 +13,21 @@ class Item {
     double range;
     int attribute;
 
-    Item (String n, String t, String s, int id, int a, int d, double dmg, int shots, double rof, double r, int attr) {
+    /*Item (String n, String t, String s, int id, int a, int d, double dmg, int shots, double rof, double r, int attr) {
         name = n;
         type = t;
         subType = s;
+        imageId = id;
+        addedAtt = a;
+        addedDex = d;
+        avgDmg = dmg;
+        noOfShots = shots;
+        rateOfFire = rof;
+        range = r;
+        attribute = attr;
+    }*/
+    Item (String n, int id, int a, int d, double dmg, int shots, double rof, double r, int attr) {
+        name = n;
         imageId = id;
         addedAtt = a;
         addedDex = d;
