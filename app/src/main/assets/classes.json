@@ -1,0 +1,130 @@
+{"classes": [
+    {
+        "name": "rogue",
+        "weapon": 1,
+        "ability": 9,
+        "armor": 7,
+        "att": 50,
+        "dex": 75
+    },
+    {
+        "name": "archer",
+        "weapon": 0,
+        "ability": 15,
+        "armor": 7,
+        "att": 75,
+        "dex": 50
+    },
+    {
+        "name": "wizard",
+        "weapon": 3,
+        "ability": 21,
+        "armor": 8,
+        "att": 75,
+        "dex": 75
+    },
+    {
+        "name": "priest",
+        "weapon": 5,
+        "ability": 23,
+        "armor": 8,
+        "att": 50,
+        "dex": 55
+    },
+    {
+        "name": "warrior",
+        "weapon": 4,
+        "ability": 10,
+        "armor": 6,
+        "att": 75,
+        "dex": 50
+    },
+    {
+        "name": "knight",
+        "weapon": 4,
+        "ability": 19,
+        "armor": 6,
+        "att": 50,
+        "dex": 50
+    },
+    {
+        "name": "paladin",
+        "weapon": 4,
+        "ability": 18,
+        "armor": 6,
+        "att": 50,
+        "dex": 45
+    },
+    {
+        "name": "assassin",
+        "weapon": 1,
+        "ability": 13,
+        "armor": 7,
+        "att": 50,
+        "dex": 75
+    },
+    {
+        "name": "necromancer",
+        "weapon": 3,
+        "ability": 20,
+        "armor": 8,
+        "att": 75,
+        "dex": 60
+    },
+    {
+        "name": "huntress",
+        "weapon": 0,
+        "ability": 24,
+        "armor": 7,
+        "att": 75,
+        "dex": 50
+    },
+    {
+        "name": "mystic",
+        "weapon": 3,
+        "ability": 12,
+        "armor": 8,
+        "att": 60,
+        "dex": 55
+    },
+    {
+        "name": "trickster",
+        "weapon": 1,
+        "ability": 14,
+        "armor": 7,
+        "att": 65,
+        "dex": 75
+    },
+    {
+        "name": "sorcerer",
+        "weapon": 5,
+        "ability": 17,
+        "armor": 8,
+        "att": 70,
+        "dex": 60
+    },
+    {
+        "name": "ninja",
+        "weapon": 2,
+        "ability": 22,
+        "armor": 7,
+        "att": 70,
+        "dex": 70
+    },
+    {
+        "name": "samurai",
+        "weapon": 2,
+        "ability": 25,
+        "armor": 6,
+        "att": 75,
+        "dex": 50
+    },
+    {
+        "name": "bard",
+        "weapon": 0,
+        "ability": 11,
+        "armor": 8,
+        "att": 55,
+        "dex": 70
+    }
+]}
