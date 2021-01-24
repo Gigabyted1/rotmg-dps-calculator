@@ -20,20 +20,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/bg_button"
-        android:fontFamily="@font/myfont"
-        android:onClick="addLoadout"
-        android:text="+"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <ListView
         android:id="@+id/loadout_view"
         android:layout_width="match_parent"
@@ -45,6 +31,30 @@
 
     </ListView>
 
+    <FrameLayout
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/bg_button"
+            android:fontFamily="@font/myfont"
+            android:onClick="addLoadout"
+            android:text="+"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </FrameLayout>
+
     <View
         android:id="@+id/fade"
         android:layout_width="wrap_content"
@@ -55,13 +65,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/header"
-        layout="@layout/header"
+        android:id="@+id/footer"
+        layout="@layout/footer"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/item_selection_view" />
 
     <ListView
         android:id="@+id/item_selection_view"
@@ -73,9 +84,9 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/footer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header">
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
     </ListView>
 

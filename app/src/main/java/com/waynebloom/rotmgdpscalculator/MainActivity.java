@@ -4,49 +4,40 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements ClickListeners {
@@ -57,8 +48,10 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     String[] statusEffectNames;
     DpsAdapter dpsTableAdpt;
     LoadoutAdapter loadAdpt;
+    ItemAdapter itemAdpt;
     boolean onLoadouts = true;
     File saveFile;
+    ArrayList<String> selectedCategories;
 
     Toolbar toolbar;
     View fade;
@@ -90,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
 
         toolbar = findViewById(R.id.my_toolbar);
         fade = findViewById(R.id.fade);
-        header = findViewById(R.id.header);
+        header = findViewById(R.id.footer);
         dpsTableView = findViewById(R.id.dps_table_view);
         itemSelView = findViewById(R.id.item_selection_view);
         loadoutView = findViewById(R.id.loadout_view);
@@ -111,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         // Reads item data from file
         readData(data);
 
+        selectedCategories = new ArrayList<>();
+        selectedCategories.add("untiered");
+        selectedCategories.add("set_tiered");
+        selectedCategories.add("tiered");
+        setupCategorySelectors();
+
         // Load previous builds
         try {
             loadBuilds();
@@ -118,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             e.printStackTrace();
         }
 
-        // Adding a header
-        //ViewGroup headerView = (ViewGroup)getLayoutInflater().inflate(R.layout.header, itemSelView ,false);
+        // Adding a footer
+        //ViewGroup headerView = (ViewGroup)getLayoutInflater().inflate(R.layout.footer, itemSelView ,false);
         //itemSelView.addHeaderView(headerView);
 
         // Toolbar stuff
@@ -262,8 +261,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.wepId;
-                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.weps);
-                itemSelView.setAdapter(itemSelAdpt);
+                itemAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.weps);
+                itemAdpt.enactCategories(selectedCategories);
+                itemSelView.setAdapter(itemAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                 header.animate().translationXBy(1000f).setDuration(200);
                 fade.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
-                itemSelView.setSelectionFromTop(itemListOffset, 0);
+                //itemSelView.setSelectionFromTop(itemListOffset, 0);
 
                 itemSelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -301,8 +301,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.abilId;
-                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.abils);
-                itemSelView.setAdapter(itemSelAdpt);
+                itemAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.abils);
+                itemAdpt.enactCategories(selectedCategories);
+                itemSelView.setAdapter(itemAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
@@ -340,8 +341,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.armId;
-                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.arms);
-                itemSelView.setAdapter(itemSelAdpt);
+                itemAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.arms);
+                itemAdpt.enactCategories(selectedCategories);
+                itemSelView.setAdapter(itemAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
@@ -379,8 +381,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
             @Override
             public void onClick(View v) {
                 int itemListOffset = currLoadout.ringId;
-                ItemAdapter itemSelAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.rings);
-                itemSelView.setAdapter(itemSelAdpt);
+                itemAdpt = new ItemAdapter(getApplicationContext(), currLoadout.charClass.rings);
+                itemAdpt.enactCategories(selectedCategories);
+                itemSelView.setAdapter(itemAdpt);
                 itemSelView.setX(-1000f);
                 itemSelView.setVisibility(View.VISIBLE);
                 itemSelView.animate().translationXBy(1000f).setDuration(200);
@@ -565,6 +568,81 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
         currLoadout.setViews(charClass, weapon, ability, armor, ring, att, dex, status, del);
     }
 
+
+
+    private void setupCategorySelectors() {
+        CheckBox checkUt = findViewById(R.id.check_ut);
+        CheckBox checkSt = findViewById(R.id.check_st);
+        CheckBox checkT = findViewById(R.id.check_t);
+        CheckBox checkWeak = findViewById(R.id.check_weak);
+        CheckBox checkReskin = findViewById(R.id.check_reskin);
+
+        checkUt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    selectedCategories.add("untiered");
+                }
+                else {
+                    selectedCategories.remove("untiered");
+                }
+                itemAdpt.enactCategories(selectedCategories);
+            }
+        });
+
+        checkSt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    selectedCategories.add("set_tiered");
+                }
+                else {
+                    selectedCategories.remove("set_tiered");
+                }
+                itemAdpt.enactCategories(selectedCategories);
+            }
+        });
+
+        checkT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    selectedCategories.add("tiered");
+                }
+                else {
+                    selectedCategories.remove("tiered");
+                }
+                itemAdpt.enactCategories(selectedCategories);
+            }
+        });
+
+        checkWeak.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    selectedCategories.add("weak");
+                }
+                else {
+                    selectedCategories.remove("weak");
+                }
+                itemAdpt.enactCategories(selectedCategories);
+            }
+        });
+
+        checkReskin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    selectedCategories.add("reskin");
+                }
+                else {
+                    selectedCategories.remove("reskin");
+                }
+                itemAdpt.enactCategories(selectedCategories);
+            }
+        });
+    }
+
     // Adds a new empty loadout to the loadouts listView
     public void addLoadout(View view) {
         Random ran1 = new Random();
@@ -735,6 +813,7 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
                         getResources().getIdentifier(currentItem.getString("image"), "drawable", getPackageName()),
                         currentItem.getInt("att"),
                         currentItem.getInt("dex"),
+                        currentItem.getString("categories"),
                         currentItem.getInt("shot_dmg"),
                         currentItem.getInt("no_shots"),
                         currentItem.getInt("rate_of_fire"),
