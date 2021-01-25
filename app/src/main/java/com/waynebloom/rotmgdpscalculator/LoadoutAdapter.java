@@ -9,41 +9,79 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class LoadoutAdapter extends ArrayAdapter<Loadout> {
+public class LoadoutAdapter extends RecyclerView.Adapter<LoadoutAdapter.ViewHolder> {
     private Context dContext;
     private ArrayList<Loadout> loadouts;
     private ClickListeners myActivityInterface;
+    private LayoutInflater mInflater;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+        public ViewHolder(View view) {
+            super(view);
+
+        }
+    }
 
     LoadoutAdapter(Context context, ArrayList<Loadout> data, ClickListeners inter) {
-        super(context, R.layout.list_item_loadout, data);
-        dContext = context;
         loadouts = data;
         myActivityInterface = inter;
+        mInflater = LayoutInflater.from(context);
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
     }
 
     public View getView(int position, View convertView, final ViewGroup parent) {
-        View listItem = convertView;
+        ViewHolder viewHolder;
 
-        if (listItem == null) {
-            listItem = LayoutInflater.from(dContext).inflate(R.layout.list_item_loadout, parent, false);
+        if(convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_itemsel, parent, false);
+
+            // Creates a ViewHolder
+            viewHolder = new LoadoutAdapter.ViewHolder(convertView);
+
+            // Bind the data efficiently with the holder.
+            convertView.setTag(viewHolder);
+
+        } else {
+            // Get the ViewHolder back to get fast access to the TextView
+            // and the ImageView.
+            viewHolder = (LoadoutAdapter.ViewHolder) convertView.getTag();
         }
 
         Loadout currLoadout;
-        ConstraintLayout background = listItem.findViewById(R.id.background);
+        ConstraintLayout background = convertView.findViewById(R.id.background);
 
         if (position < loadouts.size()) {
             currLoadout = loadouts.get(position);
 
             //Assign the elements of each loadout to the corresponding class object
-            myActivityInterface.setupLoadoutViews((ImageView)listItem.findViewById(R.id.class_view), (ImageView)listItem.findViewById(R.id.weapon_view),
-                    (ImageView)listItem.findViewById(R.id.ability_view), (ImageView)listItem.findViewById(R.id.armor_view),
-                    (ImageView)listItem.findViewById(R.id.ring_view), (TextView)listItem.findViewById(R.id.total_att),
-                    (TextView)listItem.findViewById(R.id.total_dex), (ConstraintLayout)listItem.findViewById(R.id.status),
-                    (Button)listItem.findViewById(R.id.delete), position);
+            myActivityInterface.setupLoadoutViews((ImageView)convertView.findViewById(R.id.class_view), (ImageView)convertView.findViewById(R.id.weapon_view),
+                    (ImageView)convertView.findViewById(R.id.ability_view), (ImageView)convertView.findViewById(R.id.armor_view),
+                    (ImageView)convertView.findViewById(R.id.ring_view), (TextView)convertView.findViewById(R.id.total_att),
+                    (TextView)convertView.findViewById(R.id.total_dex), (ConstraintLayout)convertView.findViewById(R.id.status),
+                    (Button)convertView.findViewById(R.id.delete), position);
 
             //myActivityInterface.setLoadoutViewListeners(position);
 
@@ -85,7 +123,7 @@ public class LoadoutAdapter extends ArrayAdapter<Loadout> {
                 break;
         }
 
-        return listItem;
+        return convertView;
     }
 }
 

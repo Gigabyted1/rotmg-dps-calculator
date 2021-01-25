@@ -10,35 +10,44 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
-class DpsAdapter extends ArrayAdapter<ArrayList<DpsEntry>> {
+class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
     private Context dContext;
     private ArrayList<ArrayList<DpsEntry>> dpsTables;
     private Typeface myFont;
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+        public ViewHolder(View view) {
+            super(view);
+
+        }
+    }
+
     DpsAdapter(Context context, ArrayList<ArrayList<DpsEntry>> data) {
-        super(context, R.layout.list_item_dpstable, data);
         dContext = context;
         dpsTables = data;
         myFont = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View listItem = convertView;
 
-        if (listItem == null) {
-            listItem = LayoutInflater.from(dContext).inflate(R.layout.list_item_dpstable, parent, false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(dContext).inflate(R.layout.list_item_dpstable, parent, false);
         }
 
         ArrayList<DpsEntry> currDpsList = dpsTables.get(position);
 
-        TextView[] dpsViews = { listItem.findViewById(R.id.dps1), listItem.findViewById(R.id.dps2), listItem.findViewById(R.id.dps3),
-                                listItem.findViewById(R.id.dps4), listItem.findViewById(R.id.dps5), listItem.findViewById(R.id.dps6),
-                                listItem.findViewById(R.id.dps7), listItem.findViewById(R.id.dps8) };
+        TextView[] dpsViews = { convertView.findViewById(R.id.dps1), convertView.findViewById(R.id.dps2), convertView.findViewById(R.id.dps3),
+                                convertView.findViewById(R.id.dps4), convertView.findViewById(R.id.dps5), convertView.findViewById(R.id.dps6),
+                                convertView.findViewById(R.id.dps7), convertView.findViewById(R.id.dps8) };
 
-        TextView defense = listItem.findViewById(R.id.defense);
+        TextView defense = convertView.findViewById(R.id.defense);
         defense.setTypeface(myFont);
         defense.setTextColor(Color.parseColor("#EEEEEE"));
         defense.setTextSize(17f);
@@ -96,6 +105,6 @@ class DpsAdapter extends ArrayAdapter<ArrayList<DpsEntry>> {
 
         defense.setText(String.format(Locale.US, "%d", position));
 
-        return listItem;
+        return convertView;
     }
 }

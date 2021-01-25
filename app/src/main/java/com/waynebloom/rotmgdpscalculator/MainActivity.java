@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -56,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements ClickListeners {
     Toolbar toolbar;
     View fade;
     View header;
-    ListView dpsTableView;
-    ListView itemSelView;
-    ListView loadoutView;
+    RecyclerView dpsTableView;
+    RecyclerView itemSelView;
+    RecyclerView loadoutView;
     ConstraintLayout statEditView;
     SeekBar statSeekView;
     TextView titleView;

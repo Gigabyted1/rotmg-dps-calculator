@@ -12,16 +12,36 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ItemAdapter extends BaseAdapter {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Item> originalData;
     private List<Item> filteredData;
     private Typeface myFont;
     private LayoutInflater mInflater;
     private ItemFilter mFilter = new ItemFilter();
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView image;
+        TextView name;
+        TextView dmg;
+        TextView rof;
+        TextView shots;
+
+        public ViewHolder(View view) {
+            super(view);
+            image = view.findViewById(R.id.item_picture);
+            name = view.findViewById(R.id.item_name);
+            dmg = view.findViewById(R.id.item_dmg);
+            rof = view.findViewById(R.id.item_rof);
+            shots = view.findViewById(R.id.item_shots);
+        }
+    }
 
     ItemAdapter(Context context, List<Item> data) {
         originalData = data;
@@ -30,19 +50,20 @@ public class ItemAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
         return filteredData.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return filteredData.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -54,14 +75,8 @@ public class ItemAdapter extends BaseAdapter {
         if(convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_itemsel, parent, false);
 
-            // Creates a ViewHolder and store references to the two children views
-            // we want to bind data to.
-            viewHolder = new ViewHolder();
-            viewHolder.image = convertView.findViewById(R.id.item_picture);
-            viewHolder.name = convertView.findViewById(R.id.item_name);
-            viewHolder.dmg = convertView.findViewById(R.id.item_dmg);
-            viewHolder.rof = convertView.findViewById(R.id.item_rof);
-            viewHolder.shots = convertView.findViewById(R.id.item_shots);
+            // Creates a ViewHolder
+            viewHolder = new ViewHolder(convertView);
 
             // Bind the data efficiently with the holder.
             convertView.setTag(viewHolder);
@@ -110,14 +125,6 @@ public class ItemAdapter extends BaseAdapter {
 
     public void enactCategories(List<String> mCategories) {
         mFilter.publishResults(mFilter.performFiltering(mCategories));
-    }
-
-    static class ViewHolder {
-        ImageView image;
-        TextView name;
-        TextView dmg;
-        TextView rof;
-        TextView shots;
     }
 
     private class ItemFilter {

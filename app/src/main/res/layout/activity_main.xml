@@ -20,7 +20,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/loadout_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <FrameLayout
         android:layout_width="75dp"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_selection_view" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_selection_view"
         style="@style/Widget.AppCompat.ListView.DropDown"
         android:layout_width="350dp"
@@ -88,9 +88,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dps_table_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -99,7 +99,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/stat_edit"
