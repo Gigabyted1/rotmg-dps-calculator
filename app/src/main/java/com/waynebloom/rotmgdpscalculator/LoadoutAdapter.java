@@ -14,116 +14,109 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoadoutAdapter extends RecyclerView.Adapter<LoadoutAdapter.ViewHolder> {
-    private Context dContext;
-    private ArrayList<Loadout> loadouts;
-    private ClickListeners myActivityInterface;
-    private LayoutInflater mInflater;
+    private final Context mContext;
+    private final List<Loadout> loadouts;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
+        private final ImageView classView;
+        private final ImageView weaponView;
+        private final ImageView abilityView;
+        private final ImageView armorView;
+        private final ImageView ringView;
+        private final TextView attView;
+        private final TextView dexView;
+        private final ConstraintLayout statusView;
+        private final Button deleteButton;
+        private final ConstraintLayout background;
 
         public ViewHolder(View view) {
             super(view);
-
+            classView = view.findViewById(R.id.class_view);
+            weaponView = view.findViewById(R.id.weapon_view);
+            abilityView = view.findViewById(R.id.ability_view);
+            armorView = view.findViewById(R.id.armor_view);
+            ringView = view.findViewById(R.id.ring_view);
+            attView = view.findViewById(R.id.total_att);
+            dexView = view.findViewById(R.id.total_dex);
+            statusView = view.findViewById(R.id.status);
+            deleteButton = view.findViewById(R.id.delete);
+            background = view.findViewById(R.id.background);
         }
     }
 
-    LoadoutAdapter(Context context, ArrayList<Loadout> data, ClickListeners inter) {
+    LoadoutAdapter(Context context, ArrayList<Loadout> data) {
         loadouts = data;
-        myActivityInterface = inter;
-        mInflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public LoadoutAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new LoadoutAdapter.ViewHolder(LayoutInflater
+                .from(mContext)
+                .inflate(R.layout.list_item_loadout, parent, false)
+        );
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Assign different background colors
+        switch (position) {
+            case 0:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_red);
+                break;
 
+            case 1:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_orange);
+                break;
+
+            case 2:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_yellow);
+                break;
+
+            case 3:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_green);
+                break;
+
+            case 4:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_cyan);
+                break;
+
+            case 5:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_blue);
+                break;
+
+            case 6:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_purple);
+                break;
+
+            case 7:
+                holder.background.setBackgroundResource(R.drawable.bg_loadout_black);
+                break;
+        }
+
+        // Sends holder view references to the loadout class
+        Loadout currentLoadout = loadouts.get(position);
+        currentLoadout.setViews(this, holder.classView, holder.weaponView, holder.abilityView, holder.armorView, holder.ringView, holder.attView, holder.dexView, holder.statusView, holder.deleteButton);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return loadouts.size();
     }
 
-    public View getView(int position, View convertView, final ViewGroup parent) {
-        ViewHolder viewHolder;
-
-        if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item_itemsel, parent, false);
-
-            // Creates a ViewHolder
-            viewHolder = new LoadoutAdapter.ViewHolder(convertView);
-
-            // Bind the data efficiently with the holder.
-            convertView.setTag(viewHolder);
-
-        } else {
-            // Get the ViewHolder back to get fast access to the TextView
-            // and the ImageView.
-            viewHolder = (LoadoutAdapter.ViewHolder) convertView.getTag();
+    public void removeAt(int position) {
+        loadouts.remove(position);
+        if(position != loadouts.size()) {
+            for(int loadoutPos = position; loadoutPos < loadouts.size(); loadoutPos++) {
+                loadouts.get(loadoutPos).setLoadoutId(loadoutPos);
+            }
         }
-
-        Loadout currLoadout;
-        ConstraintLayout background = convertView.findViewById(R.id.background);
-
-        if (position < loadouts.size()) {
-            currLoadout = loadouts.get(position);
-
-            //Assign the elements of each loadout to the corresponding class object
-            myActivityInterface.setupLoadoutViews((ImageView)convertView.findViewById(R.id.class_view), (ImageView)convertView.findViewById(R.id.weapon_view),
-                    (ImageView)convertView.findViewById(R.id.ability_view), (ImageView)convertView.findViewById(R.id.armor_view),
-                    (ImageView)convertView.findViewById(R.id.ring_view), (TextView)convertView.findViewById(R.id.total_att),
-                    (TextView)convertView.findViewById(R.id.total_dex), (ConstraintLayout)convertView.findViewById(R.id.status),
-                    (Button)convertView.findViewById(R.id.delete), position);
-
-            //myActivityInterface.setLoadoutViewListeners(position);
-
-            //Initial setting of loadout elements to reflect stats loaded from file
-            currLoadout.updateViews();
-        }
-
-        switch (position) {
-            case 0:
-                background.setBackgroundResource(R.drawable.bg_loadout_red);
-                break;
-
-            case 1:
-                background.setBackgroundResource(R.drawable.bg_loadout_orange);
-                break;
-
-            case 2:
-                background.setBackgroundResource(R.drawable.bg_loadout_yellow);
-                break;
-
-            case 3:
-                background.setBackgroundResource(R.drawable.bg_loadout_green);
-                break;
-
-            case 4:
-                background.setBackgroundResource(R.drawable.bg_loadout_cyan);
-                break;
-
-            case 5:
-                background.setBackgroundResource(R.drawable.bg_loadout_blue);
-                break;
-
-            case 6:
-                background.setBackgroundResource(R.drawable.bg_loadout_purple);
-                break;
-
-            case 7:
-                background.setBackgroundResource(R.drawable.bg_loadout_black);
-                break;
-        }
-
-        return convertView;
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, loadouts.size());
     }
 }
 

@@ -7,104 +7,120 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
-    private Context dContext;
-    private ArrayList<ArrayList<DpsEntry>> dpsTables;
-    private Typeface myFont;
+    private final Context mContext;
+    private final List<List<DpsEntry>> data;
+    private final Typeface myFont;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
+        TextView defense;
+        TextView[] dpsViews;
 
         public ViewHolder(View view) {
             super(view);
-
+            defense = view.findViewById(R.id.defense);
+            dpsViews = new TextView[] {
+                    view.findViewById(R.id.dps1),
+                    view.findViewById(R.id.dps2),
+                    view.findViewById(R.id.dps3),
+                    view.findViewById(R.id.dps4),
+                    view.findViewById(R.id.dps5),
+                    view.findViewById(R.id.dps6),
+                    view.findViewById(R.id.dps7),
+                    view.findViewById(R.id.dps8)};
         }
     }
 
-    DpsAdapter(Context context, ArrayList<ArrayList<DpsEntry>> data) {
-        dContext = context;
-        dpsTables = data;
+    DpsAdapter(Context context, List<List<DpsEntry>> data) {
+        mContext = context;
+        this.data = data;
         myFont = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull
+    @Override
+    public DpsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new DpsAdapter.ViewHolder(LayoutInflater
+                .from(mContext)
+                .inflate(R.layout.list_item_dpstable, parent, false)
+        );
+    }
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(dContext).inflate(R.layout.list_item_dpstable, parent, false);
-        }
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        populateFields(holder, position, data.get(position));
+    }
 
-        ArrayList<DpsEntry> currDpsList = dpsTables.get(position);
+    private void populateFields(ViewHolder holder, int position, List<DpsEntry> currentDefLevel) {
+        holder.defense.setText(String.format(Locale.US, "%d", position));
+        holder.defense.setTypeface(myFont);
+        holder.defense.setTextColor(Color.parseColor("#EEEEEE"));
+        holder.defense.setTextSize(17f);
 
-        TextView[] dpsViews = { convertView.findViewById(R.id.dps1), convertView.findViewById(R.id.dps2), convertView.findViewById(R.id.dps3),
-                                convertView.findViewById(R.id.dps4), convertView.findViewById(R.id.dps5), convertView.findViewById(R.id.dps6),
-                                convertView.findViewById(R.id.dps7), convertView.findViewById(R.id.dps8) };
+        for(int i = 0; i < currentDefLevel.size(); i++) {
+            holder.dpsViews[i].setText(String.format(Locale.US, "%.2f", currentDefLevel.get(i).getDps()));
 
-        TextView defense = convertView.findViewById(R.id.defense);
-        defense.setTypeface(myFont);
-        defense.setTextColor(Color.parseColor("#EEEEEE"));
-        defense.setTextSize(17f);
-
-        for(int i = 0; i < currDpsList.size(); i++) {
-            dpsViews[i].setText(String.format(Locale.US, "%.2f", currDpsList.get(i).dps));
-
-            switch (currDpsList.get(i).color) {
+            // Assign each view the background color that corresponds with their loadout
+            switch (currentDefLevel.get(i).getLoadoutId()) {
                 case 0:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_red);
-                    dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_red);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
                     break;
 
                 case 1:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_orange);
-                    dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_orange);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
                     break;
 
                 case 2:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_yellow);
-                    dpsViews[i].setTextColor(Color.parseColor("#444444"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_yellow);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#444444"));
                     break;
 
                 case 3:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_green);
-                    dpsViews[i].setTextColor(Color.parseColor("#444444"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_green);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#444444"));
                     break;
 
                 case 4:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_cyan);
-                    dpsViews[i].setTextColor(Color.parseColor("#444444"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_cyan);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#444444"));
                     break;
 
                 case 5:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_blue);
-                    dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_blue);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
                     break;
 
                 case 6:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_pink);
-                    dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_pink);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
                     break;
 
                 case 7:
-                    dpsViews[i].setBackgroundResource(R.drawable.dps_black);
-                    dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
+                    holder.dpsViews[i].setBackgroundResource(R.drawable.dps_black);
+                    holder.dpsViews[i].setTextColor(Color.parseColor("#FFFFFF"));
                     break;
 
             }
 
-            dpsViews[i].setTypeface(myFont);
-            dpsViews[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
-            dpsViews[i].setVisibility(View.VISIBLE);
+            holder.dpsViews[i].setTypeface(myFont);
+            holder.dpsViews[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+            holder.dpsViews[i].setVisibility(View.VISIBLE);
         }
+    }
 
-        defense.setText(String.format(Locale.US, "%d", position));
-
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return data.size();
     }
 }

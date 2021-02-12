@@ -7,8 +7,6 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +18,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private List<Item> originalData;
+    private final List<Item> originalData;
     private List<Item> filteredData;
-    private Typeface myFont;
-    private LayoutInflater mInflater;
-    private ItemFilter mFilter = new ItemFilter();
+    private final Typeface myFont;
+    private final Context mContext;
+    private final Loadout callingLoadout;
+    private final int type;
+    private final ItemFilter mFilter = new ItemFilter();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
@@ -32,6 +32,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         TextView dmg;
         TextView rof;
         TextView shots;
+        View parent;
 
         public ViewHolder(View view) {
             super(view);
@@ -40,25 +41,38 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             dmg = view.findViewById(R.id.item_dmg);
             rof = view.findViewById(R.id.item_rof);
             shots = view.findViewById(R.id.item_shots);
+            parent = view;
         }
     }
 
-    ItemAdapter(Context context, List<Item> data) {
+    ItemAdapter(Context context, List<Item> data, Loadout callingLoadout, int type) {
         originalData = data;
         filteredData = data;
         myFont = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
-        mInflater = LayoutInflater.from(context);
+        mContext = context;
+        this.callingLoadout = callingLoadout;
+        this.type = type;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        return new ViewHolder(LayoutInflater
+                        .from(mContext)
+                        .inflate(R.layout.list_item_itemsel, parent, false)
+        );
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        populateFields(holder, filteredData.get(position));
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callingLoadout.informSelected(filteredData.get(position), null, type);
+                callingLoadout.makeSelectorViewGone();
+            }
+        });
     }
 
     @Override
@@ -66,33 +80,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         return filteredData.size();
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-
-        // When convertView is not null, we can reuse it directly, there is no need
-        // to reinflate it. We only inflate a new View when the convertView supplied
-        // by ListView is null.
-        if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item_itemsel, parent, false);
-
-            // Creates a ViewHolder
-            viewHolder = new ViewHolder(convertView);
-
-            // Bind the data efficiently with the holder.
-            convertView.setTag(viewHolder);
-
-        } else {
-            // Get the ViewHolder back to get fast access to the TextView
-            // and the ImageView.
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-
-        if(position < filteredData.size()) {
-            populateFields(viewHolder, filteredData.get(position));
-        }
-
-        return convertView;
-    }
 
     private void populateFields(ViewHolder mViewHolder, Item currentItem) {
         final int MAX_NAME_LENGTH = 29;
@@ -110,7 +97,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         mViewHolder.name.setTypeface(myFont);
         mViewHolder.name.setTextSize(FONT_SIZE_NAME);
 
-        mViewHolder.dmg.setText(String.format(Locale.US,"%.2f", currentItem.getAvgDmg()));
+        mViewHolder.dmg.setText(String.format(Locale.US,"%.2f", currentItem.getAvgDamage()));
         mViewHolder.dmg.setTypeface(myFont);
         mViewHolder.dmg.setTextSize(FONT_SIZE_DESC);
 
@@ -131,10 +118,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         protected List<Item> performFiltering(List<String> mCategories) {
 
-            final List<Item> itemList = originalData;
             ArrayList<Item> results = new ArrayList<>();
 
-            for(Item i : itemList) {
+            for(Item i : originalData) {
                 boolean match = true;
                 for(String itemCat : i.getCategories()) {               // The item's categories
                     boolean found = false;

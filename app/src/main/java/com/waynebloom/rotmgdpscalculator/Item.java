@@ -1,42 +1,57 @@
 package com.waynebloom.rotmgdpscalculator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class Item {
-    String name;
-    int imageId;
-    int addedAtt;
-    int addedDex;
-    ArrayList<String> categories;
-    double avgDmg;
-    int noOfShots;
-    double rateOfFire;
-    double range;
-    int attribute;
+    private final String name;
+    private final int itemId;
+    private final int imageId;
+    private final int bonusAtt;
+    private final int bonusDex;
+    private final List<String> categories;
+    private final double avgDamage;
+    private final int noOfShots;
+    private final double rateOfFire;
+    private final double range;
+    private final int attribute;    // Such as armor piercing
 
-    Item (String n, int id, int a, int d, String c, double dmg, int shots, double rof, double r, int attr) {
-        name = n;
-        imageId = id;
-        addedAtt = a;
-        addedDex = d;
-        categories = parseCategories(c);
-        avgDmg = dmg;
-        noOfShots = shots;
-        rateOfFire = rof;
-        range = r;
-        attribute = attr;
+    Item (String name, int itemId, int imageId, int bonusAtt, int bonusDex, String categories, double avgDamage, int noOfShots, double rateOfFire, double range, int attribute) {
+        this.name = name;
+        this.itemId = itemId;
+        this.imageId = imageId;
+        this.bonusAtt = bonusAtt;
+        this.bonusDex = bonusDex;
+        this.categories = parseCategories(categories);
+        this.avgDamage = avgDamage;
+        this.noOfShots = noOfShots;
+        this.rateOfFire = rateOfFire;
+        this.range = range;
+        this.attribute = attribute;
     }
 
     public String getName() {
         return name;
     }
 
+    public int getItemId() {
+        return itemId;
+    }
+
     public int getImageId() {
         return imageId;
     }
 
-    public double getAvgDmg() {
-        return avgDmg;
+    public int getBonusAtt() {
+        return bonusAtt;
+    }
+
+    public int getBonusDex() {
+        return bonusDex;
+    }
+
+    public double getAvgDamage() {
+        return avgDamage;
     }
 
     public int getNoOfShots() {
@@ -47,12 +62,16 @@ class Item {
         return rateOfFire;
     }
 
-    public ArrayList<String> getCategories() {
+    public int getAttribute() {
+        return attribute;
+    }
+
+    public List<String> getCategories() {
         return categories;
     }
 
     // Translates raw string data from file into an arrayList
-    private ArrayList<String> parseCategories(String input) {
+    private List<String> parseCategories(String input) {
         ArrayList<String> output = new ArrayList<>();
 
         for (int i = 1; i < input.length(); i++) {
