@@ -6,9 +6,10 @@ import com.microsoft.appcenter.crashes.Crashes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -35,10 +34,10 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Loadout> loadouts = new ArrayList<>(8);
+    ArrayList<Loadout> loadoutList = new ArrayList<>(8);
     JSONObject[] data = new JSONObject[2];
-    ArrayList<CharClass> classes;
-    ArrayList<ArrayList<Item>> items;
+    List<CharClass> charClassData;
+    List<List<Item>> items;
     String[] statusEffectNames;
     DpsAdapter dpsAdpt;
     LoadoutAdapter loadAdpt;
@@ -47,21 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
     List<List<DpsEntry>> dpsDataTable = new ArrayList<>();
 
+    ViewPager2 mViewPager;
     Toolbar toolbar;
     View fade;
     View header;
     RecyclerView dpsTableView;
     RecyclerView itemSelView;
     RecyclerView loadoutView;
-    ConstraintLayout statEditView;
-    SeekBar statSeekView;
-    TextView titleView;
-    TextView baseStatView;
-    TextView wepStatView;
-    TextView abilStatView;
-    TextView armStatView;
-    TextView ringStatView;
-    Button statConfirm;
     Button addBuild;
 
     @Override
@@ -75,28 +66,20 @@ public class MainActivity extends AppCompatActivity {
         saveFile = new File(getApplicationContext().getFilesDir(), "loadouts.txt");
         statusEffectNames = getResources().getStringArray(R.array.stat_effects);
 
+        mViewPager = findViewById(R.id.container);
         toolbar = findViewById(R.id.my_toolbar);
         fade = findViewById(R.id.fade);
-        header = findViewById(R.id.footer);
+        header = findViewById(R.id.filter);
         dpsTableView = findViewById(R.id.dps_table_view);
-        itemSelView = findViewById(R.id.item_selection_view);
-        loadoutView = findViewById(R.id.loadout_view);
-        statEditView = findViewById(R.id.stat_edit);
-        statSeekView = findViewById(R.id.stat_seekbar);
-        titleView = findViewById(R.id.title);
-        baseStatView = findViewById(R.id.base_stat);
-        wepStatView = findViewById(R.id.wep_stat);
-        abilStatView = findViewById(R.id.abil_stat);
-        armStatView = findViewById(R.id.arm_stat);
-        ringStatView = findViewById(R.id.ring_stat);
-        statConfirm = findViewById(R.id.confirm);
-        addBuild = findViewById(R.id.add_button);
+        itemSelView = findViewById(R.id.selector);
+        loadoutView = findViewById(R.id.rV_loadout);
+        addBuild = findViewById(R.id.button_add_loadout);
 
         // Reads item and class data from file
         readData(data);
 
         // Setup static variables in Loadout class
-        Loadout.setStatics(classes);
+        Loadout.setStatics(charClassData);
 
         // Load previous loadouts
         try {
@@ -104,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        loadAdpt = new LoadoutAdapter(this, loadouts);
+        loadAdpt = new LoadoutAdapter(this, loadoutList);
         loadoutView.setAdapter(loadAdpt);
         loadoutView.setLayoutManager(new LinearLayoutManager(this));
+
+        setupViewPager(mViewPager);
 
         // Toolbar stuff
         setSupportActionBar(toolbar);
@@ -175,18 +160,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setupViewPager(ViewPager2 viewPager) {
+        PagerAdapter adapter = new PagerAdapter(MainActivity.this);
+        adapter.addFragment(new LoadoutFragment(), "Loadout fragment");
+        adapter.addFragment(new DpsFragment(), "DPS table fragment");
+        viewPager.setAdapter((FragmentStateAdapter) adapter);
+    }
+
+    public void setViewPagerPosition(int position) {
+        mViewPager.setCurrentItem(position);
+    }
+
     public void createNewLoadout(View view) {
 
         // Randomly select the default class
-        CharClass randomClass = classes.get(new Random().nextInt(16));
+        CharClass randomClass = charClassData.get(new Random().nextInt(16));
 
-        if(loadouts.size() < 8) {
+        if(loadoutList.size() < 8) {
             Loadout newLoadout = new Loadout(getApplicationContext(),
                     this,
-                    loadouts.size(),
+                    loadoutList.size(),
                     randomClass
             );
-            loadouts.add(newLoadout);
+            loadoutList.add(newLoadout);
             loadAdpt.notifyDataSetChanged();
         }
         else {
@@ -201,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
         for(int currentDefLevel = 0; currentDefLevel <= 150; currentDefLevel++) {
             ArrayList<DpsEntry> dpsTableAtCurrentDefLevel = new ArrayList<>();
-            for(Loadout currentLoadout : loadouts) {
+            for(Loadout currentLoadout : loadoutList) {
                 dpsTableAtCurrentDefLevel.add(currentLoadout.getDps().get(currentDefLevel));
             }
             dpsDataTable.add(dpsTableAtCurrentDefLevel);
@@ -228,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<List<DpsEntry>> sortDpsTable(List<List<DpsEntry>> data) {        // Insert sort
         for(int i = 0; i <= 150; i++) {                                 // Insert sort on the data
-            for(int j = 1; j < loadouts.size(); j++) {
+            for(int j = 1; j < loadoutList.size(); j++) {
                 DpsEntry currentEntry = data.get(i).get(j);
                 int k = j;
                 while(k > 0 && data.get(i).get(k - 1).getDps() < currentEntry.getDps()) {
@@ -245,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         BufferedWriter writer = new BufferedWriter(new FileWriter(saveFile, false));
         StringBuilder saveStr = new StringBuilder();
 
-        for(Loadout i : loadouts) {
+        for(Loadout i : loadoutList) {
             saveStr.append(i.getCharClass().getClassId()).append('/');
             saveStr.append(i.getWeapon().getItemId()).append('/');
             saveStr.append(i.getAbility().getItemId()).append('/');
@@ -293,8 +289,8 @@ public class MainActivity extends AppCompatActivity {
                             Integer.parseInt(lineData.get(4).toString()) };
 
                     // Translate the nonsense above
-                    int loadoutId = loadouts.size();
-                    CharClass loadedClass = classes.get(temps[0]);
+                    int loadoutId = loadoutList.size();
+                    CharClass loadedClass = charClassData.get(temps[0]);
                     Item loadedWeapon = loadedClass.getWeapons().get(temps[1]);
                     Item loadedAbility = loadedClass.getAbilities().get(temps[2]);
                     Item loadedArmor = loadedClass.getArmors().get(temps[3]);
@@ -312,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
                             loadedRing,
                             loadedEffects
                     );
-                    loadouts.add(newLoadout);
+                    loadoutList.add(newLoadout);
                 }
             }
         }
@@ -343,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     private void parseData(JSONObject[] data) throws JSONException {
         int classArraySize = data[1].getJSONArray("classes").length();
         int itemOutsideSize = data[0].getJSONArray("item").length();
-        classes = new ArrayList<>();  // Create arraylist for character class objects
+        charClassData = new ArrayList<>();  // Create arraylist for character class objects
         items = new ArrayList<>();     // Create arraylist for sub-types of items
 
         for (int i = 0; i < itemOutsideSize; i++) {
@@ -370,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < classArraySize; i++) {
             JSONObject currentClass = data[1].getJSONArray("classes").getJSONObject(i);
-            classes.add(i, new CharClass(
+            charClassData.add(i, new CharClass(
                     currentClass.getString("name"),
                     i,
                     items.get(currentClass.getInt("weapon")),
@@ -382,5 +378,17 @@ public class MainActivity extends AppCompatActivity {
                     currentClass.getInt("dex"))
             );
         }
+    }
+
+    public List<Loadout> getLoadoutList() {
+        return loadoutList;
+    }
+
+    public void addToLoadoutList(Loadout loadout) {
+        loadoutList.add(loadout);
+    }
+
+    public List<CharClass> getClassData() {
+        return charClassData;
     }
 }

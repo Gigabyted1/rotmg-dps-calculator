@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -24,26 +21,18 @@ import java.util.Arrays;
 import java.util.List;
 
 class Loadout {
-    private static List<CharClass> classData;
-    private final Context mContext;
+
+    // Cached references
     private final Activity mActivity;
+    private final Context mContext;
+
+    // Necessary data
+    private static List<CharClass> classData;
+    private static final ArrayList<String> selectedCategories = new ArrayList<>(Arrays.asList("untiered", "set_tiered", "tiered"));
+    private List<DpsEntry> loadoutDps = new ArrayList<>();
     private int loadoutId;
-    private ItemAdapter itemAdpt;
-    static final int CLASS = 0;
-    static final int WEAPON = 1;
-    static final int ABILITY = 2;
-    static final int ARMOR = 3;
-    static final int RING = 4;
 
-    private final RecyclerView selectorView;
-    private final View filterView;
-        private final CheckBox checkUt;
-        private final CheckBox checkSt;
-        private final CheckBox checkT;
-        private final CheckBox checkReskin;
-        private final CheckBox checkWeak;
-    private final View backgroundFade;
-
+    // DPS calculation stats
     private CharClass charClass;
     private Item weapon;
     private Item ability;
@@ -54,10 +43,9 @@ class Loadout {
     private int baseDex;
     private int totalDex;
     private boolean[] activeEffects;    //Tracks active status effects
-    private static final ArrayList<String> selectedCategories = new ArrayList<>(Arrays.asList("untiered", "set_tiered", "tiered"));
-    private List<DpsEntry> loadoutDps = new ArrayList<>();
     private boolean loadoutChanged;
 
+    // Each-row views
     private ImageView classView;
     private ImageView weaponView;
     private ImageView abilityView;
@@ -73,12 +61,29 @@ class Loadout {
     private ImageView weakView;
     private Button deleteButton;
 
+    // Single instance
+    private final RecyclerView selectorView; private ItemAdapter itemAdpt;
+    private final View filterView;
+    private final CheckBox checkUt;
+    private final CheckBox checkSt;
+    private final CheckBox checkT;
+    private final CheckBox checkReskin;
+    private final CheckBox checkWeak;
+    private final View backgroundFade;
+
+    // For communication with ItemAdapter and ClassAdapter
+    static final int CLASS = 0;
+    static final int WEAPON = 1;
+    static final int ABILITY = 2;
+    static final int ARMOR = 3;
+    static final int RING = 4;
+
     // Empty loadout
     Loadout(Context mContext, Activity activity, int loadoutId) {
         this.mContext = mContext;
         this.mActivity = activity;
-        selectorView = activity.findViewById(R.id.item_selection_view);
-        filterView = activity.findViewById(R.id.footer);
+        selectorView = activity.findViewById(R.id.selector);
+        filterView = activity.findViewById(R.id.filter);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
@@ -93,8 +98,8 @@ class Loadout {
     Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass) {
         this.mContext = mContext;
         this.mActivity = activity;
-        selectorView = activity.findViewById(R.id.item_selection_view);
-        filterView = activity.findViewById(R.id.footer);
+        selectorView = activity.findViewById(R.id.selector);
+        filterView = activity.findViewById(R.id.filter);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
@@ -116,8 +121,8 @@ class Loadout {
     Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass, Item weapon, Item ability, Item armor, Item ring, String activeEffects) {
         this.mContext = mContext;
         this.mActivity = activity;
-        selectorView = activity.findViewById(R.id.item_selection_view);
-        filterView = activity.findViewById(R.id.footer);
+        selectorView = activity.findViewById(R.id.selector);
+        filterView = activity.findViewById(R.id.filter);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);

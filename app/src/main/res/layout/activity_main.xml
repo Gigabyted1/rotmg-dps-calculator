@@ -27,7 +27,7 @@
         android:id="@+id/container"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/loadout_view"
+        android:id="@+id/rV_loadout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/button_add_loadout"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="0dp"
@@ -73,17 +73,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/footer"
+        android:id="@+id/filter"
         layout="@layout/footer"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_selection_view" />
+        app:layout_constraintTop_toBottomOf="@id/selector" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/item_selection_view"
+        android:id="@+id/selector"
         style="@style/Widget.AppCompat.ListView.DropDown"
         android:layout_width="350dp"
         android:layout_height="0dp"
@@ -92,7 +92,7 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintBottom_toTopOf="@id/filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
@@ -108,145 +108,6 @@
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/stat_edit"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:background="@drawable/bg_dialogue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/bg_button"
-            android:text="Done"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ring_stat" />
-
-        <SeekBar
-            android:id="@+id/stat_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:thumb="@drawable/thumb"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
-
-        <TextView
-            android:id="@+id/base_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:hint="Stat"
-            android:includeFontPadding="true"
-            android:text="75(93)"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stat_seekbar" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stat"
-            android:textColor="#CCCCCC"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="Slide the bar to change the base stat"
-            android:textColor="#CCCCCC"
-            android:textSize="8dp"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
-
-        <TextView
-            android:id="@+id/wep_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/base_stat" />
-
-        <TextView
-            android:id="@+id/abil_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wep_stat" />
-
-        <TextView
-            android:id="@+id/arm_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/abil_stat" />
-
-        <TextView
-            android:id="@+id/ring_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/arm_stat" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--        app:adUnitId="ca-app-pub-1507290914426110/2593373825" (for live) -->
 </androidx.constraintlayout.widget.ConstraintLayout>

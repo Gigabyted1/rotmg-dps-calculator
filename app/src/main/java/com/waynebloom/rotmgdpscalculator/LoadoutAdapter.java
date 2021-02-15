@@ -47,7 +47,7 @@ public class LoadoutAdapter extends RecyclerView.Adapter<LoadoutAdapter.ViewHold
         }
     }
 
-    LoadoutAdapter(Context context, ArrayList<Loadout> data) {
+    LoadoutAdapter(Context context, List<Loadout> data) {
         loadouts = data;
         mContext = context;
     }
