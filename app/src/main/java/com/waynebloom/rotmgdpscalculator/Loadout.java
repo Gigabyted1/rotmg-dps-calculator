@@ -21,9 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 class Loadout {
-
-    // misc
-    public static List<CharClass> classData;
+    private static List<CharClass> classData;
     private final Context mContext;
     private final Activity mActivity;
     private int loadoutId;
@@ -34,7 +32,6 @@ class Loadout {
     static final int ARMOR = 3;
     static final int RING = 4;
 
-    // constant views
     private final RecyclerView selectorView;
     private final View filterView;
         private final CheckBox checkUt;
@@ -44,21 +41,20 @@ class Loadout {
         private final CheckBox checkWeak;
     private final View backgroundFade;
 
-    // dps factors
     private CharClass charClass;
     private Item weapon;
     private Item ability;
     private Item armor;
     private Item ring;
-    private StatBonus baseStats = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
-    private StatBonus setBonus = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
-    private StatBonus statTotals = new StatBonus(0,0,0,0,0,0,0,0);
+    private int baseAtt;
+    private int totalAtt;
+    private int baseDex;
+    private int totalDex;
     private boolean[] activeEffects;    //Tracks active status effects
     private static final ArrayList<String> selectedCategories = new ArrayList<>(Arrays.asList("untiered", "set_tiered", "tiered"));
     private List<DpsEntry> loadoutDps = new ArrayList<>();
     private boolean loadoutChanged;
 
-    // view references
     private ImageView classView;
     private ImageView weaponView;
     private ImageView abilityView;
@@ -94,68 +90,54 @@ class Loadout {
     Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass) {
         this.mContext = mContext;
         this.mActivity = activity;
-        this.selectorView = activity.findViewById(R.id.item_selection_view);
-        this.filterView = activity.findViewById(R.id.footer);
+        selectorView = activity.findViewById(R.id.item_selection_view);
+        filterView = activity.findViewById(R.id.footer);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
             checkReskin = filterView.findViewById(R.id.check_reskin);
             checkWeak = filterView.findViewById(R.id.check_weak);
-        this.backgroundFade = activity.findViewById(R.id.fade);
+        backgroundFade = activity.findViewById(R.id.fade);
         this.loadoutId = loadoutId;
         this.loadoutChanged = true;
 
-        // load initial stats
-        this.charClass = charClass;
-        this.baseStats = charClass.getMaxedStats();
-        this.statTotals.addBonus(baseStats);
-        this.weapon = charClass.getWeapons().get(0);
-        this.ability = charClass.getAbilities().get(0);
-        this.armor = charClass.getArmors().get(0);
-        this.ring = charClass.getRings().get(0);
+        setCharClass(charClass);
+        setWeapon(charClass.getWeapons().get(0));
+        setAbility(charClass.getAbilities().get(0));
+        setArmor(charClass.getArmors().get(0));
+        setRing(charClass.getRings().get(0));
         setActiveEffects("00000");
-
-        // update stat views
-        updateAtt();
-        updateDex();
     }
 
     // Loadout with all gear included (for 'loadBuilds' in MainActivity)
     Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass, Item weapon, Item ability, Item armor, Item ring, String activeEffects) {
         this.mContext = mContext;
         this.mActivity = activity;
-        this.selectorView = activity.findViewById(R.id.item_selection_view);
-        this.filterView = activity.findViewById(R.id.footer);
+        selectorView = activity.findViewById(R.id.item_selection_view);
+        filterView = activity.findViewById(R.id.footer);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
             checkReskin = filterView.findViewById(R.id.check_reskin);
             checkWeak = filterView.findViewById(R.id.check_weak);
-        this.backgroundFade = activity.findViewById(R.id.fade);
+        backgroundFade = activity.findViewById(R.id.fade);
         this.loadoutId = loadoutId;
         this.loadoutChanged = true;
 
-        // load initial stats
         this.charClass = charClass;
-        this.baseStats = charClass.getMaxedStats();
-        this.statTotals.addBonus(baseStats);
         this.weapon = weapon;
-        this.statTotals.addBonus(weapon.getStatBonus());
         this.ability = ability;
-        this.statTotals.addBonus(ability.getStatBonus());
         this.armor = armor;
-        this.statTotals.addBonus(armor.getStatBonus());
         this.ring = ring;
-        this.statTotals.addBonus(ring.getStatBonus());
-        checkAndUpdateSetBonus();
-        setActiveEffects(activeEffects);
 
-        // update stat views
-        updateAtt();
-        updateDex();
+        setCharClass(charClass);
+        setWeapon(weapon);
+        setAbility(ability);
+        setArmor(armor);
+        setRing(ring);
+        setActiveEffects(activeEffects);
     }
 
-    // assign view references and then set all click listeners
     public void setViews(LoadoutAdapter caller, ImageView classView, ImageView weaponView, ImageView abilityView, ImageView armorView, ImageView ringView, TextView attView, TextView dexView, ConstraintLayout statusView, Button deleteView) {
         this.classView = classView;
         this.weaponView = weaponView;
@@ -183,6 +165,11 @@ class Loadout {
         setDeleteViewListener(caller);
 
         updateAllViews();
+    }
+
+    // Called once from onCreate
+    public static void setStatics(List<CharClass> classData) {
+        Loadout.classData = classData;
     }
 
     public void setClassViewListener() {
@@ -259,7 +246,7 @@ class Loadout {
             public void onClick(View v) {
                 // Load a string array with values between 0 and the current class's maximum att
                 final int MIN_ATT = 0;
-                final int MAX_ATT = charClass.getMaxedStats().getAttBonus();
+                final int MAX_ATT = charClass.getBaseAtt();
                 String[] baseStatRange = new String[MAX_ATT + 1];   // '+1' is to include 0
                 for(int i = MIN_ATT; i <= MAX_ATT; i++) {
                     baseStatRange[i] = Integer.toString(i);
@@ -271,12 +258,12 @@ class Loadout {
                         .setItems(baseStatRange, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int difference = baseStats.getAttBonus() - which;
-                        baseStats.subtractBonus(new StatBonus(difference,0,0,0,0,0,0,0));
+                        baseAtt = which;
+                        updateAtt();
                     }
                 })
                         .create()
-                        .getListView().setSelectionFromTop(baseStats.getAttBonus(), 0);
+                        .getListView().setSelectionFromTop(baseAtt, 0);
                 mBuilder.show();
             }
         });
@@ -288,7 +275,7 @@ class Loadout {
             public void onClick(View v) {
                 // Load a string array with values between 0 and the current class's maximum dex
                 final int MIN_DEX = 0;
-                final int MAX_DEX = charClass.getMaxedStats().getDexBonus();
+                final int MAX_DEX = charClass.getBaseDex();
                 String[] baseStatRange = new String[MAX_DEX + 1];   // '+1' is to include 0
                 for(int i = MIN_DEX; i <= MAX_DEX; i++) {
                     baseStatRange[i] = Integer.toString(i);
@@ -300,12 +287,12 @@ class Loadout {
                         .setItems(baseStatRange, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int difference = baseStats.getDexBonus() - which;
-                        baseStats.subtractBonus(new StatBonus(0,0,0, difference,0,0,0,0));
+                        baseDex = which;
+                        updateDex();
                     }
                 })
                         .create()
-                        .getListView().setSelectionFromTop(baseStats.getDexBonus(), 0);
+                        .getListView().setSelectionFromTop(baseDex, 0);
                 mBuilder.show();
             }
         });
@@ -427,9 +414,37 @@ class Loadout {
         });
     }
 
-    // various necessary setters and getters
     public void setLoadoutId(int loadoutId) {
         this.loadoutId = loadoutId;
+    }
+
+    public void setCharClass(CharClass charClass) {
+        this.charClass = charClass;
+        baseAtt = charClass.getBaseAtt();
+        totalAtt = baseAtt;
+        baseDex = charClass.getBaseDex();
+        totalDex = baseDex;
+        updateClass();
+    }
+
+    public void setWeapon(Item weapon) {
+        this.weapon = weapon;
+        updateWeapon();
+    }
+
+    public void setAbility(Item ability) {
+        this.ability = ability;
+        updateAbility();
+    }
+
+    public void setArmor(Item armor) {
+        this.armor = armor;
+        updateArmor();
+    }
+
+    public void setRing(Item ring) {
+        this.ring = ring;
+        updateRing();
     }
 
     public void setActiveEffects(String activeEffects) {
@@ -465,45 +480,38 @@ class Loadout {
 
     // Called by ItemAdapter and ClassAdapter. Assigns the selected object to the corresponding load out variable
     public void informSelected(Item item, CharClass mClass, int type) {
-        Item prevItem;
-        CharClass prevClass;
         switch(type) {
             case CLASS:
-                prevClass = charClass;
                 charClass = mClass;
-                updateClass(mClass);
-                if (charClass.getWeapons().get(0).getAbsItemId() != prevClass.getWeapons().get(0).getAbsItemId()) {
+                updateClass();
+                if(!charClass.getWeapons().get(weapon.getRelItemId()).equals(weapon)) {
                     weapon = charClass.getWeapons().get(0);
-                    updateWeapon(item);
+                    updateWeapon();
                 }
-                if (charClass.getAbilities().get(0).getAbsItemId() != prevClass.getAbilities().get(0).getAbsItemId()) {
+                if(!charClass.getAbilities().get(ability.getRelItemId()).equals(ability)) {
                     ability = charClass.getAbilities().get(0);
-                    updateAbility(item);
+                    updateAbility();
                 }
-                if (charClass.getArmors().get(0).getAbsItemId() != prevClass.getArmors().get(0).getAbsItemId()) {
+                if(!charClass.getArmors().get(armor.getRelItemId()).equals(armor)) {
                     armor = charClass.getArmors().get(0);
-                    updateArmor(item);
+                    updateArmor();
                 }
                 break;
             case WEAPON:
-                prevItem = weapon;
                 weapon = item;
-                updateWeapon(prevItem);
+                updateWeapon();
                 break;
             case ABILITY:
-                prevItem = ability;
                 ability = item;
-                updateAbility(prevItem);
+                updateAbility();
                 break;
             case ARMOR:
-                prevItem = armor;
                 armor = item;
-                updateArmor(prevItem);
+                updateArmor();
                 break;
             case RING:
-                prevItem = ring;
                 ring = item;
-                updateRing(prevItem);
+                updateRing();
                 break;
         }
 
@@ -526,154 +534,79 @@ class Loadout {
         filterView.setVisibility(View.GONE);
     }
 
-    void updateClass(CharClass prevClass) {
-
-        // change image
+    void updateClass() {
         if(classView != null) {
             classView.setImageResource(charClass.getImageId());
         }
-
-        // subtract old base stats and add new ones
-        if(prevClass != null) {
-            statTotals.subtractBonus(baseStats);
-            baseStats = charClass.getMaxedStats();
-            statTotals.addBonus(baseStats);
-        }
-
-        // update stat views
+        baseAtt = charClass.getBaseAtt();
+        baseDex = charClass.getBaseDex();
         updateAtt();
         updateDex();
     }
 
-    private void checkAndUpdateSetBonus() {
-        List<Integer> temp = new ArrayList<>(Arrays.asList(weapon.getPartOfSet(), ability.getPartOfSet(), armor.getPartOfSet(), ring.getPartOfSet()));
-        List<Integer> sets = new ArrayList<>();
-
-        // makes a list of item sets with 2 or more equipped pieces
-        for(int i = 0; i < temp.size(); i++) {
-            for(int j = i + 1; j < temp.size(); j++) {
-                if(temp.get(i).equals(temp.get(j)) && !temp.get(i).equals(-1) && !sets.contains(temp.get(i))) {
-                    sets.add(temp.get(i));
-                    break;
-                }
-            }
-        }
-
-        // removes old bonus, builds a new bonus from any current set bonuses, adds to total
-        if (sets.size() > 0) {
-            StatBonus newBonus = new StatBonus(0,0,0,0,0,0,0,0);
-            statTotals.subtractBonus(setBonus);
-            for(int i = 0; i < sets.size(); i++) {
-                ItemSet currentSet = Item.itemSets.get(sets.get(i));
-                StatBonus currentBonus = currentSet.getBonus(currentSet.checkSet(weapon.getAbsItemId(), ability.getAbsItemId(), armor.getAbsItemId(), ring.getAbsItemId()));
-                newBonus.addBonus(currentBonus);
-            }
-            setBonus.replaceBonus(newBonus);
-            statTotals.addBonus(setBonus);
-        }
-    }
-
-    void updateWeapon(Item prevWeapon) {
-
-        // change image
+    void updateWeapon() {
         if(weaponView != null) {
             weaponView.setImageResource(weapon.getImageId());
         }
-
-        if(prevWeapon != null) {
-            // subtract old stats and add new ones
-            statTotals.subtractBonus(prevWeapon.getStatBonus());
-            statTotals.addBonus(weapon.getStatBonus());
-
-            // check for set bonus
-            checkAndUpdateSetBonus();
-
-            // update stat views
-            updateAtt();
-            updateDex();
-        }
+        updateAtt();
+        updateDex();
     }
 
-    void updateAbility(Item prevAbility) {
-
-        // change image
+    void updateAbility() {
         if(abilityView != null) {
             abilityView.setImageResource(ability.getImageId());
         }
-
-        if(prevAbility != null) {
-            // subtract old stats and add new ones
-            statTotals.subtractBonus(prevAbility.getStatBonus());
-            statTotals.addBonus(ability.getStatBonus());
-
-            // check for set bonus
-            checkAndUpdateSetBonus();
-
-            // update stat views
-            updateAtt();
-            updateDex();
-        }
+        updateAtt();
+        updateDex();
     }
 
-    void updateArmor(Item prevArmor) {
-
-        // change image
+    void updateArmor() {
         if(armorView != null) {
             armorView.setImageResource(armor.getImageId());
         }
-
-        if(prevArmor != null) {
-            // subtract old stats and add new ones
-            statTotals.subtractBonus(prevArmor.getStatBonus());
-            statTotals.addBonus(armor.getStatBonus());
-
-            // check for set bonus
-            checkAndUpdateSetBonus();
-
-            // update stat views
-            updateAtt();
-            updateDex();
-        }
+        updateAtt();
+        updateDex();
     }
 
-    void updateRing(Item prevRing) {
-
-        // change image
+    void updateRing() {
         if(ringView != null) {
             ringView.setImageResource(ring.getImageId());
         }
+        updateAtt();
+        updateDex();
+    }
 
-        if(prevRing != null) {
-            // subtract old stats and add new ones
-            statTotals.subtractBonus(prevRing.getStatBonus());
-            statTotals.addBonus(ring.getStatBonus());
+    void updateAtt() {
+        if(attView != null) {
+            String attString;
 
-            // check for set bonus
-            checkAndUpdateSetBonus();
+            totalAtt = baseAtt + weapon.getStatBonus().getAttBonus() + ability.getStatBonus().getAttBonus() + armor.getStatBonus().getAttBonus() + ring.getStatBonus().getAttBonus();
+            attString = baseAtt + "(" + totalAtt + ")";
+            attView.setText(attString);
 
-            // update stat views
-            updateAtt();
-            updateDex();
+            if(baseAtt < charClass.getBaseAtt()) {
+                attView.setTextColor(mContext.getResources().getColor(R.color.colorUnmaxedText));
+            }
+            else {
+                attView.setTextColor(mContext.getResources().getColor(R.color.colorMaxedText));
+            }
         }
     }
 
-    private void updateAtt() {
-        if (attView != null) {
-            String attStr = statTotals.getAttBonus() +
-                    "(+" +
-                    (statTotals.getAttBonus() - baseStats.getAttBonus()) +
-                    ')';
-            attView.setText(attStr);
-        }
-    }
+    void updateDex() {
+        if(dexView != null) {
+            String dexString;
 
-    private void updateDex() {
-        if (dexView != null) {
-            String dexStr = statTotals.getDexBonus() +
-                    "(+" +
-                    (statTotals.getDexBonus() - baseStats.getDexBonus()) +
-                    ')';
-            dexView.setText(dexStr);
+            totalDex = baseDex + weapon.getStatBonus().getDexBonus() + ability.getStatBonus().getDexBonus() + armor.getStatBonus().getDexBonus() + ring.getStatBonus().getDexBonus();
+            dexString = baseDex + "(" + totalDex + ")";
+            dexView.setText(dexString);
+
+            if(baseDex < charClass.getBaseDex()) {
+                dexView.setTextColor(mContext.getResources().getColor(R.color.colorUnmaxedText));
+            }
+            else {
+                dexView.setTextColor(mContext.getResources().getColor(R.color.colorMaxedText));
+            }
         }
     }
 
@@ -712,11 +645,13 @@ class Loadout {
     }
 
     public void updateAllViews() {
-        updateClass(null);
-        updateWeapon(null);
-        updateAbility(null);
-        updateArmor(null);
-        updateRing(null);
+        updateClass();
+        updateWeapon();
+        updateAbility();
+        updateArmor();
+        updateRing();
+        updateAtt();
+        updateDex();
         updateStatus();
     }
 
@@ -730,16 +665,17 @@ class Loadout {
     }
 
     private void generateDps() {
-        final float DEFENSE_DMG_REDUCTION_CAP = 0.9f;
+        final float DEFENSE_DMG_REDUCTION_CAP = 0.85f;
         final int MAX_ENEMY_DEFENSE = 150;
 
-        int realAtt = statTotals.getAttBonus();
-        int realDex = statTotals.getDexBonus();
+        int realAtt = totalAtt;
+        int realDex = totalDex;
         double dexModifier = 1;
         double attModifier = 1;
         double dmgModifier = 1;
 
-        // turns on status effects
+        // Turns on status effects
+
         if(activeEffects[0]) {  // Damaging
             attModifier = 1.25;
         }
@@ -759,23 +695,22 @@ class Loadout {
         }
 
         loadoutDps = new ArrayList<>();
-        double baseDmg = ((weapon.getAvgDamage() - 0.5) * (0.5 + realAtt / 50.0));
-        double finalRof = (1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire();
-        int noOfShots = weapon.getNoOfShots();
         for(int currentDefense = 0; currentDefense <= MAX_ENEMY_DEFENSE; currentDefense++) {   // Generate a table row for every defense level up to the max
-            double finalDps;
+            double dpsAtCurrentDefense = 0;
 
-            if(weapon.getAttribute() == 0) {          // defense is a factor
-                double finalDamage = Math.max(
-                        Math.round(baseDmg - currentDefense) * dmgModifier * attModifier,                     // shot damage minus enemy defense rounded, multiplied by curse and damaging/weak modifiers
-                        Math.round(baseDmg * (1 - DEFENSE_DMG_REDUCTION_CAP)) * dmgModifier * attModifier     // defense cap calculation
-                );
-                finalDps = finalDamage * noOfShots * finalRof;
+            if(weapon.getAttribute() == 0) {          // Regular equation
+                dpsAtCurrentDefense = (((weapon.getAvgDamage() * (0.5 + realAtt / 50.0)) - currentDefense) * dmgModifier * attModifier * weapon.getNoOfShots()) * ((1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire());
             }
-            else {    // defense factor removed (armor piercing)
-                finalDps = Math.round(baseDmg) * dmgModifier * attModifier * noOfShots * finalRof;
+            else if (weapon.getAttribute() == 1) {    // For armor piercing (removes enemy defense)
+                dpsAtCurrentDefense = ((weapon.getAvgDamage() * (0.5 + realAtt / 50.0)) * dmgModifier * attModifier * weapon.getNoOfShots()) * ((1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire());
             }
-            loadoutDps.add(new DpsEntry(finalDps, loadoutId));
+
+            if(dpsAtCurrentDefense > DEFENSE_DMG_REDUCTION_CAP * weapon.getAvgDamage() * weapon.getNoOfShots()) {      // Defense cap check (defense can only limit damage up to 85%)
+                loadoutDps.add(new DpsEntry(dpsAtCurrentDefense, loadoutId));
+            }
+            else {
+                loadoutDps.add(new DpsEntry(DEFENSE_DMG_REDUCTION_CAP * weapon.getAvgDamage() * weapon.getNoOfShots(), loadoutId));
+            }
         }
     }
 }
