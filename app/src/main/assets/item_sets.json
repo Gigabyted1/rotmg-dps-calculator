@@ -1,0 +1,1299 @@
+{
+  "set": [
+    {
+      "id": 0,
+      "weaponId": 40,
+      "abilityId": 16,
+      "armorId": 41,
+      "ringId": 141,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 4,
+        "wis": 4,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 4,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 30
+      },
+      "four_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 80,
+        "mana": 0
+      }
+    },
+    {
+      "id": 1,
+      "weaponId": ,
+      "abilityId": 0,
+      "armorId": 0,
+      "ringId": 0,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 5,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 10,
+        "life": 30,
+        "mana": 20
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 5,
+        "spd": 0,
+        "dex": 15,
+        "wis": 0,
+        "vit": 20,
+        "life": 30,
+        "mana": 30
+      }
+    },
+    {
+      "id": 2,
+      "weaponId": 38,
+      "abilityId": 19,
+      "armorId": 44,
+      "ringId": 130,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 5,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 11,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 95
+      },
+      "four_item_bonus": {
+        "att": 6,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 105,
+        "mana": 0
+      }
+    },
+    {
+      "id": 3,
+      "weaponId": 42,
+      "abilityId": 0,
+      "armorId": 0,
+      "ringId": 0,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 4,
+      "weaponId": 28,
+      "abilityId": 17,
+      "armorId": 23,
+      "ringId": 43,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 3,
+        "wis": 0,
+        "vit": 3,
+        "life": 20,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 5,
+        "life": 30,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 4,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 7,
+        "life": 40,
+        "mana": 0
+      }
+    },
+    {
+      "id": 5,
+      "weaponId": 42,
+      "abilityId": 21,
+      "armorId": 40,
+      "ringId": 129,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 1,
+        "mana": 0
+      }
+    },
+    {
+      "id": 6,
+      "weaponId": 40,
+      "abilityId": 21,
+      "armorId": 36,
+      "ringId": 112,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 15,
+        "mana": 15
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 15,
+        "mana": 15
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 15,
+        "mana": 15
+      }
+    },
+    {
+      "id": 7,
+      "weaponId": 44,
+      "abilityId": 24,
+      "armorId": 35,
+      "ringId": 121,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 2,
+        "spd": 2,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 20,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 4,
+        "spd": 3,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 30,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 10,
+        "def": 6,
+        "spd": 4,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 40,
+        "mana": 0
+      }
+    },
+    {
+      "id": 8,
+      "weaponId": 41,
+      "abilityId": 20,
+      "armorId": 39,
+      "ringId": 115,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 8,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 50
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 50,
+        "mana": 0
+      }
+    },
+    {
+      "id": 9,
+      "weaponId": 40,
+      "abilityId": 21,
+      "armorId": 31,
+      "ringId": 135,
+      "two_item_bonus": {
+        "att": 2,
+        "def": 0,
+        "spd": 0,
+        "dex": 2,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 3,
+        "def": 0,
+        "spd": 0,
+        "dex": 3,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 100,
+        "mana": 0
+      }
+    },
+    {
+      "id": 10,
+      "weaponId": 40,
+      "abilityId": 17,
+      "armorId": 35,
+      "ringId": 107,
+      "two_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 10,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 80
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 75,
+        "mana": 0
+      }
+    },
+    {
+      "id": 11,
+      "weaponId": 45,
+      "abilityId": 18,
+      "armorId": 33,
+      "ringId": 111,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 70,
+        "mana": 50
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 100,
+        "mana": 80
+      },
+      "four_item_bonus": {
+        "att": 100,
+        "def": 0,
+        "spd": -20,
+        "dex": -30,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 12,
+      "weaponId": 41,
+      "abilityId": 18,
+      "armorId": 32,
+      "ringId": 108,
+      "two_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 15,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 75,
+        "mana": 0
+      }
+    },
+    {
+      "id": 13,
+      "weaponId": 42,
+      "abilityId": 43,
+      "armorId": 28,
+      "ringId": 136,
+      "two_item_bonus": {
+        "att": 2,
+        "def": 2,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 25
+      },
+      "three_item_bonus": {
+        "att": 2,
+        "def": 2,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 25
+      },
+      "four_item_bonus": {
+        "att": 2,
+        "def": 2,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 25
+      }
+    },
+    {
+      "id": 14,
+      "weaponId": 42,
+      "abilityId": 17,
+      "armorId": 43,
+      "ringId": 118,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 7,
+        "vit": 6,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 7,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 50,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 100
+      }
+    },
+    {
+      "id": 15,
+      "weaponId": 43,
+      "abilityId": 18,
+      "armorId": 33,
+      "ringId": 127,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 5,
+        "spd": -5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 5,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 5,
+        "spd": -5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 10,
+        "life": 0,
+        "mana": 50
+      },
+      "four_item_bonus": {
+        "att": 10,
+        "def": 10,
+        "spd": -5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 15,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 16,
+      "weaponId": 37,
+      "abilityId": 18,
+      "armorId": 42,
+      "ringId": 122,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 6,
+        "life": 0,
+        "mana": 30
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 4,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 7,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 17,
+      "weaponId": 41,
+      "abilityId": 18,
+      "armorId": 34,
+      "ringId": 119,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 5,
+        "spd": 5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 40,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 8,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 18,
+      "weaponId": 37,
+      "abilityId": 19,
+      "armorId": 38,
+      "ringId": 109,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 3,
+        "dex": 3,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 20
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 5,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 30,
+        "mana": 40
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 5,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 70,
+        "mana": 0
+      }
+    },
+    {
+      "id": 19,
+      "weaponId": 38,
+      "abilityId": 18,
+      "armorId": 40,
+      "ringId": 132,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 2,
+        "dex": 1,
+        "wis": 5,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 10,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 40
+      },
+      "four_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 35,
+        "mana": 0
+      }
+    },
+    {
+      "id": 20,
+      "weaponId": 43,
+      "abilityId": 17,
+      "armorId": 34,
+      "ringId": 134,
+      "two_item_bonus": {
+        "att": 3,
+        "def": 0,
+        "spd": 3,
+        "dex": 0,
+        "wis": 0,
+        "vit": 5,
+        "life": 30,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 10,
+        "life": 25,
+        "mana": 60
+      },
+      "four_item_bonus": {
+        "att": 20,
+        "def": 0,
+        "spd": 5,
+        "dex": 0,
+        "wis": 0,
+        "vit": 15,
+        "life": 50,
+        "mana": 0
+      }
+    },
+    {
+      "id": 21,
+      "weaponId": 38,
+      "abilityId": 16,
+      "armorId": 32,
+      "ringId": 120,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 6,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 3,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 15,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 22,
+      "weaponId": 39,
+      "abilityId": 17,
+      "armorId": 33,
+      "ringId": 126,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 2,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 4,
+        "spd": 0,
+        "dex": 3,
+        "wis": 5,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 60,
+        "vit": 0,
+        "life": 0,
+        "mana": -135
+      }
+    },
+    {
+      "id": 23,
+      "weaponId": 36,
+      "abilityId": 19,
+      "armorId": 37,
+      "ringId": 117,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 4,
+        "spd": 7,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 4,
+        "def": 0,
+        "spd": 0,
+        "dex": 4,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 75,
+        "mana": 0
+      }
+    },
+    {
+      "id": 24,
+      "weaponId": 35,
+      "abilityId": 18,
+      "armorId": 39,
+      "ringId": 128,
+      "two_item_bonus": {
+        "att": 4,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 5,
+        "life": 30,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 5,
+        "life": 30,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 6,
+        "def": 5,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 10,
+        "life": 120,
+        "mana": 0
+      }
+    },
+    {
+      "id": 25,
+      "weaponId": 33,
+      "abilityId": 17,
+      "armorId": 31,
+      "ringId": 101,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 4,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 3,
+        "def": 10,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 100,
+        "mana": 0
+      }
+    },
+    {
+      "id": 26,
+      "weaponId": 34,
+      "abilityId": 18,
+      "armorId": 34,
+      "ringId": 143,
+      "two_item_bonus": {
+        "att": 3,
+        "def": 3,
+        "spd": 2,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 3,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 50
+      },
+      "four_item_bonus": {
+        "att": 6,
+        "def": 5,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 40,
+        "mana": 0
+      }
+    },
+    {
+      "id": 27,
+      "weaponId": 40,
+      "abilityId": 13,
+      "armorId": 43,
+      "ringId": 116,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 3,
+        "wis": 0,
+        "vit": 0,
+        "life": 20,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 3,
+        "wis": 0,
+        "vit": 0,
+        "life": 20,
+        "mana": 40
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 5,
+        "spd": 0,
+        "dex": 4,
+        "wis": 0,
+        "vit": 0,
+        "life": 40,
+        "mana": 20
+      }
+    },
+    {
+      "id": 28,
+      "weaponId": 42,
+      "abilityId": 23,
+      "armorId": 38,
+      "ringId": 114,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 15,
+        "mana": 15
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 15,
+        "mana": 15
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 15,
+        "mana": 15
+      }
+    },
+    {
+      "id": 29,
+      "weaponId": 22,
+      "abilityId": 20,
+      "armorId": 21,
+      "ringId": 48,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 3,
+        "dex": 0,
+        "wis": 0,
+        "vit": 4,
+        "life": 0,
+        "mana": 20
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 4,
+        "dex": 0,
+        "wis": 4,
+        "vit": 0,
+        "life": 0,
+        "mana": 30
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 6,
+        "dex": 4,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 40
+      }
+    },
+    {
+      "id": 30,
+      "weaponId": 44,
+      "abilityId": 18,
+      "armorId": 30,
+      "ringId": 138,
+      "two_item_bonus": {
+        "att": 2,
+        "def": 2,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 25
+      },
+      "three_item_bonus": {
+        "att": 2,
+        "def": 2,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 25
+      },
+      "four_item_bonus": {
+        "att": 2,
+        "def": 2,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 25
+      }
+    },
+    {
+      "id": 31,
+      "weaponId": ,
+      "abilityId": ,
+      "armorId": ,
+      "ringId": ,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 6,
+        "life": 0,
+        "mana": 30
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 4,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 25,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 7,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      }
+    },
+    {
+      "id": 32,
+      "weaponId": 39,
+      "abilityId": 19,
+      "armorId": 41,
+      "ringId": 133,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 2,
+        "dex": 1,
+        "wis": 5,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 0,
+        "def": 10,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 40
+      },
+      "four_item_bonus": {
+        "att": 5,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 35,
+        "mana": 0
+      }
+    },
+    {
+      "id": 33,
+      "weaponId": 38,
+      "abilityId": 19,
+      "armorId": 36,
+      "ringId": 139,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 15,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 10,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 40,
+        "mana": 0
+      }
+    },
+    {
+      "id": 34,
+      "weaponId": 39,
+      "abilityId": 20,
+      "armorId": 37,
+      "ringId": 140,
+      "two_item_bonus": {
+        "att": 0,
+        "def": 3,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 15,
+        "life": 0,
+        "mana": 0
+      },
+      "three_item_bonus": {
+        "att": 10,
+        "def": 0,
+        "spd": 0,
+        "dex": 5,
+        "wis": 0,
+        "vit": 0,
+        "life": 0,
+        "mana": 0
+      },
+      "four_item_bonus": {
+        "att": 0,
+        "def": 0,
+        "spd": 0,
+        "dex": 0,
+        "wis": 0,
+        "vit": 0,
+        "life": 40,
+        "mana": 0
+      }
+    }
+  ]
+}

@@ -1,9 +1,5 @@
 package com.waynebloom.rotmgdpscalculator;
 
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +27,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -68,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        AppCenter.start(getApplication(), "5b1fb4f9-62fe-4eb6-a98e-581fb668b5f8",
-                Analytics.class, Crashes.class);
 
         saveFile = new File(getApplicationContext().getFilesDir(), "loadouts.txt");
         statusEffectNames = getResources().getStringArray(R.array.stat_effects);
@@ -247,10 +242,10 @@ public class MainActivity extends AppCompatActivity {
 
         for(Loadout i : loadouts) {
             saveStr.append(i.getCharClass().getClassId()).append('/');
-            saveStr.append(i.getWeapon().getItemId()).append('/');
-            saveStr.append(i.getAbility().getItemId()).append('/');
-            saveStr.append(i.getArmor().getItemId()).append('/');
-            saveStr.append(i.getRing().getItemId()).append('/');
+            saveStr.append(i.getWeapon().getRelItemId()).append('/');
+            saveStr.append(i.getAbility().getRelItemId()).append('/');
+            saveStr.append(i.getArmor().getRelItemId()).append('/');
+            saveStr.append(i.getRing().getRelItemId()).append('/');
 
             boolean[] activeEffects = i.getActiveEffects();
             for (boolean activeEffect : activeEffects) {
@@ -354,10 +349,10 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject currentItem = data[0].getJSONArray("item").getJSONArray(i).getJSONObject(j);
                 items.get(i).add(j, new Item(
                         currentItem.getString("name"),
-                        j,
+                        currentItem.getInt("relItemId"),
+                        currentItem.getInt("absItemId"),
                         getResources().getIdentifier(currentItem.getString("image"), "drawable", getPackageName()),
-                        currentItem.getInt("att"),
-                        currentItem.getInt("dex"),
+                        new StatBonus(currentItem.getInt("att"), 0, 0, currentItem.getInt("dex"), 0, 0, 0, 0),
                         currentItem.getString("categories"),
                         currentItem.getDouble("shot_dmg"),
                         currentItem.getInt("no_shots"),
