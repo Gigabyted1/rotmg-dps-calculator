@@ -4,24 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Item {
+
+    // Qualitative info
     private final String name;
-    private final int itemId;
+    private final int relItemId;
+    private final int absItemId;
     private final int imageId;
-    private final int bonusAtt;
-    private final int bonusDex;
     private final List<String> categories;
+
+    // Item stats
+    private final StatBonus statBonus;
     private final double avgDamage;
     private final int noOfShots;
     private final double rateOfFire;
     private final double range;
     private final int attribute;    // Such as armor piercing
 
-    Item (String name, int itemId, int imageId, int bonusAtt, int bonusDex, String categories, double avgDamage, int noOfShots, double rateOfFire, double range, int attribute) {
+    // Item set info
+    private static List<ItemSet> itemSets;
+    private int partOfSet;
+
+    Item (String name, int relItemId, int absItemId, int imageId, StatBonus statBonus, String categories, double avgDamage, int noOfShots, double rateOfFire, double range, int attribute) {
         this.name = name;
-        this.itemId = itemId;
+        this.relItemId = relItemId;
+        this.absItemId = absItemId;
         this.imageId = imageId;
-        this.bonusAtt = bonusAtt;
-        this.bonusDex = bonusDex;
+        this.statBonus = statBonus;
         this.categories = parseCategories(categories);
         this.avgDamage = avgDamage;
         this.noOfShots = noOfShots;
@@ -34,20 +42,16 @@ class Item {
         return name;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getRelItemId() {
+        return relItemId;
     }
 
     public int getImageId() {
         return imageId;
     }
 
-    public int getBonusAtt() {
-        return bonusAtt;
-    }
-
-    public int getBonusDex() {
-        return bonusDex;
+    public StatBonus getStatBonus() {
+        return statBonus;
     }
 
     public double getAvgDamage() {

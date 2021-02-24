@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -487,15 +484,15 @@ class Loadout {
             case CLASS:
                 charClass = mClass;
                 updateClass();
-                if(!charClass.getWeapons().get(weapon.getItemId()).equals(weapon)) {
+                if(!charClass.getWeapons().get(weapon.getRelItemId()).equals(weapon)) {
                     weapon = charClass.getWeapons().get(0);
                     updateWeapon();
                 }
-                if(!charClass.getAbilities().get(ability.getItemId()).equals(ability)) {
+                if(!charClass.getAbilities().get(ability.getRelItemId()).equals(ability)) {
                     ability = charClass.getAbilities().get(0);
                     updateAbility();
                 }
-                if(!charClass.getArmors().get(armor.getItemId()).equals(armor)) {
+                if(!charClass.getArmors().get(armor.getRelItemId()).equals(armor)) {
                     armor = charClass.getArmors().get(0);
                     updateArmor();
                 }
@@ -583,7 +580,7 @@ class Loadout {
         if(attView != null) {
             String attString;
 
-            totalAtt = baseAtt + weapon.getBonusAtt() + ability.getBonusAtt() + armor.getBonusAtt() + ring.getBonusAtt();
+            totalAtt = baseAtt + weapon.getStatBonus().getAttBonus() + ability.getStatBonus().getAttBonus() + armor.getStatBonus().getAttBonus() + ring.getStatBonus().getAttBonus();
             attString = baseAtt + "(" + totalAtt + ")";
             attView.setText(attString);
 
@@ -600,7 +597,7 @@ class Loadout {
         if(dexView != null) {
             String dexString;
 
-            totalDex = baseDex + weapon.getBonusDex() + ability.getBonusDex() + armor.getBonusDex() + ring.getBonusDex();
+            totalDex = baseDex + weapon.getStatBonus().getDexBonus() + ability.getStatBonus().getDexBonus() + armor.getStatBonus().getDexBonus() + ring.getStatBonus().getDexBonus();
             dexString = baseDex + "(" + totalDex + ")";
             dexView.setText(dexString);
 
@@ -680,13 +677,13 @@ class Loadout {
         // Turns on status effects
 
         if(activeEffects[0]) {  // Damaging
-            attModifier = 1.5;
+            attModifier = 1.25;
         }
         if(activeEffects[1]) {  // Berserk
-            dexModifier = 1.5;
+            dexModifier = 1.25;
         }
         if(activeEffects[2]) {  // Curse
-            dmgModifier = 1.2;
+            dmgModifier = 1.25;
         }
         if(activeEffects[3]) {  // Dazed (cancels berserk and sets dex to 0)
             dexModifier = 1;
