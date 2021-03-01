@@ -21,16 +21,17 @@ class Item {
     private final int attribute;    // Such as armor piercing
 
     // Item set info
-    private static List<ItemSet> itemSets;
+    public static List<ItemSet> itemSets;
     private int partOfSet;
 
-    Item (String name, int relItemId, int absItemId, int imageId, StatBonus statBonus, String categories, double avgDamage, int noOfShots, double rateOfFire, double range, int attribute) {
+    Item (String name, int imageId, String categories, int relItemId, int absItemId, int partOfSet, StatBonus statBonus, double avgDamage, int noOfShots, double rateOfFire, double range, int attribute) {
         this.name = name;
+        this.imageId = imageId;
+        this.categories = parseCategories(categories);
         this.relItemId = relItemId;
         this.absItemId = absItemId;
-        this.imageId = imageId;
+        this.partOfSet = partOfSet;
         this.statBonus = statBonus;
-        this.categories = parseCategories(categories);
         this.avgDamage = avgDamage;
         this.noOfShots = noOfShots;
         this.rateOfFire = rateOfFire;
@@ -42,12 +43,20 @@ class Item {
         return name;
     }
 
+    public int getImageId() {
+        return imageId;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
     public int getRelItemId() {
         return relItemId;
     }
 
-    public int getImageId() {
-        return imageId;
+    public int getAbsItemId() {
+        return absItemId;
     }
 
     public StatBonus getStatBonus() {
@@ -70,8 +79,8 @@ class Item {
         return attribute;
     }
 
-    public List<String> getCategories() {
-        return categories;
+    public int getPartOfSet() {
+        return partOfSet;
     }
 
     // Translates raw string data from file into an arrayList
