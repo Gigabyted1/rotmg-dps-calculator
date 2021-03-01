@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,16 +28,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Loadout> loadouts = new ArrayList<>(8);
-    JSONObject[] data = new JSONObject[2];
-    ArrayList<CharClass> classes;
-    ArrayList<ArrayList<Item>> items;
     String[] statusEffectNames;
     DpsAdapter dpsAdpt;
     LoadoutAdapter loadAdpt;
@@ -88,10 +85,7 @@ public class MainActivity extends AppCompatActivity {
         addBuild = findViewById(R.id.add_button);
 
         // Reads item and class data from file
-        readData(data);
-
-        // Setup static variables in Loadout class
-        Loadout.setStatics(classes);
+        readData();
 
         // Load previous loadouts
         try {
@@ -173,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     public void createNewLoadout(View view) {
 
         // Randomly select the default class
-        CharClass randomClass = classes.get(new Random().nextInt(16));
+        CharClass randomClass = Loadout.classData.get(new Random().nextInt(16));
 
         if(loadouts.size() < 8) {
             Loadout newLoadout = new Loadout(getApplicationContext(),
@@ -289,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Translate the nonsense above
                     int loadoutId = loadouts.size();
-                    CharClass loadedClass = classes.get(temps[0]);
+                    CharClass loadedClass = Loadout.classData.get(temps[0]);
                     Item loadedWeapon = loadedClass.getWeapons().get(temps[1]);
                     Item loadedAbility = loadedClass.getAbilities().get(temps[2]);
                     Item loadedArmor = loadedClass.getArmors().get(temps[3]);
@@ -315,18 +309,16 @@ public class MainActivity extends AppCompatActivity {
         loadReader.close();
     }     // |
 
-    private void readData(JSONObject[] data) {
-        Log.i("Notification", "Reading data");
-
-        String[] fileNames = { "items.json", "classes.json" };
+    private void readData() {
+        String[] fileNames = { "items.json", "classes.json", "item_sets.json" };
+        JSONObject[] data = new JSONObject[3];
         try {
-            for(int i = 0; i < 2; i++) {
+            for(int i = 0; i < 3; i++) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open(fileNames[i])));
                 StringBuilder read = new StringBuilder();
                 while(reader.ready()) {
                     read.append(reader.readLine());
                 }
-                Log.i("JSON data", read.toString());
                 data[i] = new JSONObject(read.toString());
             }
             parseData(data);
@@ -336,11 +328,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void parseData(JSONObject[] data) throws JSONException {
-        int classArraySize = data[1].getJSONArray("classes").length();
+        final int STANDARD_SET_MAXIMUM_INDEX = 37;
         int itemOutsideSize = data[0].getJSONArray("item").length();
-        classes = new ArrayList<>();  // Create arraylist for character class objects
-        items = new ArrayList<>();     // Create arraylist for sub-types of items
+        int classArraySize = data[1].getJSONArray("classes").length();
+        int setArraySize = data[2].getJSONArray("set").length();
+        List<ArrayList<Item>> items = new ArrayList<>();            // Create outside arraylist for sub-types of items
+        List<CharClass> classes = new ArrayList<>();                // Create arraylist for character class objects
+        List<ItemSet> itemSets = new ArrayList<>(setArraySize);     // Create arraylist for item set objects
 
+        // preallocate all indices, as the loader for this list jumps around
+        for(int i = 0; i < setArraySize; i++) {
+            itemSets.add(new ItemSet());
+        }
+
+        // load items
         for (int i = 0; i < itemOutsideSize; i++) {
             int itemInsideSize = data[0].getJSONArray("item").getJSONArray(i).length();
             items.add(i, new ArrayList<Item>());
@@ -349,11 +350,12 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject currentItem = data[0].getJSONArray("item").getJSONArray(i).getJSONObject(j);
                 items.get(i).add(j, new Item(
                         currentItem.getString("name"),
-                        currentItem.getInt("relItemId"),
-                        currentItem.getInt("absItemId"),
                         getResources().getIdentifier(currentItem.getString("image"), "drawable", getPackageName()),
-                        new StatBonus(currentItem.getInt("att"), 0, 0, currentItem.getInt("dex"), 0, 0, 0, 0),
                         currentItem.getString("categories"),
+                        j, // relative id
+                        currentItem.getInt("absItemId"),
+                        currentItem.getInt("partOfSet"),
+                        new StatBonus(currentItem.getInt("att"), 0, 0, currentItem.getInt("dex"), 0, 0, 0, 0),
                         currentItem.getDouble("shot_dmg"),
                         currentItem.getInt("no_shots"),
                         currentItem.getDouble("rate_of_fire"),
@@ -363,6 +365,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // load classes
         for (int i = 0; i < classArraySize; i++) {
             JSONObject currentClass = data[1].getJSONArray("classes").getJSONObject(i);
             classes.add(i, new CharClass(
@@ -373,9 +376,156 @@ public class MainActivity extends AppCompatActivity {
                     items.get(currentClass.getInt("armor")),
                     items.get(16),  // Rings
                     getResources().getIdentifier(currentClass.getString("name"), "drawable", getPackageName()), // Turn image name into id
-                    currentClass.getInt("att"),
-                    currentClass.getInt("dex"))
+                    new StatBonus(currentClass.getInt("maxAtt"), 0, 0, currentClass.getInt("maxDex"), 0, 0, 0, 0))
             );
         }
+        Loadout.classData = classes;
+
+        // load item sets
+        for (int i = 0; i < setArraySize; i++) {
+            JSONObject currentSet = data[2].getJSONArray("set").getJSONObject(i);
+
+            if(i <= STANDARD_SET_MAXIMUM_INDEX) {       // standard item sets (one of each item type)
+                itemSets.add(
+                    currentSet.getInt("id"),
+                    new ItemSet(
+                        currentSet.getInt("weaponId"),
+                        currentSet.getInt("abilityId"),
+                        currentSet.getInt("armorId"),
+                        currentSet.getInt("ringId"),
+                        new StatBonus(
+                                currentSet.getJSONObject("two_item_bonus").getInt("att"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("def"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("spd"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("dex"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("wis"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("vit"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("life"),
+                                currentSet.getJSONObject("two_item_bonus").getInt("mana")
+                        ),
+                        new StatBonus(
+                                currentSet.getJSONObject("three_item_bonus").getInt("att"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("def"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("spd"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("dex"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("wis"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("vit"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("life"),
+                                currentSet.getJSONObject("three_item_bonus").getInt("mana")
+                        ),
+                        new StatBonus(
+                                currentSet.getJSONObject("four_item_bonus").getInt("att"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("def"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("spd"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("dex"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("wis"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("vit"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("life"),
+                                currentSet.getJSONObject("four_item_bonus").getInt("mana")
+                        )
+                    )
+                );
+            }
+            else {          // nonstandard item sets (multiple items per type)
+
+                // translating from JSONArray to required types
+                JSONArray jWeaponIds = currentSet.getJSONArray("weaponId");
+                int[] weaponIds = new int[0];
+                if (jWeaponIds != null) {
+                    weaponIds = new int[jWeaponIds.length()];
+                    for(int k = 0; k < jWeaponIds.length(); k++) {
+                        weaponIds[k] = jWeaponIds.getInt(k);
+                    }
+                }
+
+                JSONArray jAbilityIds = currentSet.getJSONArray("abilityId");
+                int[] abilityIds = new int[0];
+                if (jAbilityIds != null) {
+                    abilityIds = new int[jAbilityIds.length()];
+                    for(int k = 0; k < jAbilityIds.length(); k++) {
+                        abilityIds[k] = jAbilityIds.getInt(k);
+                    }
+                }
+
+                JSONArray jArmorIds = currentSet.getJSONArray("armorId");
+                int[] armorIds = new int[0];
+                if (jArmorIds != null) {
+                    armorIds = new int[jArmorIds.length()];
+                    for(int k = 0; k < jArmorIds.length(); k++) {
+                        armorIds[k] = jArmorIds.getInt(k);
+                    }
+                }
+
+                JSONArray jRingIds = currentSet.getJSONArray("ringId");
+                int[] ringIds = new int[0];
+                if (jRingIds != null) {
+                    ringIds = new int[jRingIds.length()];
+                    for(int k = 0; k < jRingIds.length(); k++) {
+                        ringIds[k] = jRingIds.getInt(k);
+                    }
+                }
+
+                JSONArray jTwoItem = currentSet.getJSONArray("two_item_bonus");
+                StatBonus[] twoItem = new StatBonus[0];
+                if (jTwoItem != null) {
+                    twoItem = new StatBonus[jTwoItem.length()];
+                    for(int k = 0; k < jTwoItem.length(); k++) {
+                        JSONObject currentBonus = jTwoItem.getJSONObject(k);
+                        twoItem[k] = new StatBonus(
+                                currentBonus.getInt("att"),
+                                currentBonus.getInt("def"),
+                                currentBonus.getInt("spd"),
+                                currentBonus.getInt("dex"),
+                                currentBonus.getInt("wis"),
+                                currentBonus.getInt("vit"),
+                                currentBonus.getInt("life"),
+                                currentBonus.getInt("mana")
+                        );
+                    }
+                }
+
+                JSONArray jThreeItem = currentSet.getJSONArray("three_item_bonus");
+                StatBonus[] threeItem = new StatBonus[0];
+                if (jThreeItem != null) {
+                    threeItem = new StatBonus[jThreeItem.length()];
+                    for(int k = 0; k < jThreeItem.length(); k++) {
+                        JSONObject currentBonus = jThreeItem.getJSONObject(k);
+                        threeItem[k] = new StatBonus(
+                                currentBonus.getInt("att"),
+                                currentBonus.getInt("def"),
+                                currentBonus.getInt("spd"),
+                                currentBonus.getInt("dex"),
+                                currentBonus.getInt("wis"),
+                                currentBonus.getInt("vit"),
+                                currentBonus.getInt("life"),
+                                currentBonus.getInt("mana")
+                        );
+                    }
+                }
+
+                JSONArray jFourItem = currentSet.getJSONArray("four_item_bonus");
+                StatBonus[] fourItem = new StatBonus[0];
+                if (jFourItem != null) {
+                    fourItem = new StatBonus[jFourItem.length()];
+                    for(int k = 0; k < jFourItem.length(); k++) {
+                        JSONObject currentBonus = jFourItem.getJSONObject(k);
+                        fourItem[k] = new StatBonus(
+                                currentBonus.getInt("att"),
+                                currentBonus.getInt("def"),
+                                currentBonus.getInt("spd"),
+                                currentBonus.getInt("dex"),
+                                currentBonus.getInt("wis"),
+                                currentBonus.getInt("vit"),
+                                currentBonus.getInt("life"),
+                                currentBonus.getInt("mana")
+                        );
+                    }
+                }
+
+                itemSets.add(currentSet.getInt("id"), new MultiItemSet(weaponIds, abilityIds, armorIds, ringIds, twoItem, threeItem, fourItem));
+            }
+
+        }
+        Item.itemSets = new ArrayList<>(itemSets);
     }
 }

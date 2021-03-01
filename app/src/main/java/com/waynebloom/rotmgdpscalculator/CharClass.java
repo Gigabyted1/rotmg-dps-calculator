@@ -10,10 +10,9 @@ class CharClass {
     private final List<Item> armors;
     private final List<Item> rings;
     private final int imageId;
-    private final int baseAtt;
-    private final int baseDex;
+    private final StatBonus maxedStats;
 
-    CharClass (String name, int classId, List<Item> weapons, List<Item> abilities, List<Item> armors, List<Item> rings, int imageId, int baseAtt, int baseDex) {
+    CharClass (String name, int classId, List<Item> weapons, List<Item> abilities, List<Item> armors, List<Item> rings, int imageId, StatBonus maxedStats) {
         this.name = name;
         this.classId = classId;
         this.weapons = weapons;
@@ -21,8 +20,7 @@ class CharClass {
         this.armors = armors;
         this.rings = rings;
         this.imageId = imageId;
-        this.baseAtt = baseAtt;
-        this.baseDex = baseDex;
+        this.maxedStats = maxedStats;
     }
 
     public String getName() {
@@ -53,11 +51,7 @@ class CharClass {
         return imageId;
     }
 
-    public int getBaseAtt() {
-        return baseAtt;
-    }
-
-    public int getBaseDex() {
-        return baseDex;
+    public StatBonus getMaxedStats() {
+        return maxedStats;
     }
 }
