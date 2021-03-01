@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "550149717168",
+    "firebase_url": "https://rotmg-dps-calculator.firebaseio.com",
+    "project_id": "rotmg-dps-calculator",
+    "storage_bucket": "rotmg-dps-calculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550149717168:android:91d5212196d15afc254f75",
+        "android_client_info": {
+          "package_name": "com.waynebloom.rotmgdpscalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550149717168-g3lre3h24hh71piche4rvua7b7ogcrai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0iz3OrSsDbUd1p4aQrv1CI_oNiSnlorc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550149717168-g3lre3h24hh71piche4rvua7b7ogcrai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
