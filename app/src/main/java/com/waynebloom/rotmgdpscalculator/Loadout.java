@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -552,7 +553,7 @@ class Loadout {
         // makes a list of item sets with 2 or more equipped pieces
         for(int i = 0; i < temp.size(); i++) {
             for(int j = i + 1; j < temp.size(); j++) {
-                if(temp.get(i).equals(temp.get(j)) && !sets.contains(temp.get(i))) {
+                if(temp.get(i).equals(temp.get(j)) && !temp.get(i).equals(-1) && !sets.contains(temp.get(i))) {
                     sets.add(temp.get(i));
                     break;
                 }
@@ -739,8 +740,7 @@ class Loadout {
         double attModifier = 1;
         double dmgModifier = 1;
 
-        // Turns on status effects
-
+        // turns on status effects
         if(activeEffects[0]) {  // Damaging
             attModifier = 1.25;
         }
@@ -760,22 +760,25 @@ class Loadout {
         }
 
         loadoutDps = new ArrayList<>();
+        double baseDmg = ((weapon.getAvgDamage() - 0.5) * (0.5 + realAtt / 50.0));
+        double finalRof = (1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire();
+        int noOfShots = weapon.getNoOfShots();
         for(int currentDefense = 0; currentDefense <= MAX_ENEMY_DEFENSE; currentDefense++) {   // Generate a table row for every defense level up to the max
-            double dpsAtCurrentDefense = 0;
+            double finalDps;
 
-            if(weapon.getAttribute() == 0) {          // Regular equation
-                dpsAtCurrentDefense = (((weapon.getAvgDamage() * (0.5 + realAtt / 50.0)) - currentDefense) * dmgModifier * attModifier * weapon.getNoOfShots()) * ((1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire());
+            if(weapon.getAttribute() == 0) {          // defense is a factor
+                double finalDamage = Math.max(
+                        Math.round(baseDmg - currentDefense) * dmgModifier * attModifier,                     // shot damage minus enemy defense rounded, multiplied by curse and damaging/weak modifiers
+                        Math.round(baseDmg * (1 - DEFENSE_DMG_REDUCTION_CAP)) * dmgModifier * attModifier     // defense cap calculation
+                );
+                finalDps = finalDamage * noOfShots * finalRof;
             }
-            else if (weapon.getAttribute() == 1) {    // For armor piercing (removes enemy defense)
-                dpsAtCurrentDefense = ((weapon.getAvgDamage() * (0.5 + realAtt / 50.0)) * dmgModifier * attModifier * weapon.getNoOfShots()) * ((1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire());
+            else {    // defense factor removed (armor piercing)
+                finalDps = Math.round(baseDmg) * dmgModifier * attModifier * noOfShots * finalRof;
             }
 
-            if(dpsAtCurrentDefense > DEFENSE_DMG_REDUCTION_CAP * weapon.getAvgDamage() * weapon.getNoOfShots()) {      // Defense cap check (defense can only limit damage up to 85%)
-                loadoutDps.add(new DpsEntry(dpsAtCurrentDefense, loadoutId));
-            }
-            else {
-                loadoutDps.add(new DpsEntry(DEFENSE_DMG_REDUCTION_CAP * weapon.getAvgDamage() * weapon.getNoOfShots(), loadoutId));
-            }
+            Log.i("DpsLogging", Double.toString(finalDps));
+            loadoutDps.add(new DpsEntry(finalDps, loadoutId));
         }
     }
 }

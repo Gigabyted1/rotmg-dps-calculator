@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,7 +50,7 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
     public DpsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new DpsAdapter.ViewHolder(LayoutInflater
                 .from(mContext)
-                .inflate(R.layout.list_item_dpstable, parent, false)
+                .inflate(R.layout.list_item_dps, parent, false)
         );
     }
 

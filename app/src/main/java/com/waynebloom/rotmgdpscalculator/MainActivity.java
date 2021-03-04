@@ -1,14 +1,13 @@
 package com.waynebloom.rotmgdpscalculator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +15,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,30 +35,22 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Loadout> loadouts = new ArrayList<>(8);
+    List<List<DpsEntry>> dpsDataTable = new ArrayList<>();
     String[] statusEffectNames;
-    DpsAdapter dpsAdpt;
-    LoadoutAdapter loadAdpt;
-    boolean onLoadouts = true;
     File saveFile;
 
-    List<List<DpsEntry>> dpsDataTable = new ArrayList<>();
-
     Toolbar toolbar;
+    BottomNavigationView navigation;
     View fade;
     View header;
     RecyclerView dpsTableView;
     RecyclerView itemSelView;
     RecyclerView loadoutView;
-    ConstraintLayout statEditView;
-    SeekBar statSeekView;
     TextView titleView;
-    TextView baseStatView;
-    TextView wepStatView;
-    TextView abilStatView;
-    TextView armStatView;
-    TextView ringStatView;
-    Button statConfirm;
     Button addBuild;
+    boolean onLoadouts = true;
+    DpsAdapter dpsAdpt;
+    LoadoutAdapter loadAdpt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +61,13 @@ public class MainActivity extends AppCompatActivity {
         statusEffectNames = getResources().getStringArray(R.array.stat_effects);
 
         toolbar = findViewById(R.id.my_toolbar);
+        navigation = findViewById(R.id.navigation);
         fade = findViewById(R.id.fade);
         header = findViewById(R.id.footer);
         dpsTableView = findViewById(R.id.dps_table_view);
         itemSelView = findViewById(R.id.item_selection_view);
         loadoutView = findViewById(R.id.loadout_view);
-        statEditView = findViewById(R.id.stat_edit);
-        statSeekView = findViewById(R.id.stat_seekbar);
         titleView = findViewById(R.id.title);
-        baseStatView = findViewById(R.id.base_stat);
-        wepStatView = findViewById(R.id.wep_stat);
-        abilStatView = findViewById(R.id.abil_stat);
-        armStatView = findViewById(R.id.arm_stat);
-        ringStatView = findViewById(R.id.ring_stat);
-        statConfirm = findViewById(R.id.confirm);
         addBuild = findViewById(R.id.add_button);
 
         // Reads item and class data from file
@@ -101,6 +87,29 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Builds");
         toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.page_1:
+                        loadoutView.setVisibility(View.VISIBLE);
+                        dpsTableView.setVisibility(View.GONE);
+                        addBuild.setVisibility(View.VISIBLE);
+                        setTitle("Loadouts");
+                        return true;
+                    case R.id.page_2:
+                        loadoutView.setVisibility(View.GONE);
+                        dpsTableView.setVisibility(View.VISIBLE);
+                        addBuild.setVisibility(View.GONE);
+                        setTitle("DPS Table");
+                        populateDpsTable();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 
     @Override
@@ -114,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //More action bar setup
         getMenuInflater().inflate(R.menu.menubar, menu);
@@ -123,29 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_switch:
-                if(onLoadouts) {
-                    loadoutView.setVisibility(View.GONE);
-                    dpsTableView.setVisibility(View.VISIBLE);
-                    addBuild.setVisibility(View.GONE);
-                    setTitle("DPS Table");
-                    populateDpsTable();
-                    onLoadouts = false;
-                }
-                else {
-                    loadoutView.setVisibility(View.VISIBLE);
-                    dpsTableView.setVisibility(View.GONE);
-                    addBuild.setVisibility(View.VISIBLE);
-                    setTitle("Loadouts");
-                    onLoadouts = true;
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+        return false;
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -375,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                     items.get(currentClass.getInt("ability")),
                     items.get(currentClass.getInt("armor")),
                     items.get(16),  // Rings
-                    getResources().getIdentifier(currentClass.getString("name"), "drawable", getPackageName()), // Turn image name into id
+                    getResources().getIdentifier(currentClass.getString("name").toLowerCase(), "drawable", getPackageName()), // Turn image name into id
                     new StatBonus(currentClass.getInt("maxAtt"), 0, 0, currentClass.getInt("maxDex"), 0, 0, 0, 0))
             );
         }
