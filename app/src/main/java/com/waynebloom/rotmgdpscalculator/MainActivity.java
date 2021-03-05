@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         statusEffectNames = getResources().getStringArray(R.array.stat_effects);
 
         toolbar = findViewById(R.id.my_toolbar);
+        navigation = findViewById(R.id.navigation);
         fade = findViewById(R.id.fade);
         filterView = findViewById(R.id.filter);
         dpsTableView = findViewById(R.id.dps_table_view);
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
