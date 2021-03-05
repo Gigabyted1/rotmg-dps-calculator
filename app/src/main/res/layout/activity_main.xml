@@ -89,7 +89,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/footer"
+        android:id="@+id/filter"
         layout="@layout/filter"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintBottom_toTopOf="@id/filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
