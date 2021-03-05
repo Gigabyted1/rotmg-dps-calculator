@@ -20,9 +20,9 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
     private final Typeface myFont;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView name;
-        View parent;
+        final ImageView image;
+        final TextView name;
+        final View parent;
 
         public ViewHolder(View view) {
             super(view);

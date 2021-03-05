@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class MultiItemSet extends ItemSet {
-    int[] sWeaponIds;
-    int[] sAbilityIds;
-    int[] sArmorIds;
-    int[] sRingIds;
+    final int[] sWeaponIds;
+    final int[] sAbilityIds;
+    final int[] sArmorIds;
+    final int[] sRingIds;
 
-    StatBonus[][] statBonuses;
+    final StatBonus[][] statBonuses;
 
     MultiItemSet(int[] sWeaponIds, int[] sAbilityIds, int[] sArmorIds, int[] sRingIds, StatBonus[] twoItemBonusList, StatBonus[] threeItemBonusList, StatBonus[] fourItemBonusList) {
         super();

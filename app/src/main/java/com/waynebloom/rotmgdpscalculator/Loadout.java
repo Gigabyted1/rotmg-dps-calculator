@@ -51,8 +51,8 @@ class Loadout {
     private Item armor;
     private Item ring;
     private StatBonus baseStats = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
-    private StatBonus setBonus = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
-    private StatBonus statTotals = new StatBonus(0,0,0,0,0,0,0,0);
+    private final StatBonus setBonus = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
+    private final StatBonus statTotals = new StatBonus(0,0,0,0,0,0,0,0);
     private boolean[] activeEffects;    //Tracks active status effects
     private static final ArrayList<String> selectedCategories = new ArrayList<>(Arrays.asList("untiered", "set_tiered", "tiered"));
     private List<DpsEntry> loadoutDps = new ArrayList<>();
@@ -73,22 +73,6 @@ class Loadout {
     private ImageView dazedView;
     private ImageView weakView;
     private Button deleteButton;
-
-    // Empty loadout
-    Loadout(Context mContext, Activity activity, int loadoutId) {
-        this.mContext = mContext;
-        this.mActivity = activity;
-        selectorView = activity.findViewById(R.id.item_selection_view);
-        filterView = activity.findViewById(R.id.filter);
-            checkUt = filterView.findViewById(R.id.check_ut);
-            checkSt = filterView.findViewById(R.id.check_st);
-            checkT = filterView.findViewById(R.id.check_t);
-            checkReskin = filterView.findViewById(R.id.check_reskin);
-            checkWeak = filterView.findViewById(R.id.check_weak);
-        backgroundFade = activity.findViewById(R.id.fade);
-        this.loadoutId = loadoutId;
-        this.loadoutChanged = true;
-    }
 
     // Loadout with Class included (for 'createNewLoadout' in MainActivity)
     Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass) {

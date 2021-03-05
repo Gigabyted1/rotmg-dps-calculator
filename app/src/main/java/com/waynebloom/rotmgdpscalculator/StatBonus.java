@@ -10,10 +10,6 @@ class StatBonus {
     int lifeBonus;
     int manaBonus;
 
-    StatBonus() {
-
-    }
-
     StatBonus(int attBonus, int defBonus, int spdBonus, int dexBonus, int wisBonus, int vitBonus, int lifeBonus, int manaBonus) {
         this.attBonus = attBonus;
         this.defBonus = defBonus;

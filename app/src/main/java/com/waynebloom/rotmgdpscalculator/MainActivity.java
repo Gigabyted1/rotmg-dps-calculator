@@ -30,9 +30,8 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Loadout> loadouts = new ArrayList<>(8);
+    final ArrayList<Loadout> loadouts = new ArrayList<>(8);
     List<List<DpsEntry>> dpsDataTable = new ArrayList<>();
-    String[] statusEffectNames;
     File saveFile;
 
     Toolbar toolbar;
@@ -53,10 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         saveFile = new File(getApplicationContext().getFilesDir(), "loadouts.txt");
-        statusEffectNames = getResources().getStringArray(R.array.stat_effects);
 
         toolbar = findViewById(R.id.my_toolbar);
-        navigation = findViewById(R.id.navigation);
+        navigationView = findViewById(R.id.navigation);
         fade = findViewById(R.id.fade);
         filterView = findViewById(R.id.filter);
         dpsTableView = findViewById(R.id.dps_table_view);
@@ -83,6 +81,26 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Builds");
         toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance);
 
+        addBuild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Randomly select the default class
+                CharClass randomClass = Loadout.classData.get(new Random().nextInt(16));
+
+                if(loadouts.size() < 8) {
+                    Loadout newLoadout = new Loadout(getApplicationContext(),
+                            MainActivity.this,
+                            loadouts.size(),
+                            randomClass
+                    );
+                    loadouts.add(newLoadout);
+                    loadAdpt.notifyDataSetChanged();
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "You can only have 8 loadouts at a time.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -121,39 +139,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //More action bar setup
-        getMenuInflater().inflate(R.menu.menubar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_switch:
-                if(onLoadouts) {
-                    loadoutView.setVisibility(View.GONE);
-                    dpsTableView.setVisibility(View.VISIBLE);
-                    addBuild.setVisibility(View.GONE);
-                    setTitle("DPS Table");
-                    populateDpsTable();
-                    onLoadouts = false;
-                }
-                else {
-                    loadoutView.setVisibility(View.VISIBLE);
-                    dpsTableView.setVisibility(View.GONE);
-                    addBuild.setVisibility(View.VISIBLE);
-                    setTitle("Loadouts");
-                    onLoadouts = true;
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
     @Override
     public void onBackPressed() {
         if(!onLoadouts) {
@@ -169,26 +154,6 @@ public class MainActivity extends AppCompatActivity {
             fade.setVisibility(View.GONE);
             filterView.setVisibility(View.GONE);
         }
-    }
-
-    public void createNewLoadout(View view) {
-
-        // Randomly select the default class
-        CharClass randomClass = Loadout.classData.get(new Random().nextInt(16));
-
-        if(loadouts.size() < 8) {
-            Loadout newLoadout = new Loadout(getApplicationContext(),
-                    this,
-                    loadouts.size(),
-                    randomClass
-            );
-            loadouts.add(newLoadout);
-            loadAdpt.notifyDataSetChanged();
-        }
-        else {
-            Toast.makeText(this, "You can only have 8 loadouts at a time.", Toast.LENGTH_LONG).show();
-        }
-
     }
 
     // Generates an ascending order list of each current loadout's damage per second for each level of defense up to the maximum
@@ -261,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
         writer.write(saveStr.toString());
         writer.close();
     }     // | TODO: Clean this shit up, my EYES
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void loadBuilds() throws IOException {
         BufferedReader loadReader = new BufferedReader(new FileReader(saveFile));
         ArrayList<StringBuilder> lineData;

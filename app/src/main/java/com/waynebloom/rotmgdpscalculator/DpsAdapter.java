@@ -21,8 +21,8 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
     private final Typeface myFont;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView defense;
-        TextView[] dpsViews;
+        final TextView defense;
+        final TextView[] dpsViews;
 
         public ViewHolder(View view) {
             super(view);

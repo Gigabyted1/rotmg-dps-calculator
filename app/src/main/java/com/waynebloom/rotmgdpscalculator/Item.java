@@ -3,6 +3,7 @@ package com.waynebloom.rotmgdpscalculator;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 class Item {
 
     // Qualitative info
@@ -22,7 +23,7 @@ class Item {
 
     // Item set info
     public static List<ItemSet> itemSets;
-    private int partOfSet;
+    private final int partOfSet;
 
     Item (String name, int imageId, String categories, int relItemId, int absItemId, int partOfSet, StatBonus statBonus, double avgDamage, int noOfShots, double rateOfFire, double range, int attribute) {
         this.name = name;
