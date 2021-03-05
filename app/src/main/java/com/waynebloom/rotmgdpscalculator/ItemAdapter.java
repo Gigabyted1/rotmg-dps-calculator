@@ -82,7 +82,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     private void populateFields(ViewHolder mViewHolder, Item currentItem) {
-        final int MAX_NAME_LENGTH = 29;
+        final int MAX_NAME_LENGTH = 27;
         final float FONT_SIZE_NAME = 10;
         final float FONT_SIZE_DESC = 8;
 

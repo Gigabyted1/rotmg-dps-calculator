@@ -90,7 +90,7 @@
 
     <include
         android:id="@+id/footer"
-        layout="@layout/footer"
+        layout="@layout/filter"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
