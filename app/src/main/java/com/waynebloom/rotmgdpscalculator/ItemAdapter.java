@@ -38,9 +38,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             super(view);
             image = view.findViewById(R.id.item_picture);
             name = view.findViewById(R.id.item_name);
-            dmg = view.findViewById(R.id.item_dmg);
+            /*dmg = view.findViewById(R.id.item_dmg);
             rof = view.findViewById(R.id.item_rof);
-            shots = view.findViewById(R.id.item_shots);
+            shots = view.findViewById(R.id.item_shots);*/
             parent = view;
         }
     }
@@ -59,7 +59,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater
                         .from(mContext)
-                        .inflate(R.layout.list_item_itemsel, parent, false)
+                        .inflate(R.layout.list_item_item, parent, false)
         );
     }
 
@@ -82,7 +82,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     private void populateFields(ViewHolder mViewHolder, Item currentItem) {
-        final int MAX_NAME_LENGTH = 29;
+        final int MAX_NAME_LENGTH = 27;
         final float FONT_SIZE_NAME = 10;
         final float FONT_SIZE_DESC = 8;
 
@@ -97,7 +97,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         mViewHolder.name.setTypeface(myFont);
         mViewHolder.name.setTextSize(FONT_SIZE_NAME);
 
-        mViewHolder.dmg.setText(String.format(Locale.US,"%.2f", currentItem.getAvgDamage()));
+       /* mViewHolder.dmg.setText(String.format(Locale.US,"%.2f", currentItem.getAvgDamage()));
         mViewHolder.dmg.setTypeface(myFont);
         mViewHolder.dmg.setTextSize(FONT_SIZE_DESC);
 
@@ -107,7 +107,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         mViewHolder.shots.setText(String.format(Locale.US,"%d", currentItem.getNoOfShots()));
         mViewHolder.shots.setTypeface(myFont);
-        mViewHolder.shots.setTextSize(FONT_SIZE_DESC);
+        mViewHolder.shots.setTextSize(FONT_SIZE_DESC);*/
     }
 
     public void enactCategories(List<String> mCategories) {

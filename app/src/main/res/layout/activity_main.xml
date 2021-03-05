@@ -21,17 +21,33 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <androidx.viewpager2.widget.ViewPager2 xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:theme="@style/Widget.BottomNavigationView"
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:id="@+id/container"/>
+        android:id="@+id/container">
+
+    </androidx.viewpager2.widget.ViewPager2>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/loadout_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="125dp"
+        android:paddingBottom="90dp"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +61,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintEnd_toEndOf="parent">
 
         <Button
@@ -73,12 +89,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/footer"
-        layout="@layout/footer"
+        android:id="@+id/filter"
+        layout="@layout/filter"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_selection_view" />
 
@@ -92,7 +108,7 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintBottom_toTopOf="@id/filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
@@ -103,150 +119,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/stat_edit"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:background="@drawable/bg_dialogue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/bg_button"
-            android:text="Done"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ring_stat" />
-
-        <SeekBar
-            android:id="@+id/stat_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:thumb="@drawable/thumb"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
-
-        <TextView
-            android:id="@+id/base_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:hint="Stat"
-            android:includeFontPadding="true"
-            android:text="75(93)"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stat_seekbar" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stat"
-            android:textColor="#CCCCCC"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="Slide the bar to change the base stat"
-            android:textColor="#CCCCCC"
-            android:textSize="8dp"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
-
-        <TextView
-            android:id="@+id/wep_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/base_stat" />
-
-        <TextView
-            android:id="@+id/abil_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wep_stat" />
-
-        <TextView
-            android:id="@+id/arm_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/abil_stat" />
-
-        <TextView
-            android:id="@+id/ring_stat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_stats"
-            android:gravity="center"
-            android:text="+5"
-            android:textColor="@color/colorMaxedText"
-            app:fontFamily="@font/myfont"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/arm_stat" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--        app:adUnitId="ca-app-pub-1507290914426110/2593373825" (for live) -->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,4 +14,10 @@
         <item name="colorControlHighlight">#730000</item>
     </style>
 
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/myfont</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
