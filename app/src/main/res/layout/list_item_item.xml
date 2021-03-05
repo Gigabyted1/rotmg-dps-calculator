@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="350dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_itemlisting"
+    android:background="@drawable/bg_item_item"
     android:orientation="horizontal">
 
     <ImageView
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
         android:maxLength="29"
         android:text="Item Name"
         android:textColor="#C5C5C5"

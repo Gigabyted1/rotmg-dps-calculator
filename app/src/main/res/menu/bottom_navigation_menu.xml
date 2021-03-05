@@ -3,7 +3,7 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@drawable/berserk"
+        android:icon="@drawable/loadouts_icon"
         android:title="@string/loadouts_name"/>
     <item
         android:id="@+id/page_2"

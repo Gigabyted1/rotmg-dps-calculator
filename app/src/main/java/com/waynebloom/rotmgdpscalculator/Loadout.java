@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -776,8 +775,6 @@ class Loadout {
             else {    // defense factor removed (armor piercing)
                 finalDps = Math.round(baseDmg) * dmgModifier * attModifier * noOfShots * finalRof;
             }
-
-            Log.i("DpsLogging", Double.toString(finalDps));
             loadoutDps.add(new DpsEntry(finalDps, loadoutId));
         }
     }
