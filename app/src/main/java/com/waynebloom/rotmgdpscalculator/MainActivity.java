@@ -1,16 +1,12 @@
 package com.waynebloom.rotmgdpscalculator;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -19,303 +15,73 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Loadout> loadouts = new ArrayList<>(8);
-    List<List<DpsEntry>> dpsDataTable = new ArrayList<>();
-    String[] statusEffectNames;
-    File saveFile;
-
     Toolbar toolbar;
+    private ViewPager2 mViewPager;
+    private SectionsStatePagerAdapter pagerAdapter;
     BottomNavigationView navigationView;
-    View fade;
-    View filterView;
-    RecyclerView dpsTableView;
-    RecyclerView selectorView;
-    RecyclerView loadoutView;
-    Button addBuild;
-    boolean onLoadouts = true;
-    DpsAdapter dpsAdpt;
-    LoadoutAdapter loadAdpt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-
-        saveFile = new File(getApplicationContext().getFilesDir(), "loadouts.txt");
-        statusEffectNames = getResources().getStringArray(R.array.stat_effects);
-
         toolbar = findViewById(R.id.my_toolbar);
-        navigation = findViewById(R.id.navigation);
-        fade = findViewById(R.id.fade);
-        filterView = findViewById(R.id.filter);
-        dpsTableView = findViewById(R.id.dps_table_view);
-        selectorView = findViewById(R.id.item_selection_view);
-        loadoutView = findViewById(R.id.loadout_view);
-        addBuild = findViewById(R.id.add_button);
+        mViewPager = findViewById(R.id.container);
+        setupViewPager(mViewPager);
         navigationView = findViewById(R.id.navigation);
-
-        // Reads item and class data from file
-        readData();
-
-        // Load previous loadouts
-        try {
-            loadBuilds();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        loadAdpt = new LoadoutAdapter(this, loadouts);
-        loadoutView.setAdapter(loadAdpt);
-        loadoutView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Toolbar stuff
-        setSupportActionBar(toolbar);
-        setTitle("Builds");
-        toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance);
-
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.page_1:
-                        loadoutView.setVisibility(View.VISIBLE);
-                        dpsTableView.setVisibility(View.GONE);
-                        addBuild.setVisibility(View.VISIBLE);
-                        setTitle("Loadouts");
+                        setViewPagerPosition(0);
                         return true;
                     case R.id.page_2:
-                        loadoutView.setVisibility(View.GONE);
-                        dpsTableView.setVisibility(View.VISIBLE);
-                        addBuild.setVisibility(View.GONE);
-                        selectorView.setVisibility(View.GONE);
-                        filterView.setVisibility(View.GONE);
-                        fade.setVisibility(View.GONE);
-                        setTitle("DPS Table");
-                        populateDpsTable();
+                        setViewPagerPosition(1);
                         return true;
                     default:
                         return false;
                 }
             }
         });
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+        // Reads item and class data from file
+        readData();
 
-        try {
-            saveBuilds();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //More action bar setup
-        getMenuInflater().inflate(R.menu.menubar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_switch:
-                if(onLoadouts) {
-                    loadoutView.setVisibility(View.GONE);
-                    dpsTableView.setVisibility(View.VISIBLE);
-                    addBuild.setVisibility(View.GONE);
-                    setTitle("DPS Table");
-                    populateDpsTable();
-                    onLoadouts = false;
-                }
-                else {
-                    loadoutView.setVisibility(View.VISIBLE);
-                    dpsTableView.setVisibility(View.GONE);
-                    addBuild.setVisibility(View.VISIBLE);
-                    setTitle("Loadouts");
-                    onLoadouts = true;
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
-    @Override
-    public void onBackPressed() {
-        if(!onLoadouts) {
-            loadoutView.setVisibility(View.VISIBLE);
-            dpsTableView.setVisibility(View.GONE);
-            addBuild.setVisibility(View.VISIBLE);
-            setTitle("Loadouts");
-            onLoadouts = true;
-        }
-
-        if(selectorView.getVisibility() == View.VISIBLE) {
-            selectorView.setVisibility(View.GONE);
-            fade.setVisibility(View.GONE);
-            filterView.setVisibility(View.GONE);
-        }
-    }
-
-    public void createNewLoadout(View view) {
-
-        // Randomly select the default class
-        CharClass randomClass = Loadout.classData.get(new Random().nextInt(16));
-
-        if(loadouts.size() < 8) {
-            Loadout newLoadout = new Loadout(getApplicationContext(),
-                    this,
-                    loadouts.size(),
-                    randomClass
-            );
-            loadouts.add(newLoadout);
-            loadAdpt.notifyDataSetChanged();
-        }
-        else {
-            Toast.makeText(this, "You can only have 8 loadouts at a time.", Toast.LENGTH_LONG).show();
-        }
+        // Toolbar stuff
+        setSupportActionBar(toolbar);
+        setTitle("RotMG DPS Calculator");
+        toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance);
 
     }
 
-    // Generates an ascending order list of each current loadout's damage per second for each level of defense up to the maximum
-    public void populateDpsTable() {
-        dpsDataTable.clear();
+    private void setupViewPager(ViewPager2 viewPager) {
+        pagerAdapter = new SectionsStatePagerAdapter(MainActivity.this);
+        pagerAdapter.addFragment(new LoadoutFragment(), "Loadout fragment");
+        pagerAdapter.addFragment(new DpsFragment(), "DPS fragment");
+        viewPager.setAdapter(pagerAdapter);
+    }
 
-        for(int currentDefLevel = 0; currentDefLevel <= 150; currentDefLevel++) {
-            ArrayList<DpsEntry> dpsTableAtCurrentDefLevel = new ArrayList<>();
-            for(Loadout currentLoadout : loadouts) {
-                dpsTableAtCurrentDefLevel.add(currentLoadout.getDps().get(currentDefLevel));
-            }
-            dpsDataTable.add(dpsTableAtCurrentDefLevel);
-        }
-
-        dpsDataTable = sortDpsTable(dpsDataTable);
-
-        if(dpsAdpt == null) {
-            dpsAdpt = new DpsAdapter(MainActivity.this, dpsDataTable);
-            dpsTableView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-            dpsTableView.setAdapter(dpsAdpt);
-        }
-        else {
-            dpsAdpt.notifyDataSetChanged();
+    public void setViewPagerPosition(int position) {
+        // if switching to dps
+        mViewPager.setCurrentItem(position);
+        if(position == 1) {
+            DpsFragment dpsFragment = (DpsFragment) pagerAdapter.getFragment(1);
+            dpsFragment.displayDpsTable();
         }
     }
 
-    public void notifyLoadoutRemoved() {
-        if(dpsAdpt != null) {
-            dpsAdpt = new DpsAdapter(MainActivity.this, dpsDataTable);
-            dpsTableView.setAdapter(dpsAdpt);
-        }
+    public SectionsStatePagerAdapter getFragmentHolder() {
+        return pagerAdapter;
     }
 
-    private List<List<DpsEntry>> sortDpsTable(List<List<DpsEntry>> data) {        // Insert sort
-        for(int i = 0; i <= 150; i++) {                                 // Insert sort on the data
-            for(int j = 1; j < loadouts.size(); j++) {
-                DpsEntry currentEntry = data.get(i).get(j);
-                int k = j;
-                while(k > 0 && data.get(i).get(k - 1).getDps() < currentEntry.getDps()) {
-                    data.get(i).set(k, data.get(i).get(k - 1));
-                    k--;
-                }
-                data.get(i).set(k, currentEntry);
-            }
-        }
-
-        return data;
-    }
-    private void saveBuilds() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(saveFile, false));
-        StringBuilder saveStr = new StringBuilder();
-
-        for(Loadout i : loadouts) {
-            saveStr.append(i.getCharClass().getClassId()).append('/');
-            saveStr.append(i.getWeapon().getRelItemId()).append('/');
-            saveStr.append(i.getAbility().getRelItemId()).append('/');
-            saveStr.append(i.getArmor().getRelItemId()).append('/');
-            saveStr.append(i.getRing().getRelItemId()).append('/');
-
-            boolean[] activeEffects = i.getActiveEffects();
-            for (boolean activeEffect : activeEffects) {
-                if (activeEffect) {
-                    saveStr.append('1');
-                } else {
-                    saveStr.append('0');
-                }
-            }
-            saveStr.append("/\n");
-        }
-        writer.write(saveStr.toString());
-        writer.close();
-    }     // | TODO: Clean this shit up, my EYES
-    private void loadBuilds() throws IOException {
-        BufferedReader loadReader = new BufferedReader(new FileReader(saveFile));
-        ArrayList<StringBuilder> lineData;
-        char fileChar;
-        int lineLoc;
-
-        while(loadReader.ready()) {
-            lineData = new ArrayList<>(6);
-            lineLoc = 0;
-            for(int i = 0; i < 6; i++) {
-                lineData.add(new StringBuilder());
-            }
-            while(loadReader.ready() && lineLoc < 6) {
-                fileChar = (char)loadReader.read();
-                if(fileChar == '/') {
-                    lineLoc++;
-                }
-                else {
-                    lineData.get(lineLoc).append(fileChar);
-                }
-
-                if(lineLoc == 6) {
-                    loadReader.read();
-                    int[] temps = { Integer.parseInt(lineData.get(0).toString()), Integer.parseInt(lineData.get(1).toString()),
-                            Integer.parseInt(lineData.get(2).toString()), Integer.parseInt(lineData.get(3).toString()),
-                            Integer.parseInt(lineData.get(4).toString()) };
-
-                    // Translate the nonsense above
-                    int loadoutId = loadouts.size();
-                    CharClass loadedClass = Loadout.classData.get(temps[0]);
-                    Item loadedWeapon = loadedClass.getWeapons().get(temps[1]);
-                    Item loadedAbility = loadedClass.getAbilities().get(temps[2]);
-                    Item loadedArmor = loadedClass.getArmors().get(temps[3]);
-                    Item loadedRing = loadedClass.getRings().get(temps[4]);
-                    String loadedEffects = lineData.get(5).toString();
-
-                    Loadout newLoadout = new Loadout(
-                            getApplicationContext(),
-                            MainActivity.this,
-                            loadoutId,
-                            loadedClass,
-                            loadedWeapon,
-                            loadedAbility,
-                            loadedArmor,
-                            loadedRing,
-                            loadedEffects
-                    );
-                    loadouts.add(newLoadout);
-                }
-            }
-        }
-
-        loadReader.close();
-    }     // |
-
+    // read game data from file
     private void readData() {
         String[] fileNames = { "items.json", "classes.json", "item_sets.json" };
         JSONObject[] data = new JSONObject[3];
@@ -333,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
     private void parseData(JSONObject[] data) throws JSONException {
         final int STANDARD_SET_MAXIMUM_INDEX = 37;
         int itemOutsideSize = data[0].getJSONArray("item").length();

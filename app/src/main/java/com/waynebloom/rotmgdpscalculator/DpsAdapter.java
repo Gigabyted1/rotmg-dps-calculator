@@ -2,7 +2,6 @@ package com.waynebloom.rotmgdpscalculator;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import java.util.Locale;
 class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
     private final Context mContext;
     private final List<List<DpsEntry>> data;
-    private final Typeface myFont;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView defense;
@@ -42,7 +40,6 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
     DpsAdapter(Context context, List<List<DpsEntry>> data) {
         mContext = context;
         this.data = data;
-        myFont = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
     }
 
     @NonNull
@@ -61,7 +58,6 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
 
     private void populateFields(ViewHolder holder, int position, List<DpsEntry> currentDefLevel) {
         holder.defense.setText(String.format(Locale.US, "%d", position));
-        holder.defense.setTypeface(myFont);
         holder.defense.setTextColor(Color.parseColor("#EEEEEE"));
         holder.defense.setTextSize(17f);
 
@@ -112,7 +108,6 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
 
             }
 
-            holder.dpsViews[i].setTypeface(myFont);
             holder.dpsViews[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
             holder.dpsViews[i].setVisibility(View.VISIBLE);
         }
