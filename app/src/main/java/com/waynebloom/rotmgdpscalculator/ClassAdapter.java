@@ -55,7 +55,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callingLoadout.informSelected(null, data.get(position), Loadout.CLASS);
+                callingLoadout.informSelected(data.get(position));
                 callingLoadout.makeSelectorViewGone();
             }
         });

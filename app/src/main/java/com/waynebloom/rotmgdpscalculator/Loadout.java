@@ -1,6 +1,5 @@
 package com.waynebloom.rotmgdpscalculator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,8 +24,8 @@ class Loadout {
 
     // misc
     public static List<CharClass> classData;
+    private final LoadoutFragment mFragment;
     private final Context mContext;
-    private final Activity mActivity;
     private int loadoutId;
     private ItemAdapter itemAdpt;
     static final int CLASS = 0;
@@ -33,6 +33,8 @@ class Loadout {
     static final int ABILITY = 2;
     static final int ARMOR = 3;
     static final int RING = 4;
+    static final int ATT = 5;
+    static final int DEX = 6;
 
     // constant views
     private final RecyclerView selectorView;
@@ -75,39 +77,43 @@ class Loadout {
     private Button deleteButton;
 
     // Empty loadout
-    Loadout(Context mContext, Activity activity, int loadoutId) {
-        this.mContext = mContext;
-        this.mActivity = activity;
-        selectorView = activity.findViewById(R.id.item_selection_view);
-        filterView = activity.findViewById(R.id.filter);
+    Loadout(LoadoutFragment mFragment, int loadoutId) {
+        View fragmentView = mFragment.getView();
+
+        this.mFragment = mFragment;
+        this.mContext = mFragment.getContext();
+        selectorView = fragmentView.findViewById(R.id.item_selection_view);
+        filterView = fragmentView.findViewById(R.id.filter);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
             checkReskin = filterView.findViewById(R.id.check_reskin);
             checkWeak = filterView.findViewById(R.id.check_weak);
-        backgroundFade = activity.findViewById(R.id.fade);
+        backgroundFade = fragmentView.findViewById(R.id.fade);
         this.loadoutId = loadoutId;
         this.loadoutChanged = true;
     }
 
     // Loadout with Class included (for 'createNewLoadout' in MainActivity)
-    Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass) {
-        this.mContext = mContext;
-        this.mActivity = activity;
-        this.selectorView = activity.findViewById(R.id.item_selection_view);
-        this.filterView = activity.findViewById(R.id.filter);
+    Loadout(LoadoutFragment mFragment, int loadoutId, CharClass charClass) {
+        View fragmentView = mFragment.getView();
+
+        this.mFragment = mFragment;
+        this.mContext = mFragment.getContext();
+        this.selectorView = fragmentView.findViewById(R.id.item_selection_view);
+        this.filterView = fragmentView.findViewById(R.id.filter);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
             checkReskin = filterView.findViewById(R.id.check_reskin);
             checkWeak = filterView.findViewById(R.id.check_weak);
-        this.backgroundFade = activity.findViewById(R.id.fade);
+        this.backgroundFade = fragmentView.findViewById(R.id.fade);
         this.loadoutId = loadoutId;
         this.loadoutChanged = true;
 
         // load initial stats
         this.charClass = charClass;
-        this.baseStats = charClass.getMaxedStats();
+        this.baseStats.addBonus(charClass.getMaxedStats());
         this.statTotals.addBonus(baseStats);
         this.weapon = charClass.getWeapons().get(0);
         this.ability = charClass.getAbilities().get(0);
@@ -121,23 +127,25 @@ class Loadout {
     }
 
     // Loadout with all gear included (for 'loadBuilds' in MainActivity)
-    Loadout(Context mContext, Activity activity, int loadoutId, CharClass charClass, Item weapon, Item ability, Item armor, Item ring, String activeEffects) {
-        this.mContext = mContext;
-        this.mActivity = activity;
-        this.selectorView = activity.findViewById(R.id.item_selection_view);
-        this.filterView = activity.findViewById(R.id.filter);
+    Loadout(LoadoutFragment mFragment, int loadoutId, CharClass charClass, Item weapon, Item ability, Item armor, Item ring, String activeEffects) {
+        View fragmentView = mFragment.getView();
+
+        this.mFragment = (LoadoutFragment) mFragment;
+        this.mContext = mFragment.getContext();
+        this.selectorView = fragmentView.findViewById(R.id.item_selection_view);
+        this.filterView = fragmentView.findViewById(R.id.filter);
             checkUt = filterView.findViewById(R.id.check_ut);
             checkSt = filterView.findViewById(R.id.check_st);
             checkT = filterView.findViewById(R.id.check_t);
             checkReskin = filterView.findViewById(R.id.check_reskin);
             checkWeak = filterView.findViewById(R.id.check_weak);
-        this.backgroundFade = activity.findViewById(R.id.fade);
+        this.backgroundFade = fragmentView.findViewById(R.id.fade);
         this.loadoutId = loadoutId;
         this.loadoutChanged = true;
 
         // load initial stats
         this.charClass = charClass;
-        this.baseStats = charClass.getMaxedStats();
+        this.baseStats.addBonus(charClass.getMaxedStats());
         this.statTotals.addBonus(baseStats);
         this.weapon = weapon;
         this.statTotals.addBonus(weapon.getStatBonus());
@@ -266,13 +274,12 @@ class Loadout {
                 }
 
                 // Produce a dialog box for selection of new baseAtt value
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mActivity);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
                 mBuilder.setTitle("Change Base Attack")
                         .setItems(baseStatRange, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int difference = baseStats.getAttBonus() - which;
-                        baseStats.subtractBonus(new StatBonus(difference,0,0,0,0,0,0,0));
+                        informSelected(which, ATT);
                     }
                 })
                         .create()
@@ -295,13 +302,12 @@ class Loadout {
                 }
 
                 // Produce a dialog box for selection of new baseDex value
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mActivity);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
                 mBuilder.setTitle("Change Base Dexterity")
                         .setItems(baseStatRange, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int difference = baseStats.getDexBonus() - which;
-                        baseStats.subtractBonus(new StatBonus(0,0,0, difference,0,0,0,0));
+                        informSelected(which, DEX);
                     }
                 })
                         .create()
@@ -319,7 +325,7 @@ class Loadout {
                 String[] statusEffectNames = mContext.getResources().getStringArray(R.array.stat_effects);
 
                 // Produce a dialog box for selection of status effects
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mActivity);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
                 mBuilder.setTitle("Status Effects")
                         .setMultiChoiceItems(statusEffectNames, activeEffects, new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
@@ -343,14 +349,14 @@ class Loadout {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mActivity);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
                 mBuilder.setTitle("Confirm Delete")
                         .setMessage("Are you sure you want to delete this loadout?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         caller.removeAt(loadoutId);
-                        ((MainActivity) mActivity).notifyLoadoutRemoved();
+                        mFragment.notifyLoadoutRemoved();
                     }
                 })
                         .setNegativeButton("Cancel", null)
@@ -464,27 +470,9 @@ class Loadout {
     }
 
     // Called by ItemAdapter and ClassAdapter. Assigns the selected object to the corresponding load out variable
-    public void informSelected(Item item, CharClass mClass, int type) {
+    public void informSelected(Item item, int type) {
         Item prevItem;
-        CharClass prevClass;
         switch(type) {
-            case CLASS:
-                prevClass = charClass;
-                charClass = mClass;
-                updateClass(mClass);
-                if (charClass.getWeapons().get(0).getAbsItemId() != prevClass.getWeapons().get(0).getAbsItemId()) {
-                    weapon = charClass.getWeapons().get(0);
-                    updateWeapon(item);
-                }
-                if (charClass.getAbilities().get(0).getAbsItemId() != prevClass.getAbilities().get(0).getAbsItemId()) {
-                    ability = charClass.getAbilities().get(0);
-                    updateAbility(item);
-                }
-                if (charClass.getArmors().get(0).getAbsItemId() != prevClass.getArmors().get(0).getAbsItemId()) {
-                    armor = charClass.getArmors().get(0);
-                    updateArmor(item);
-                }
-                break;
             case WEAPON:
                 prevItem = weapon;
                 weapon = item;
@@ -506,6 +494,55 @@ class Loadout {
                 updateRing(prevItem);
                 break;
         }
+        mFragment.saveLoadouts();
+
+        loadoutChanged = true;
+    }
+
+    public void informSelected(CharClass mClass) {
+        CharClass prevClass = charClass;
+        charClass = mClass;
+        updateClass(mClass);
+        if (charClass.getWeapons().get(0).getAbsItemId() != prevClass.getWeapons().get(0).getAbsItemId()) {
+            Item prevWeapon = weapon;
+            weapon = charClass.getWeapons().get(0);
+            updateWeapon(prevWeapon);
+        }
+        if (charClass.getAbilities().get(0).getAbsItemId() != prevClass.getAbilities().get(0).getAbsItemId()) {
+            Item prevAbility = ability;
+            ability = charClass.getAbilities().get(0);
+            updateAbility(prevAbility);
+        }
+        if (charClass.getArmors().get(0).getAbsItemId() != prevClass.getArmors().get(0).getAbsItemId()) {
+            Item prevArmor = armor;
+            armor = charClass.getArmors().get(0);
+            updateArmor(prevArmor);
+        }
+        mFragment.saveLoadouts();
+
+        loadoutChanged = true;
+    }
+
+    public void informSelected(int newStat, int type) {
+        int prevStat;
+        StatBonus statDiff;
+        switch (type) {
+            case ATT:
+                prevStat = baseStats.getAttBonus();
+                statDiff = new StatBonus(prevStat - newStat, 0, 0, 0, 0, 0, 0, 0);
+                baseStats.subtractBonus(statDiff);
+                statTotals.subtractBonus(statDiff);
+                updateAtt();
+                break;
+            case DEX:
+                prevStat = baseStats.getDexBonus();
+                statDiff = new StatBonus(0, 0, 0, prevStat - newStat, 0, 0, 0, 0);
+                baseStats.subtractBonus(statDiff);
+                statTotals.subtractBonus(statDiff);
+                updateDex();
+                break;
+        }
+        mFragment.saveLoadouts();
 
         loadoutChanged = true;
     }
@@ -659,20 +696,45 @@ class Loadout {
 
     private void updateAtt() {
         if (attView != null) {
-            String attStr = statTotals.getAttBonus() +
-                    "(+" +
-                    (statTotals.getAttBonus() - baseStats.getAttBonus()) +
-                    ')';
+            String attStr = String.valueOf(statTotals.getAttBonus());
+
+            int bonusAtt = statTotals.getAttBonus() - baseStats.getAttBonus();
+            if(bonusAtt > 0) {
+                attStr = attStr + "(+" + bonusAtt + ')';
+            }
+            else if(bonusAtt < 0) {
+                attStr = attStr + '(' + bonusAtt + ')';
+            }
+
+            if(baseStats.getAttBonus() < charClass.getMaxedStats().getAttBonus()) {
+                attView.setTextColor(ContextCompat.getColor(mContext, R.color.colorUnmaxedText));
+            }
+            else {
+                attView.setTextColor(ContextCompat.getColor(mContext, R.color.colorMaxedText));
+            }
             attView.setText(attStr);
         }
     }
 
     private void updateDex() {
         if (dexView != null) {
-            String dexStr = statTotals.getDexBonus() +
-                    "(+" +
-                    (statTotals.getDexBonus() - baseStats.getDexBonus()) +
-                    ')';
+            String dexStr = String.valueOf(statTotals.getDexBonus());
+
+            int bonusDex = statTotals.getDexBonus() - baseStats.getDexBonus();
+            if(bonusDex > 0) {
+                dexStr = dexStr + "(+" + bonusDex + ')';
+            }
+            else if(bonusDex < 0) {
+                dexStr = dexStr + '(' + bonusDex + ')';
+            }
+            
+            // change color if unmaxed
+            if(baseStats.getDexBonus() < charClass.getMaxedStats().getDexBonus()) {
+                dexView.setTextColor(ContextCompat.getColor(mContext, R.color.colorUnmaxedText));
+            }
+            else {
+                dexView.setTextColor(ContextCompat.getColor(mContext, R.color.colorMaxedText));
+            }
             dexView.setText(dexStr);
         }
     }
