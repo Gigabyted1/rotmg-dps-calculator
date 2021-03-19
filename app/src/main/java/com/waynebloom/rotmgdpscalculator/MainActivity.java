@@ -63,6 +63,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mViewPager.getCurrentItem() == 0) {
+            ((LoadoutFragment) pagerAdapter.getFragment(0)).onBackPressed();
+        }
+        else {
+            navigationView.setSelectedItemId(R.id.page_1);
+            ((DpsFragment) pagerAdapter.getFragment(1)).onBackPressed();
+        }
+    }
+
     private void setupViewPager(ViewPager2 viewPager) {
         pagerAdapter = new SectionsStatePagerAdapter(MainActivity.this);
         pagerAdapter.addFragment(new LoadoutFragment(), "Loadout fragment");

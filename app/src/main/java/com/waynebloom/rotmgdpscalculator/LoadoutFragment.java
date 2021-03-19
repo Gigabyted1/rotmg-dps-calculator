@@ -33,10 +33,10 @@ public class LoadoutFragment extends Fragment {
     private Button btnAddLoadout;
     private File saveFile;
 
-    /*// selector TODO: might not be necessary to reference these here
+    // selector
     private RecyclerView selectorView;
     private View filterView;
-    private View fade;*/
+    private View fade;
 
     public LoadoutFragment() {
 
@@ -55,9 +55,9 @@ public class LoadoutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_loadout, container, false);
         loadoutView = view.findViewById(R.id.loadout_view);
         btnAddLoadout = view.findViewById(R.id.add_button);
-        /*selectorView = view.findViewById(R.id.item_selection_view); TODO: see above
+        selectorView = view.findViewById(R.id.item_selection_view);
         filterView = view.findViewById(R.id.filter);
-        fade = view.findViewById(R.id.fade);*/
+        fade = view.findViewById(R.id.fade);
 
         return view;
     }
@@ -96,6 +96,14 @@ public class LoadoutFragment extends Fragment {
 
     public List<Loadout> getLoadouts() {
         return loadouts;
+    }
+
+    public void onBackPressed() {
+        if(selectorView.getVisibility() == View.VISIBLE) {
+            selectorView.setVisibility(View.INVISIBLE);
+            filterView.setVisibility(View.INVISIBLE);
+            fade.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void notifyLoadoutRemoved() {
