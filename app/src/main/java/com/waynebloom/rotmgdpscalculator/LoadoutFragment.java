@@ -47,7 +47,7 @@ public class LoadoutFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mActivity = (MainActivity) getActivity();
-        saveFile = new File(getContext().getFilesDir(), "loadouts.txt");
+        saveFile = new File(requireContext().getFilesDir(), "loadouts.txt");
     }
 
     @Override
