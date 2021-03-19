@@ -80,6 +80,7 @@ public class LoadoutFragment extends Fragment {
                     );
                     loadouts.add(newLoadout);
                     loadAdpt.notifyDataSetChanged();
+                    saveLoadouts();
                 }
                 else {
                     Toast.makeText(getContext(), "You can only have 8 loadouts at a time.", Toast.LENGTH_LONG).show();
@@ -108,8 +109,8 @@ public class LoadoutFragment extends Fragment {
 
     public void notifyLoadoutRemoved() {
         DpsFragment dpsFragment = (DpsFragment) mActivity.getFragmentHolder().getFragment(1);
-
         dpsFragment.notifyLoadoutRemoved();
+        saveLoadouts();
     }
 
     public void saveLoadouts() {
