@@ -48,6 +48,10 @@ public class DpsFragment extends Fragment {
         displayDpsTable();
     }
 
+    public void onBackPressed() {
+        mActivity.setViewPagerPosition(0);
+    }
+
     public void displayDpsTable() {
         if(dpsTableView != null) {
             populateDpsTable(loadoutFragment.getLoadouts());
