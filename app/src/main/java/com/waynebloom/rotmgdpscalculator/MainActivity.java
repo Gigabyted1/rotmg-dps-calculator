@@ -38,15 +38,17 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()) {
-                    case R.id.page_1:
-                        setViewPagerPosition(0);
-                        return true;
-                    case R.id.page_2:
-                        setViewPagerPosition(1);
-                        return true;
-                    default:
-                        return false;
+                int itemId = item.getItemId();
+                if(itemId == R.id.page_1) {
+                    setViewPagerPosition(0);
+                    return true;
+                }
+                else if(itemId == R.id.page_2) {
+                    setViewPagerPosition(1);
+                    return true;
+                }
+                else {
+                    return false;
                 }
             }
         });
@@ -203,96 +205,75 @@ public class MainActivity extends AppCompatActivity {
 
                 // translating from JSONArray to required types
                 JSONArray jWeaponIds = currentSet.getJSONArray("weaponId");
-                int[] weaponIds = new int[0];
-                if (jWeaponIds != null) {
-                    weaponIds = new int[jWeaponIds.length()];
-                    for(int k = 0; k < jWeaponIds.length(); k++) {
-                        weaponIds[k] = jWeaponIds.getInt(k);
-                    }
+                int[] weaponIds = new int[jWeaponIds.length()];
+                for(int k = 0; k < jWeaponIds.length(); k++) {
+                    weaponIds[k] = jWeaponIds.getInt(k);
                 }
 
                 JSONArray jAbilityIds = currentSet.getJSONArray("abilityId");
-                int[] abilityIds = new int[0];
-                if (jAbilityIds != null) {
-                    abilityIds = new int[jAbilityIds.length()];
-                    for(int k = 0; k < jAbilityIds.length(); k++) {
-                        abilityIds[k] = jAbilityIds.getInt(k);
-                    }
+                int[] abilityIds = new int[jAbilityIds.length()];
+                for(int k = 0; k < jAbilityIds.length(); k++) {
+                    abilityIds[k] = jAbilityIds.getInt(k);
                 }
 
                 JSONArray jArmorIds = currentSet.getJSONArray("armorId");
-                int[] armorIds = new int[0];
-                if (jArmorIds != null) {
-                    armorIds = new int[jArmorIds.length()];
-                    for(int k = 0; k < jArmorIds.length(); k++) {
-                        armorIds[k] = jArmorIds.getInt(k);
-                    }
+                int[] armorIds = new int[jArmorIds.length()];
+                for(int k = 0; k < jArmorIds.length(); k++) {
+                    armorIds[k] = jArmorIds.getInt(k);
                 }
 
                 JSONArray jRingIds = currentSet.getJSONArray("ringId");
-                int[] ringIds = new int[0];
-                if (jRingIds != null) {
-                    ringIds = new int[jRingIds.length()];
-                    for(int k = 0; k < jRingIds.length(); k++) {
-                        ringIds[k] = jRingIds.getInt(k);
-                    }
+                int[] ringIds = new int[jRingIds.length()];
+                for(int k = 0; k < jRingIds.length(); k++) {
+                    ringIds[k] = jRingIds.getInt(k);
                 }
 
                 JSONArray jTwoItem = currentSet.getJSONArray("two_item_bonus");
-                StatBonus[] twoItem = new StatBonus[0];
-                if (jTwoItem != null) {
-                    twoItem = new StatBonus[jTwoItem.length()];
-                    for(int k = 0; k < jTwoItem.length(); k++) {
-                        JSONObject currentBonus = jTwoItem.getJSONObject(k);
-                        twoItem[k] = new StatBonus(
-                                currentBonus.getInt("att"),
-                                currentBonus.getInt("def"),
-                                currentBonus.getInt("spd"),
-                                currentBonus.getInt("dex"),
-                                currentBonus.getInt("wis"),
-                                currentBonus.getInt("vit"),
-                                currentBonus.getInt("life"),
-                                currentBonus.getInt("mana")
-                        );
-                    }
+                StatBonus[] twoItem = new StatBonus[jTwoItem.length()];
+                for(int k = 0; k < jTwoItem.length(); k++) {
+                    JSONObject currentBonus = jTwoItem.getJSONObject(k);
+                    twoItem[k] = new StatBonus(
+                            currentBonus.getInt("att"),
+                            currentBonus.getInt("def"),
+                            currentBonus.getInt("spd"),
+                            currentBonus.getInt("dex"),
+                            currentBonus.getInt("wis"),
+                            currentBonus.getInt("vit"),
+                            currentBonus.getInt("life"),
+                            currentBonus.getInt("mana")
+                    );
                 }
 
                 JSONArray jThreeItem = currentSet.getJSONArray("three_item_bonus");
-                StatBonus[] threeItem = new StatBonus[0];
-                if (jThreeItem != null) {
-                    threeItem = new StatBonus[jThreeItem.length()];
-                    for(int k = 0; k < jThreeItem.length(); k++) {
-                        JSONObject currentBonus = jThreeItem.getJSONObject(k);
-                        threeItem[k] = new StatBonus(
-                                currentBonus.getInt("att"),
-                                currentBonus.getInt("def"),
-                                currentBonus.getInt("spd"),
-                                currentBonus.getInt("dex"),
-                                currentBonus.getInt("wis"),
-                                currentBonus.getInt("vit"),
-                                currentBonus.getInt("life"),
-                                currentBonus.getInt("mana")
-                        );
-                    }
+                StatBonus[] threeItem = new StatBonus[jThreeItem.length()];
+                for(int k = 0; k < jThreeItem.length(); k++) {
+                    JSONObject currentBonus = jThreeItem.getJSONObject(k);
+                    threeItem[k] = new StatBonus(
+                            currentBonus.getInt("att"),
+                            currentBonus.getInt("def"),
+                            currentBonus.getInt("spd"),
+                            currentBonus.getInt("dex"),
+                            currentBonus.getInt("wis"),
+                            currentBonus.getInt("vit"),
+                            currentBonus.getInt("life"),
+                            currentBonus.getInt("mana")
+                    );
                 }
 
                 JSONArray jFourItem = currentSet.getJSONArray("four_item_bonus");
-                StatBonus[] fourItem = new StatBonus[0];
-                if (jFourItem != null) {
-                    fourItem = new StatBonus[jFourItem.length()];
-                    for(int k = 0; k < jFourItem.length(); k++) {
-                        JSONObject currentBonus = jFourItem.getJSONObject(k);
-                        fourItem[k] = new StatBonus(
-                                currentBonus.getInt("att"),
-                                currentBonus.getInt("def"),
-                                currentBonus.getInt("spd"),
-                                currentBonus.getInt("dex"),
-                                currentBonus.getInt("wis"),
-                                currentBonus.getInt("vit"),
-                                currentBonus.getInt("life"),
-                                currentBonus.getInt("mana")
-                        );
-                    }
+                StatBonus[] fourItem = new StatBonus[jFourItem.length()];
+                for(int k = 0; k < jFourItem.length(); k++) {
+                    JSONObject currentBonus = jFourItem.getJSONObject(k);
+                    fourItem[k] = new StatBonus(
+                            currentBonus.getInt("att"),
+                            currentBonus.getInt("def"),
+                            currentBonus.getInt("spd"),
+                            currentBonus.getInt("dex"),
+                            currentBonus.getInt("wis"),
+                            currentBonus.getInt("vit"),
+                            currentBonus.getInt("life"),
+                            currentBonus.getInt("mana")
+                    );
                 }
 
                 itemSets.add(currentSet.getInt("id"), new MultiItemSet(weaponIds, abilityIds, armorIds, ringIds, twoItem, threeItem, fourItem));
