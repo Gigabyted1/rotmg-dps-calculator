@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new SectionsStatePagerAdapter(MainActivity.this);
         pagerAdapter.addFragment(new LoadoutFragment(), "Loadout fragment");
         pagerAdapter.addFragment(new DpsFragment(), "DPS fragment");
+        viewPager.setUserInputEnabled(false);
         viewPager.setAdapter(pagerAdapter);
     }
 
