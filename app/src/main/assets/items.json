@@ -4401,7 +4401,7 @@
                 "shot_dmg":217.5,
                 "no_shots":1,
                 "rate_of_fire":0.85,
-                "range":9,
+                "range":6,
                 "ap":0,
 				"absItemId": 246
             },

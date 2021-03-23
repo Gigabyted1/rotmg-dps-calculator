@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.my_toolbar);
         mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
-        navigationView = findViewById(R.id.navigation);
+        navigationView = findViewById(R.id.dps_view_menu);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(position);
         if(position == 1) {
             DpsFragment dpsFragment = (DpsFragment) pagerAdapter.getFragment(1);
-            dpsFragment.displayDpsTable();
+            dpsFragment.updateDpsViews();
         }
     }
 

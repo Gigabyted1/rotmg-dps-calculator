@@ -2,7 +2,17 @@
 <resources>
     <color name="colorPrimary">#454545</color>
     <color name="colorPrimaryDark">#252525</color>
+    <color name="mainBackground">#1B1A1A</color>
     <color name="colorAccent">#769300</color>
     <color name="colorMaxedText">#FFE500</color>
     <color name="colorUnmaxedText">#588D5A</color>
+    <color name="gridColor">#B1B1B1</color>
+    <color name="graphLoadout1">#CA001B</color>
+    <color name="graphLoadout2">#E9872F</color>
+    <color name="graphLoadout3">#EBCC59</color>
+    <color name="graphLoadout4">#3FE27E</color>
+    <color name="graphLoadout5">#3DD9DF</color>
+    <color name="graphLoadout6">#468FFA</color>
+    <color name="graphLoadout7">#D552E8</color>
+    <color name="graphLoadout8">#11100F</color>
 </resources>

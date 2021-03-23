@@ -2,7 +2,6 @@ package com.waynebloom.rotmgdpscalculator;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,10 +55,8 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
         populateFields(holder, position, data.get(position));
     }
 
-    private void populateFields(ViewHolder holder, int position, List<DpsEntry> currentDefLevel) {
+    public void populateFields(ViewHolder holder, int position, List<DpsEntry> currentDefLevel) {
         holder.defense.setText(String.format(Locale.US, "%d", position));
-        holder.defense.setTextColor(Color.parseColor("#EEEEEE"));
-        holder.defense.setTextSize(17f);
 
         for(int i = 0; i < currentDefLevel.size(); i++) {
             holder.dpsViews[i].setText(String.format(Locale.US, "%.2f", currentDefLevel.get(i).getDps()));
@@ -108,7 +105,6 @@ class DpsAdapter extends RecyclerView.Adapter<DpsAdapter.ViewHolder> {
 
             }
 
-            holder.dpsViews[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
             holder.dpsViews[i].setVisibility(View.VISIBLE);
         }
     }

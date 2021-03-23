@@ -3,6 +3,7 @@ package com.waynebloom.rotmgdpscalculator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -338,6 +339,7 @@ class Loadout {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 updateStatus();
+                                mFragment.saveLoadouts();
                                 loadoutChanged = true;
                             }
                 }).create().show();
@@ -356,6 +358,7 @@ class Loadout {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         caller.removeAt(loadoutId);
+                        mFragment.saveLoadouts();
                         mFragment.notifyLoadoutRemoved();
                     }
                 })
@@ -797,9 +800,12 @@ class Loadout {
 
         int realAtt = statTotals.getAttBonus();
         int realDex = statTotals.getDexBonus();
-        double dexModifier = 1;
-        double attModifier = 1;
-        double dmgModifier = 1;
+        double dexModifier;
+        double attModifier;
+        double dmgModifier;
+        dexModifier = 1.0;
+        attModifier = 1.0;
+        dmgModifier = 1.0;
 
         // turns on status effects
         if(activeEffects[0]) {  // Damaging
@@ -812,27 +818,36 @@ class Loadout {
             dmgModifier = 1.25;
         }
         if(activeEffects[3]) {  // Dazed (cancels berserk and sets dex to 0)
-            dexModifier = 1;
+            dexModifier = 1.0;
             realDex = 0;
         }
         if(activeEffects[4]) {  // Weak (cancels damaging and sets att to 0)
-            attModifier = 1;
+            attModifier = 1.0;
             realAtt = 0;
         }
 
         loadoutDps = new ArrayList<>();
         double baseDmg = ((weapon.getAvgDamage() - 0.5) * (0.5 + realAtt / 50.0));
+        double minimumDmg = Math.round(baseDmg * (1 - DEFENSE_DMG_REDUCTION_CAP)) * dmgModifier * attModifier;
         double finalRof = (1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire();
+        Log.i("DpsCalc", "Rof: " + finalRof);
         int noOfShots = weapon.getNoOfShots();
+        Log.i("DpsCalc", "Shots: " + noOfShots);
         for(int currentDefense = 0; currentDefense <= MAX_ENEMY_DEFENSE; currentDefense++) {   // Generate a table row for every defense level up to the max
             double finalDps;
+            Log.i("DpsCalc", "Current defense: " + currentDefense);
 
             if(weapon.getAttribute() == 0) {          // defense is a factor
+                double currentDmg = (Math.round(baseDmg - currentDefense) * dmgModifier * attModifier);
+                Log.i("DpsCalc", "[Base shot damage: " + baseDmg + "] [Damage modifier: " + dmgModifier + "] [Attack modifier: " + attModifier + "] [Calculated shot damage: " + currentDmg + ']');
+
                 double finalDamage = Math.max(
-                        Math.round(baseDmg - currentDefense) * dmgModifier * attModifier,                     // shot damage minus enemy defense rounded, multiplied by curse and damaging/weak modifiers
-                        Math.round(baseDmg * (1 - DEFENSE_DMG_REDUCTION_CAP)) * dmgModifier * attModifier     // defense cap calculation
+                        currentDmg,     // shot damage minus enemy defense rounded, multiplied by curse and damaging/weak modifiers
+                        minimumDmg      // minimum shot damage due to defense reduction cap
                 );
+                Log.i("DpsCalc", "Final shot damage: " + finalDamage);
                 finalDps = finalDamage * noOfShots * finalRof;
+                Log.i("DpsCalc", "Final dps: " + finalDps);
             }
             else {    // defense factor removed (armor piercing)
                 finalDps = Math.round(baseDmg) * dmgModifier * attModifier * noOfShots * finalRof;

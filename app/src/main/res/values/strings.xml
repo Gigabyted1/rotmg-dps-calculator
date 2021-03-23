@@ -9,4 +9,6 @@
     </string-array>
     <string name="loadouts_name">Loadouts</string>
     <string name="dps_name">DPS</string>
+    <string name="graph_name">Graph</string>
+    <string name="table_name">Table</string>
 </resources>

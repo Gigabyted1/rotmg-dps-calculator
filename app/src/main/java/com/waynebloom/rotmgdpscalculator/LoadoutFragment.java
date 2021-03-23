@@ -38,10 +38,6 @@ public class LoadoutFragment extends Fragment {
     private View filterView;
     private View fade;
 
-    public LoadoutFragment() {
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
