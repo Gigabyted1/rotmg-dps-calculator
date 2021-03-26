@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class LoadoutFragment extends Fragment {
 
     // loadouts
     private List<Loadout> loadouts = new ArrayList<>(8);
+    private TextView emptyText;
     private RecyclerView loadoutView;
     private LoadoutAdapter loadAdpt;
     private Button btnAddLoadout;
@@ -49,6 +51,7 @@ public class LoadoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_loadout, container, false);
+        emptyText = view.findViewById(R.id.empty_lo);
         loadoutView = view.findViewById(R.id.loadout_view);
         btnAddLoadout = view.findViewById(R.id.add_button);
         selectorView = view.findViewById(R.id.item_selection_view);
@@ -77,6 +80,7 @@ public class LoadoutFragment extends Fragment {
                     loadouts.add(newLoadout);
                     loadAdpt.notifyDataSetChanged();
                     saveLoadouts();
+                    emptyLayout();
                 }
                 else {
                     Toast.makeText(getContext(), "You can only have 8 loadouts at a time.", Toast.LENGTH_LONG).show();
@@ -89,10 +93,25 @@ public class LoadoutFragment extends Fragment {
         loadAdpt = new LoadoutAdapter(getContext(), loadouts);
         loadoutView.setAdapter(loadAdpt);
         loadoutView.setLayoutManager(new LinearLayoutManager(getContext()));
+        emptyLayout();
     }
 
     public List<Loadout> getLoadouts() {
         return loadouts;
+    }
+
+    public boolean isEmpty() {
+        return loadouts.isEmpty();
+    }
+
+    // show empty layout elements if there are no loadouts
+    private void emptyLayout() {
+        if(isEmpty()) {
+            emptyText.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyText.setVisibility(View.GONE);
+        }
     }
 
     public void onBackPressed() {
@@ -104,8 +123,8 @@ public class LoadoutFragment extends Fragment {
     }
 
     public void notifyLoadoutRemoved() {
-        DpsFragment dpsFragment = (DpsFragment) mActivity.getFragmentHolder().getFragment(1);
-        dpsFragment.notifyLoadoutRemoved();
+        emptyLayout();
+        mActivity.getDpsFragment().notifyLoadoutRemoved();
         saveLoadouts();
     }
 

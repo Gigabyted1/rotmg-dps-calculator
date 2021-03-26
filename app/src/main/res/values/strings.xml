@@ -11,4 +11,5 @@
     <string name="dps_name">DPS</string>
     <string name="graph_name">Graph</string>
     <string name="table_name">Table</string>
+    <string name="empty_text">No loadouts to display</string>
 </resources>

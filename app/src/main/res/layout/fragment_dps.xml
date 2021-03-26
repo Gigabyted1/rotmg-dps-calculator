@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".DpsFragment">
 
+    <TextView
+        android:id="@+id/empty_dps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/myfont"
+        android:text="@string/empty_text"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dps_table_view"
         android:layout_width="0dp"
@@ -33,7 +46,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/dps_table_view"
-        app:layout_constraintTop_toBottomOf="@+id/dps_view_menu" />
+        app:layout_constraintTop_toBottomOf="@+id/dps_view_menu"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/details_container"

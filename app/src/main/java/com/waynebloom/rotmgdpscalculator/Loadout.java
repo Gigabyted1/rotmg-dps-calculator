@@ -29,13 +29,12 @@ class Loadout {
     private final Context mContext;
     private int loadoutId;
     private ItemAdapter itemAdpt;
-    static final int CLASS = 0;
-    static final int WEAPON = 1;
-    static final int ABILITY = 2;
-    static final int ARMOR = 3;
-    static final int RING = 4;
-    static final int ATT = 5;
-    static final int DEX = 6;
+    static final int WEAPON = 0;
+    static final int ABILITY = 1;
+    static final int ARMOR = 2;
+    static final int RING = 3;
+    static final int ATT = 4;
+    static final int DEX = 5;
 
     // constant views
     private final RecyclerView selectorView;
@@ -54,8 +53,8 @@ class Loadout {
     private Item armor;
     private Item ring;
     private StatBonus baseStats = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
-    private StatBonus setBonus = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
-    private StatBonus statTotals = new StatBonus(0,0,0,0,0,0,0,0);
+    private final StatBonus setBonus = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
+    private final StatBonus statTotals = new StatBonus(0,0,0,0,0,0,0,0);
     private boolean[] activeEffects;    //Tracks active status effects
     private static final ArrayList<String> selectedCategories = new ArrayList<>(Arrays.asList("untiered", "set_tiered", "tiered"));
     private List<DpsEntry> loadoutDps = new ArrayList<>();

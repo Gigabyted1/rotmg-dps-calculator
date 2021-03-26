@@ -6,8 +6,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,14 +28,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DpsFragment extends Fragment {
+    final static int TABLE = 0;
+    final static int GRAPH = 1;
+    final static int UPDATE = 2;
+
     MainActivity mActivity;
     LoadoutFragment loadoutFragment;
 
     List<List<DpsEntry>> dpsDataTable = new ArrayList<>();
     BottomNavigationView dpsViewMenu;
+    TextView emptyText;
     GraphView dpsGraphView;
     RecyclerView dpsTableView;
     LinearLayout detailView;
+
     DpsAdapter dpsAdpt;
     LinearLayoutManager dpsAdptManager;
 
@@ -42,16 +50,25 @@ public class DpsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mActivity = (MainActivity) requireActivity();
-        loadoutFragment = (LoadoutFragment) mActivity.getFragmentHolder().getFragment(0);
+        loadoutFragment = mActivity.getLoadoutFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dps, container, false);
+        emptyText = view.findViewById(R.id.empty_dps);
         dpsViewMenu = view.findViewById(R.id.dps_view_menu);
         dpsTableView = view.findViewById(R.id.dps_table_view);
         detailView = view.findViewById(R.id.details_container);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // style graphview
         dpsGraphView = view.findViewById(R.id.graph);
         dpsGraphView.getViewport().setScalable(true);
         dpsGraphView.getViewport().setScrollable(true);
@@ -74,11 +91,11 @@ public class DpsFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if(itemId == R.id.graph) {
-                    displayGraph();
+                    displayView(GRAPH);
                     return true;
                 }
                 else if(itemId == R.id.table) {
-                    displayTable();
+                    displayView(TABLE);
                     return true;
                 }
                 else {
@@ -88,24 +105,44 @@ public class DpsFragment extends Fragment {
         });
 
         updateDpsViews();
-
-        return view;
+        displayView(GRAPH);
     }
 
     public void onBackPressed() {
         mActivity.setViewPagerPosition(0);
     }
 
-    private void displayTable() {
-        dpsGraphView.setVisibility(View.INVISIBLE);
-        detailView.setVisibility(View.INVISIBLE);
-        dpsTableView.setVisibility(View.VISIBLE);
+    private boolean isEmpty() {
+        if(loadoutFragment.isEmpty()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    private void displayGraph() {
-        dpsGraphView.setVisibility(View.VISIBLE);
-        detailView.setVisibility(View.VISIBLE);
-        dpsTableView.setVisibility(View.INVISIBLE);
+    public void displayView(int which) {
+        if(getView() != null) {
+            if(isEmpty()) {
+                emptyText.setVisibility(View.VISIBLE);
+                dpsGraphView.setVisibility(View.INVISIBLE);
+                detailView.setVisibility(View.INVISIBLE);
+                dpsTableView.setVisibility(View.INVISIBLE);
+            }
+            else {
+                emptyText.setVisibility(View.GONE);
+                if(which == TABLE) {
+                    dpsGraphView.setVisibility(View.INVISIBLE);
+                    detailView.setVisibility(View.INVISIBLE);
+                    dpsTableView.setVisibility(View.VISIBLE);
+                }
+                else if(which == GRAPH) {
+                    dpsGraphView.setVisibility(View.VISIBLE);
+                    detailView.setVisibility(View.VISIBLE);
+                    dpsTableView.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
     }
 
     public void updateDpsViews() {

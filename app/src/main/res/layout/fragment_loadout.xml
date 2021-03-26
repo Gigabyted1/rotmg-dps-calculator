@@ -2,9 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_dps"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoadoutFragment" >
+    tools:context=".LoadoutFragment">
+
+    <TextView
+        android:id="@+id/empty_lo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/myfont"
+        android:text="@string/empty_text"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/loadout_view"
@@ -50,7 +64,7 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <include
         android:id="@+id/filter"
@@ -61,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_selection_view"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_selection_view"
@@ -76,7 +90,7 @@
         app:layout_constraintBottom_toTopOf="@id/filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
     </androidx.recyclerview.widget.RecyclerView>
 

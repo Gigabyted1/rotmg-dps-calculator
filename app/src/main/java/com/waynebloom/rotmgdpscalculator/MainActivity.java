@@ -88,11 +88,15 @@ public class MainActivity extends AppCompatActivity {
         if(position == 1) {
             DpsFragment dpsFragment = (DpsFragment) pagerAdapter.getFragment(1);
             dpsFragment.updateDpsViews();
+            dpsFragment.displayView(DpsFragment.UPDATE);
         }
     }
 
-    public SectionsStatePagerAdapter getFragmentHolder() {
-        return pagerAdapter;
+    public LoadoutFragment getLoadoutFragment() {
+        return (LoadoutFragment) pagerAdapter.getFragment(0);
+    }
+    public DpsFragment getDpsFragment() {
+        return (DpsFragment) pagerAdapter.getFragment(1);
     }
 
     // read game data from file
