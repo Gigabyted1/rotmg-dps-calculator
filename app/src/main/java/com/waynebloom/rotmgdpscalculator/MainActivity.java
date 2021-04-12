@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(mViewPager.getCurrentItem() == 0) {
-            ((LoadoutFragment) pagerAdapter.getFragment(0)).onBackPressed();
+            getLoadoutFragment().onBackPressed();
         }
         else {
             navigationView.setSelectedItemId(R.id.page_1);
-            ((DpsFragment) pagerAdapter.getFragment(1)).onBackPressed();
+            getDpsFragment().onBackPressed();
         }
     }
 

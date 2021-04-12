@@ -3,7 +3,6 @@ package com.waynebloom.rotmgdpscalculator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,6 +34,7 @@ class Loadout {
     static final int RING = 3;
     static final int ATT = 4;
     static final int DEX = 5;
+    static final int CLASS = 6;
 
     // constant views
     private final RecyclerView selectorView;
@@ -56,6 +56,9 @@ class Loadout {
     private final StatBonus setBonus = new StatBonus(0, 0, 0, 0, 0, 0, 0, 0);
     private final StatBonus statTotals = new StatBonus(0,0,0,0,0,0,0,0);
     private boolean[] activeEffects;    //Tracks active status effects
+    private double attModifier;
+    private double dexModifier;
+    private double dmgModifier;
     private static final ArrayList<String> selectedCategories = new ArrayList<>(Arrays.asList("untiered", "set_tiered", "tiered"));
     private List<DpsEntry> loadoutDps = new ArrayList<>();
     private boolean loadoutChanged;
@@ -200,7 +203,7 @@ class Loadout {
                 ClassAdapter adpt = new ClassAdapter(mContext, classData, Loadout.this);
                 selectorView.setAdapter(adpt);
                 selectorView.setLayoutManager(new LinearLayoutManager(mContext));
-                makeSelectorViewVisible();
+                makeSelectorViewVisible(CLASS);
             }
         });
     }
@@ -214,7 +217,7 @@ class Loadout {
                 itemAdpt.enactCategories(selectedCategories);
                 selectorView.setAdapter(itemAdpt);
                 selectorView.setLayoutManager(new LinearLayoutManager(mContext));
-                makeSelectorViewVisible();
+                makeSelectorViewVisible(WEAPON);
             }
         });
     }
@@ -228,7 +231,7 @@ class Loadout {
                 itemAdpt.enactCategories(selectedCategories);
                 selectorView.setAdapter(itemAdpt);
                 selectorView.setLayoutManager(new LinearLayoutManager(mContext));
-                makeSelectorViewVisible();
+                makeSelectorViewVisible(ABILITY);
             }
         });
     }
@@ -242,7 +245,7 @@ class Loadout {
                 itemAdpt.enactCategories(selectedCategories);
                 selectorView.setAdapter(itemAdpt);
                 selectorView.setLayoutManager(new LinearLayoutManager(mContext));
-                makeSelectorViewVisible();
+                makeSelectorViewVisible(ARMOR);
             }
         });
     }
@@ -256,7 +259,7 @@ class Loadout {
                 itemAdpt.enactCategories(selectedCategories);
                 selectorView.setAdapter(itemAdpt);
                 selectorView.setLayoutManager(new LinearLayoutManager(mContext));
-                makeSelectorViewVisible();
+                makeSelectorViewVisible(RING);
             }
         });
     }
@@ -549,20 +552,36 @@ class Loadout {
         loadoutChanged = true;
     }
 
-    public void makeSelectorViewVisible() {
-        selectorView.setVisibility(View.VISIBLE);
-        filterView.setVisibility(View.VISIBLE);
-        backgroundFade.setVisibility(View.VISIBLE);
-        selectorView.setX(-1000f);
-        filterView.setX(-1000f);
-        selectorView.animate().translationXBy(1000f).setDuration(200);
-        filterView.animate().translationXBy(1000f).setDuration(200);
+    public void makeSelectorViewVisible(int type) {
+        if(type == CLASS) {
+            selectorView.setVisibility(View.VISIBLE);
+            backgroundFade.setVisibility(View.VISIBLE);
+            selectorView.setX(-1000f);
+            selectorView.animate().translationXBy(1000f).setDuration(200);
+            filterView.setVisibility(View.GONE);
+        }
+        else {
+            selectorView.setVisibility(View.VISIBLE);
+            filterView.setVisibility(View.VISIBLE);
+            backgroundFade.setVisibility(View.VISIBLE);
+            selectorView.setX(-1000f);
+            filterView.setX(-1000f);
+            selectorView.animate().translationXBy(1000f).setDuration(200);
+            filterView.animate().translationXBy(1000f).setDuration(200);
+        }
     }
 
-    public void makeSelectorViewGone() {
-        selectorView.setVisibility(View.GONE);
-        backgroundFade.setVisibility(View.GONE);
-        filterView.setVisibility(View.GONE);
+    public void makeSelectorViewGone(int type) {
+        if(type == CLASS) {
+            selectorView.setVisibility(View.GONE);
+            backgroundFade.setVisibility(View.GONE);
+            filterView.setVisibility(View.GONE);
+        }
+        else {
+            selectorView.setVisibility(View.GONE);
+            backgroundFade.setVisibility(View.GONE);
+            filterView.setVisibility(View.GONE);
+        }
     }
 
     void updateClass(CharClass prevClass) {
@@ -799,9 +818,6 @@ class Loadout {
 
         int realAtt = statTotals.getAttBonus();
         int realDex = statTotals.getDexBonus();
-        double dexModifier;
-        double attModifier;
-        double dmgModifier;
         dexModifier = 1.0;
         attModifier = 1.0;
         dmgModifier = 1.0;
@@ -829,24 +845,16 @@ class Loadout {
         double baseDmg = ((weapon.getAvgDamage() - 0.5) * (0.5 + realAtt / 50.0));
         double minimumDmg = Math.round(baseDmg * (1 - DEFENSE_DMG_REDUCTION_CAP)) * dmgModifier * attModifier;
         double finalRof = (1.5 + 6.5 * (realDex / 75.0)) * dexModifier * weapon.getRateOfFire();
-        Log.i("DpsCalc", "Rof: " + finalRof);
         int noOfShots = weapon.getNoOfShots();
-        Log.i("DpsCalc", "Shots: " + noOfShots);
         for(int currentDefense = 0; currentDefense <= MAX_ENEMY_DEFENSE; currentDefense++) {   // Generate a table row for every defense level up to the max
             double finalDps;
-            Log.i("DpsCalc", "Current defense: " + currentDefense);
-
             if(weapon.getAttribute() == 0) {          // defense is a factor
                 double currentDmg = (Math.round(baseDmg - currentDefense) * dmgModifier * attModifier);
-                Log.i("DpsCalc", "[Base shot damage: " + baseDmg + "] [Damage modifier: " + dmgModifier + "] [Attack modifier: " + attModifier + "] [Calculated shot damage: " + currentDmg + ']');
-
                 double finalDamage = Math.max(
                         currentDmg,     // shot damage minus enemy defense rounded, multiplied by curse and damaging/weak modifiers
                         minimumDmg      // minimum shot damage due to defense reduction cap
                 );
-                Log.i("DpsCalc", "Final shot damage: " + finalDamage);
                 finalDps = finalDamage * noOfShots * finalRof;
-                Log.i("DpsCalc", "Final dps: " + finalDps);
             }
             else {    // defense factor removed (armor piercing)
                 finalDps = Math.round(baseDmg) * dmgModifier * attModifier * noOfShots * finalRof;

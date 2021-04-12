@@ -56,7 +56,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 callingLoadout.informSelected(data.get(position));
-                callingLoadout.makeSelectorViewGone();
+                callingLoadout.makeSelectorViewGone(Loadout.CLASS);
             }
         });
     }

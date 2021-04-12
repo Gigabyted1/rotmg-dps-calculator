@@ -50,17 +50,17 @@ public class DpsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mActivity = (MainActivity) requireActivity();
-        loadoutFragment = mActivity.getLoadoutFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        loadoutFragment = mActivity.getLoadoutFragment();
+
         View view = inflater.inflate(R.layout.fragment_dps, container, false);
         emptyText = view.findViewById(R.id.empty_dps);
         dpsViewMenu = view.findViewById(R.id.dps_view_menu);
         dpsTableView = view.findViewById(R.id.dps_table_view);
         detailView = view.findViewById(R.id.details_container);
-
         return view;
     }
 

@@ -28,18 +28,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
-        TextView dmg;
-        TextView rof;
-        TextView shots;
         View parent;
 
         public ViewHolder(View view) {
             super(view);
             image = view.findViewById(R.id.item_picture);
             name = view.findViewById(R.id.item_name);
-            /*dmg = view.findViewById(R.id.item_dmg);
-            rof = view.findViewById(R.id.item_rof);
-            shots = view.findViewById(R.id.item_shots);*/
             parent = view;
         }
     }
@@ -69,7 +63,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 callingLoadout.informSelected(filteredData.get(position), type);
-                callingLoadout.makeSelectorViewGone();
+                callingLoadout.makeSelectorViewGone(type);
             }
         });
     }
@@ -83,7 +77,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private void populateFields(ViewHolder mViewHolder, Item currentItem) {
         final int MAX_NAME_LENGTH = 27;
         final float FONT_SIZE_NAME = 10;
-        final float FONT_SIZE_DESC = 8;
 
         mViewHolder.image.setImageResource(currentItem.getImageId());
 
@@ -95,18 +88,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         mViewHolder.name.setText(temp);
         mViewHolder.name.setTypeface(myFont);
         mViewHolder.name.setTextSize(FONT_SIZE_NAME);
-
-       /* mViewHolder.dmg.setText(String.format(Locale.US,"%.2f", currentItem.getAvgDamage()));
-        mViewHolder.dmg.setTypeface(myFont);
-        mViewHolder.dmg.setTextSize(FONT_SIZE_DESC);
-
-        mViewHolder.rof.setText(String.format(Locale.US,"%.2f", currentItem.getRateOfFire()));
-        mViewHolder.rof.setTypeface(myFont);
-        mViewHolder.rof.setTextSize(FONT_SIZE_DESC);
-
-        mViewHolder.shots.setText(String.format(Locale.US,"%d", currentItem.getNoOfShots()));
-        mViewHolder.shots.setTypeface(myFont);
-        mViewHolder.shots.setTextSize(FONT_SIZE_DESC);*/
     }
 
     public void enactCategories(List<String> mCategories) {
