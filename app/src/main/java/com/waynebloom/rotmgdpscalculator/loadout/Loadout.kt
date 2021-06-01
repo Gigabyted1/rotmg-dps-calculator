@@ -12,6 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.waynebloom.rotmgdpscalculator.*
 import java.util.*
 
+enum class Status(val modifier: Double) {
+    BERSERK(1.25),
+    DAMAGING(1.25),
+    CURSE(1.25),
+    WEAK(0.0),
+    DAZED(0.0)
+}
+
+data class Build(
+    private val id: Int,
+    private val charClass: CharClass,
+    private val weapon: Weapon,
+    private val ability: Ability,
+    private val armor: Armor,
+    private val ring: Ring,
+    private val setBonus: StatBonus,
+    private val statusEffects: MutableSet<Status>
+)
+
 class Loadout {
     private val mFragment: LoadoutFragment
     private val mContext: Context?
