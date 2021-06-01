@@ -5,7 +5,7 @@
     android:id="@+id/empty_dps"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoadoutFragment">
+    tools:context=".loadout.LoadoutFragment">
 
     <TextView
         android:id="@+id/empty_lo"
@@ -34,6 +34,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <FrameLayout
+        android:id="@+id/add_frame"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -44,16 +45,36 @@
 
         <Button
             android:id="@+id/add_button"
-            android:layout_width="75dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:background="@drawable/bg_button"
             android:fontFamily="@font/myfont"
-            android:text="+"
+            android:text="New"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/exalt_frame"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_frame">
+
+        <Button
+            android:id="@+id/exalt_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button"
+            android:fontFamily="@font/myfont"
+            android:text="exalts" />
     </FrameLayout>
 
     <View
