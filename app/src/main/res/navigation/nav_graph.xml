@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loadoutFragment">
+
+    <fragment
+        android:id="@+id/loadoutFragment"
+        android:name="com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment"
+        android:label="fragment_loadout"
+        tools:layout="@layout/fragment_loadout" >
+        <action
+            android:id="@+id/action_loadoutFragment_to_dpsFragment"
+            app:destination="@id/dpsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dpsFragment"
+        android:name="com.waynebloom.rotmgdpscalculator.dps.DpsFragment"
+        android:label="fragment_dps"
+        tools:layout="@layout/fragment_dps" >
+        <action
+            android:id="@+id/action_dpsFragment_to_loadoutFragment"
+            app:destination="@id/loadoutFragment" />
+    </fragment>
+</navigation>

@@ -8,11 +8,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.waynebloom.rotmgdpscalculator.CharClass
+import com.waynebloom.rotmgdpscalculator.data.CharClass
 import com.waynebloom.rotmgdpscalculator.MainActivity
 import com.waynebloom.rotmgdpscalculator.R
-import com.waynebloom.rotmgdpscalculator.loadout.Loadout
-import com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment
 import java.io.*
 import java.util.*
 

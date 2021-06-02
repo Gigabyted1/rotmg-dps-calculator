@@ -1,5 +1,5 @@
 // Heavy structural help from https://gist.github.com/fjfish/3024308
-package com.waynebloom.rotmgdpscalculator
+package com.waynebloom.rotmgdpscalculator.loadout
 
 import android.content.Context
 import android.graphics.Typeface
@@ -9,7 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.waynebloom.rotmgdpscalculator.loadout.Loadout
+import com.waynebloom.rotmgdpscalculator.R
+import com.waynebloom.rotmgdpscalculator.data.Item
 import java.util.*
 
 class ItemAdapter internal constructor(

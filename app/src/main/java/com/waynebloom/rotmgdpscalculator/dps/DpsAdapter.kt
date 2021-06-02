@@ -1,4 +1,4 @@
-package com.waynebloom.rotmgdpscalculator
+package com.waynebloom.rotmgdpscalculator.dps
 
 import android.content.Context
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.waynebloom.rotmgdpscalculator.R
 import java.util.*
 
 class DpsAdapter(private val mContext: Context?, private val data: List<MutableList<DpsEntry>>) :

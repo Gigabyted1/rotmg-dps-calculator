@@ -10,6 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.waynebloom.rotmgdpscalculator.*
+import com.waynebloom.rotmgdpscalculator.data.CharClass
+import com.waynebloom.rotmgdpscalculator.data.Item
+import com.waynebloom.rotmgdpscalculator.data.StatBonus
+import com.waynebloom.rotmgdpscalculator.dps.DpsEntry
 import java.util.*
 
 class Loadout {
