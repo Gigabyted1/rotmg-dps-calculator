@@ -1,4 +1,4 @@
-package com.waynebloom.rotmgdpscalculator
+package com.waynebloom.rotmgdpscalculator.data
 
 internal class StatBonus {
     var attBonus = 0

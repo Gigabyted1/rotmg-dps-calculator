@@ -1,4 +1,4 @@
-package com.waynebloom.rotmgdpscalculator
+package com.waynebloom.rotmgdpscalculator.dps
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.*
+import com.waynebloom.rotmgdpscalculator.MainActivity
+import com.waynebloom.rotmgdpscalculator.R
 import com.waynebloom.rotmgdpscalculator.loadout.Loadout
 import com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment
 import java.util.*

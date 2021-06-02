@@ -3,9 +3,17 @@ package com.waynebloom.rotmgdpscalculator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.waynebloom.rotmgdpscalculator.MainActivity
+import com.waynebloom.rotmgdpscalculator.data.*
+import com.waynebloom.rotmgdpscalculator.data.Item
+import com.waynebloom.rotmgdpscalculator.data.ItemSet
+import com.waynebloom.rotmgdpscalculator.data.MultiItemSet
+import com.waynebloom.rotmgdpscalculator.data.StatBonus
+import com.waynebloom.rotmgdpscalculator.dps.DpsFragment
 import com.waynebloom.rotmgdpscalculator.loadout.Loadout
 import com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment
 import org.json.JSONException
@@ -15,71 +23,26 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
-    var toolbar: Toolbar? = null
-    private var mViewPager: ViewPager2? = null
-    private var pagerAdapter: SectionsStatePagerAdapter? = null
-    var navigationView: BottomNavigationView? = null
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        toolbar = findViewById(R.id.my_toolbar)
-        mViewPager = findViewById(R.id.container)
-        setupViewPager(mViewPager)
-        navigationView = findViewById(R.id.dps_view_menu)
-        navigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            val itemId = item.itemId
-            if (itemId == R.id.page_1) {
-                setViewPagerPosition(0)
-                true
-            } else if (itemId == R.id.page_2) {
-                setViewPagerPosition(1)
-                true
-            } else {
-                false
-            }
-        })
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
 
         // Reads item and class data from file
-        readData()
-
-        // Toolbar stuff
-        setSupportActionBar(toolbar)
-        title = "RotMG DPS Calculator"
-        toolbar.setTitleTextAppearance(this, R.style.MyFontAppearance)
+        Datasource.getData(this)
     }
 
-    override fun onBackPressed() {
-        if (mViewPager!!.currentItem == 0) {
-            loadoutFragment!!.onBackPressed()
-        } else {
-            navigationView!!.selectedItemId = R.id.page_1
-            dpsFragment!!.onBackPressed()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
-    private fun setupViewPager(viewPager: ViewPager2?) {
-        pagerAdapter = SectionsStatePagerAdapter(this@MainActivity)
-        pagerAdapter!!.addFragment(LoadoutFragment(), "Loadout fragment")
-        pagerAdapter!!.addFragment(DpsFragment(), "DPS fragment")
-        viewPager!!.isUserInputEnabled = false
-        viewPager.adapter = pagerAdapter
-    }
-
-    fun setViewPagerPosition(position: Int) {
-        // if switching to dps
-        mViewPager!!.currentItem = position
-        if (position == 1) {
-            val dpsFragment = pagerAdapter!!.getFragment(1) as DpsFragment
-            dpsFragment.updateDpsViews()
-            dpsFragment.displayView(DpsFragment.Companion.UPDATE)
-        }
-    }
-
-    val loadoutFragment: LoadoutFragment?
-        get() = pagerAdapter!!.getFragment(0) as LoadoutFragment
-    val dpsFragment: DpsFragment?
-        get() = pagerAdapter!!.getFragment(1) as DpsFragment
 
     // read game data from file
     private fun readData() {
