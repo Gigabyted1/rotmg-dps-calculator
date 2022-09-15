@@ -1,6 +1,6 @@
 package com.waynebloom.rotmgdpscalculator.data
 
-class CharClass(
+data class CharClass(
     val name: String,
     val classId: Int,
     val weapons: List<Item>,
@@ -8,5 +8,5 @@ class CharClass(
     val armors: List<Item>,
     val rings: List<Item>,
     val imageId: Int,
-    val maxedStats: StatBonus
+    val maxStats: StatBonus
 )

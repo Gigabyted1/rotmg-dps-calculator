@@ -8,7 +8,7 @@
     android:background="@drawable/bg_loadout_black">
 
     <TextView
-        android:id="@+id/total_dex"
+        android:id="@+id/dexterity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -16,33 +16,30 @@
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@color/colorMaxedText"
-        android:textSize="25px"
         app:fontFamily="@font/myfont"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/total_att"
-        app:layout_constraintTop_toBottomOf="@+id/item_view" />
+        app:layout_constraintStart_toEndOf="@+id/attack"
+        app:layout_constraintTop_toBottomOf="@+id/item_view"
+        tools:text="75"/>
 
     <TextView
-        android:id="@+id/total_att"
+        android:id="@+id/attack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_att_small"
         android:gravity="center"
-        android:inputType="number"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:textColor="@color/colorMaxedText"
-        android:textSize="25px"
         app:fontFamily="@font/myfont"
-        app:layout_constraintEnd_toStartOf="@+id/total_dex"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/status"
-        app:layout_constraintTop_toBottomOf="@+id/item_view" />
+        app:layout_constraintEnd_toStartOf="@+id/dexterity"
+        app:layout_constraintStart_toEndOf="@+id/status_effects"
+        app:layout_constraintTop_toBottomOf="@+id/item_view"
+        tools:text="75"/>
 
     <ImageView
-        android:id="@+id/class_view"
+        android:id="@+id/char_class"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:background="@drawable/bg_char"
@@ -59,7 +56,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/weapon_view"
+            android:id="@+id/weapon"
             android:layout_width="59dp"
             android:layout_height="59dp"
             android:layout_marginStart="2dp"
@@ -75,7 +72,7 @@
             app:srcCompat="@drawable/empty_dagger" />
 
         <ImageView
-            android:id="@+id/ability_view"
+            android:id="@+id/ability"
             android:layout_width="59dp"
             android:layout_height="59dp"
             android:layout_marginStart="2dp"
@@ -86,12 +83,12 @@
             android:contentDescription="A view for the current ability"
             android:tag="abil"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/weapon_view"
+            app:layout_constraintStart_toEndOf="@id/weapon"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_cloak" />
 
         <ImageView
-            android:id="@+id/armor_view"
+            android:id="@+id/armor"
             android:layout_width="59dp"
             android:layout_height="59dp"
             android:layout_marginStart="2dp"
@@ -102,12 +99,12 @@
             android:contentDescription="A view for the current armor"
             android:tag="armor"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ability_view"
+            app:layout_constraintStart_toEndOf="@+id/ability"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_light" />
 
         <ImageView
-            android:id="@+id/ring_view"
+            android:id="@+id/ring"
             android:layout_width="59dp"
             android:layout_height="59dp"
             android:layout_marginStart="2dp"
@@ -121,7 +118,7 @@
             android:tag="ring"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/armor_view"
+            app:layout_constraintStart_toEndOf="@+id/armor"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_ring" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -132,21 +129,21 @@
         android:layout_height="35dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/grave"
-        app:layout_constraintEnd_toStartOf="@+id/status"
+        app:layout_constraintEnd_toStartOf="@+id/status_effects"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/class_view" />
+        app:layout_constraintTop_toBottomOf="@+id/char_class" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/status"
+        android:id="@+id/status_effects"
         android:layout_width="wrap_content"
         android:layout_height="31.5dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/bg_status"
-        app:layout_constraintEnd_toStartOf="@+id/total_att"
+        app:layout_constraintEnd_toStartOf="@+id/attack"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/delete"
-        app:layout_constraintTop_toTopOf="@+id/total_att">
+        app:layout_constraintTop_toTopOf="@+id/attack">
 
         <ImageView
             android:id="@+id/berserk"

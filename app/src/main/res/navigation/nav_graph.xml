@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loadoutFragment">
+    app:startDestination="@id/buildsFragment">
 
     <fragment
-        android:id="@+id/loadoutFragment"
-        android:name="com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment"
-        android:label="fragment_loadout"
-        tools:layout="@layout/fragment_loadout" >
+        android:id="@+id/buildsFragment"
+        android:name="com.waynebloom.rotmgdpscalculator.builds.BuildsFragment"
+        android:label="fragment_builds"
+        tools:layout="@layout/fragment_builds" >
         <action
-            android:id="@+id/action_loadoutFragment_to_dpsFragment"
+            android:id="@+id/action_buildsFragment_to_dpsFragment"
             app:destination="@id/dpsFragment" />
     </fragment>
     <fragment
@@ -20,7 +20,7 @@
         android:label="fragment_dps"
         tools:layout="@layout/fragment_dps" >
         <action
-            android:id="@+id/action_dpsFragment_to_loadoutFragment"
-            app:destination="@id/loadoutFragment" />
+            android:id="@+id/action_dpsFragment_to_buildsFragment"
+            app:destination="@id/buildsFragment" />
     </fragment>
 </navigation>

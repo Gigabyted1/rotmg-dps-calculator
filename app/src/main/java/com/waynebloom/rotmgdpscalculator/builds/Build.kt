@@ -1,4 +1,4 @@
-package com.waynebloom.rotmgdpscalculator.loadout
+package com.waynebloom.rotmgdpscalculator.builds
 
 import android.content.Context
 import android.graphics.Color
@@ -10,13 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.waynebloom.rotmgdpscalculator.*
-import com.waynebloom.rotmgdpscalculator.data.CharClass
-import com.waynebloom.rotmgdpscalculator.data.Item
-import com.waynebloom.rotmgdpscalculator.data.StatBonus
+import com.waynebloom.rotmgdpscalculator.builds.adapter.BuildsListAdapter
+import com.waynebloom.rotmgdpscalculator.builds.adapter.ClassListAdapter
+import com.waynebloom.rotmgdpscalculator.builds.adapter.ItemListAdapter
+import com.waynebloom.rotmgdpscalculator.data.*
 import com.waynebloom.rotmgdpscalculator.dps.DpsEntry
 import java.util.*
 
-enum class Status(val modifier: Double) {
+enum class StatusEffect(val modifier: Double) {
     BERSERK(1.25),
     DAMAGING(1.25),
     CURSE(1.25),
@@ -25,21 +26,21 @@ enum class Status(val modifier: Double) {
 }
 
 data class Build(
-    private val id: Int,
-    private val charClass: CharClass,
-    private val weapon: Weapon,
-    private val ability: Ability,
-    private val armor: Armor,
-    private val ring: Ring,
-    private val setBonus: StatBonus,
-    private val statusEffects: MutableSet<Status>
+    val id: Int,
+    val charClass: CharClass,
+    val weapon: Weapon,
+    val ability: Ability,
+    val armor: Armor,
+    val ring: Ring,
+    val setBonus: StatBonus,
+    val statusEffects: MutableSet<StatusEffect>
 )
 
 class Loadout {
-    private val mFragment: LoadoutFragment
+    private val mFragment: BuildsFragment
     private val mContext: Context?
     private var loadoutId: Int
-    private var itemAdpt: ItemAdapter? = null
+    private var itemAdpt: ItemListAdapter? = null
 
     // constant views
     private val selectorView: RecyclerView
@@ -91,7 +92,7 @@ class Loadout {
     private var deleteButton: Button? = null
 
     // Empty loadout
-    constructor(mFragment: LoadoutFragment, loadoutId: Int) {
+    constructor(mFragment: BuildsFragment, loadoutId: Int) {
         val fragmentView = mFragment.view
         this.mFragment = mFragment
         mContext = mFragment.context
@@ -108,7 +109,7 @@ class Loadout {
     }
 
     // Loadout with Class included (for 'createNewLoadout' in MainActivity)
-    constructor(mFragment: LoadoutFragment, loadoutId: Int, charClass: CharClass) {
+    constructor(mFragment: BuildsFragment, loadoutId: Int, charClass: CharClass) {
         val fragmentView = mFragment.view
         this.mFragment = mFragment
         mContext = mFragment.context
@@ -140,7 +141,7 @@ class Loadout {
 
     // Loadout with all gear included (for 'loadBuilds' in MainActivity)
     constructor(
-        mFragment: LoadoutFragment,
+        mFragment: BuildsFragment,
         loadoutId: Int,
         charClass: CharClass,
         weapon: Item,
@@ -185,7 +186,7 @@ class Loadout {
 
     // assign view references and then set all click listeners
     fun setViews(
-        caller: LoadoutAdapter,
+        caller: BuildsListAdapter,
         classView: ImageView?,
         weaponView: ImageView?,
         abilityView: ImageView?,
@@ -224,7 +225,7 @@ class Loadout {
 
     fun setClassViewListener() {
         classView!!.setOnClickListener {
-            val adpt = ClassAdapter(mContext!!, classData!!, this@Loadout)
+            val adpt = ClassListAdapter(mContext!!, classData!!, this@Loadout)
             selectorView.adapter = adpt
             selectorView.layoutManager = LinearLayoutManager(mContext)
             makeSelectorViewVisible(CLASS)
@@ -234,7 +235,7 @@ class Loadout {
     fun setWeaponViewListener() {
         weaponView!!.setOnClickListener {
             setFilterViewListeners()
-            itemAdpt = ItemAdapter(mContext!!, charClass!!.weapons, this@Loadout, WEAPON)
+            itemAdpt = ItemListAdapter(mContext!!, charClass!!.weapons, this@Loadout, WEAPON)
             itemAdpt!!.enactCategories(selectedCategories)
             selectorView.adapter = itemAdpt
             selectorView.layoutManager = LinearLayoutManager(mContext)
@@ -245,7 +246,7 @@ class Loadout {
     fun setAbilityViewListener() {
         abilityView!!.setOnClickListener {
             setFilterViewListeners()
-            itemAdpt = ItemAdapter(mContext!!, charClass!!.abilities, this@Loadout, ABILITY)
+            itemAdpt = ItemListAdapter(mContext!!, charClass!!.abilities, this@Loadout, ABILITY)
             itemAdpt!!.enactCategories(selectedCategories)
             selectorView.adapter = itemAdpt
             selectorView.layoutManager = LinearLayoutManager(mContext)
@@ -256,7 +257,7 @@ class Loadout {
     fun setArmorViewListener() {
         armorView!!.setOnClickListener {
             setFilterViewListeners()
-            itemAdpt = ItemAdapter(mContext!!, charClass!!.armors, this@Loadout, ARMOR)
+            itemAdpt = ItemListAdapter(mContext!!, charClass!!.armors, this@Loadout, ARMOR)
             itemAdpt!!.enactCategories(selectedCategories)
             selectorView.adapter = itemAdpt
             selectorView.layoutManager = LinearLayoutManager(mContext)
@@ -267,7 +268,7 @@ class Loadout {
     fun setRingViewListener() {
         ringView!!.setOnClickListener {
             setFilterViewListeners()
-            itemAdpt = ItemAdapter(mContext!!, charClass!!.rings, this@Loadout, RING)
+            itemAdpt = ItemListAdapter(mContext!!, charClass!!.rings, this@Loadout, RING)
             itemAdpt!!.enactCategories(selectedCategories)
             selectorView.adapter = itemAdpt
             selectorView.layoutManager = LinearLayoutManager(mContext)
@@ -339,7 +340,7 @@ class Loadout {
         }
     }
 
-    fun setDeleteViewListener(caller: LoadoutAdapter) {
+    fun setDeleteViewListener(caller: BuildsListAdapter) {
         deleteButton!!.setOnClickListener {
             val mBuilder = AlertDialog.Builder(
                 mContext!!

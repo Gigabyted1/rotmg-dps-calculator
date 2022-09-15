@@ -1,4 +1,4 @@
-package com.waynebloom.rotmgdpscalculator.loadout
+package com.waynebloom.rotmgdpscalculator.builds.adapter
 
 import android.content.Context
 import android.graphics.Typeface
@@ -9,13 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.waynebloom.rotmgdpscalculator.R
+import com.waynebloom.rotmgdpscalculator.builds.Loadout
 import com.waynebloom.rotmgdpscalculator.data.CharClass
 
-class ClassAdapter internal constructor(
+class ClassListAdapter internal constructor(
     private val mContext: Context,
     private val data: List<CharClass>,
     private val callingLoadout: Loadout
-) : RecyclerView.Adapter<ClassAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ClassListAdapter.ViewHolder>() {
     private val myFont: Typeface
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

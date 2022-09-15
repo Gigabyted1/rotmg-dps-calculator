@@ -1,5 +1,5 @@
 // Heavy structural help from https://gist.github.com/fjfish/3024308
-package com.waynebloom.rotmgdpscalculator.loadout
+package com.waynebloom.rotmgdpscalculator.builds.adapter
 
 import android.content.Context
 import android.graphics.Typeface
@@ -10,15 +10,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.waynebloom.rotmgdpscalculator.R
+import com.waynebloom.rotmgdpscalculator.builds.Loadout
 import com.waynebloom.rotmgdpscalculator.data.Item
 import java.util.*
 
-class ItemAdapter internal constructor(
-    context: Context,
-    private val originalData: List<Item>,
-    callingLoadout: Loadout,
-    type: Int
-) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class ItemListAdapter(
+    inflater: LayoutInflater
+) : RecyclerView.Adapter<ItemListAdapter.ViewHolder>() {
     private var filteredData: List<Item>
     private val myFont: Typeface
     private val mContext: Context

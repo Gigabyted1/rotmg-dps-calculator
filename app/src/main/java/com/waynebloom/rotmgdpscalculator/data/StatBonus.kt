@@ -1,6 +1,6 @@
 package com.waynebloom.rotmgdpscalculator.data
 
-internal class StatBonus {
+class StatBonus {
     var attBonus = 0
     var defBonus = 0
     var spdBonus = 0

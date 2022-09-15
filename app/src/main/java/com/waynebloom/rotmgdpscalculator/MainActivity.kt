@@ -2,20 +2,15 @@ package com.waynebloom.rotmgdpscalculator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.waynebloom.rotmgdpscalculator.data.*
 import com.waynebloom.rotmgdpscalculator.data.Item
 import com.waynebloom.rotmgdpscalculator.data.ItemSet
 import com.waynebloom.rotmgdpscalculator.data.MultiItemSet
 import com.waynebloom.rotmgdpscalculator.data.StatBonus
-import com.waynebloom.rotmgdpscalculator.dps.DpsFragment
-import com.waynebloom.rotmgdpscalculator.loadout.Loadout
-import com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment
+import com.waynebloom.rotmgdpscalculator.builds.Loadout
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -37,7 +32,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setupActionBarWithNavController(navController)
 
         // Reads item and class data from file
-        Datasource.getData(this)
+        Datasource.getData(assets)
     }
 
     override fun onSupportNavigateUp(): Boolean {

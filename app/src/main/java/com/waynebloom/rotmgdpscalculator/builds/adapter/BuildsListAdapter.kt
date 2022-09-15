@@ -1,53 +1,38 @@
-package com.waynebloom.rotmgdpscalculator.loadout
+package com.waynebloom.rotmgdpscalculator.builds.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.waynebloom.rotmgdpscalculator.R
+import com.waynebloom.rotmgdpscalculator.builds.Build
+import com.waynebloom.rotmgdpscalculator.builds.Loadout
+import com.waynebloom.rotmgdpscalculator.builds.listitem.BuildsViewListItemModel
+import com.waynebloom.rotmgdpscalculator.data.Datasource
 
-class LoadoutAdapter internal constructor(
-    private val mContext: Context?,
-    private val loadouts: List<Loadout>
-) : RecyclerView.Adapter<LoadoutAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val classView: ImageView
-        val weaponView: ImageView
-        val abilityView: ImageView
-        val armorView: ImageView
-        val ringView: ImageView
-        val attView: TextView
-        val dexView: TextView
-        val statusView: ConstraintLayout
-        val deleteButton: Button
-        val background: ConstraintLayout
+class BuildsListAdapter(
+    val inflater: LayoutInflater
+) : RecyclerView.Adapter<BuildsListAdapter.ViewHolder>() {
 
-        init {
-            classView = view.findViewById(R.id.class_view)
-            weaponView = view.findViewById(R.id.weapon_view)
-            abilityView = view.findViewById(R.id.ability_view)
-            armorView = view.findViewById(R.id.armor_view)
-            ringView = view.findViewById(R.id.ring_view)
-            attView = view.findViewById(R.id.total_att)
-            dexView = view.findViewById(R.id.total_dex)
-            statusView = view.findViewById(R.id.status)
-            deleteButton = view.findViewById(R.id.delete)
-            background = view.findViewById(R.id.background)
-        }
-    }
+    private val builds = Datasource.loadBuilds()
+
+    class ViewHolder(
+        val viewModel: BuildsViewListItemModel
+    ) : RecyclerView.ViewHolder(viewModel.rootView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater
-                .from(mContext)
-                .inflate(R.layout.list_item_loadout, parent, false)
-        )
+        val viewModel = BuildsViewListItemModel(inflater, parent)
+        return ViewHolder(viewModel)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        
+        holder.viewModel.bindBuildsViewListItem(builds[position])
+        
+        //
+        
         // Assign different background colors
         when (position) {
             0 -> holder.background.setBackgroundResource(R.drawable.bg_loadout_red)

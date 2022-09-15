@@ -15,13 +15,13 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.*
 import com.waynebloom.rotmgdpscalculator.MainActivity
 import com.waynebloom.rotmgdpscalculator.R
-import com.waynebloom.rotmgdpscalculator.loadout.Loadout
-import com.waynebloom.rotmgdpscalculator.loadout.LoadoutFragment
+import com.waynebloom.rotmgdpscalculator.builds.Loadout
+import com.waynebloom.rotmgdpscalculator.builds.BuildsFragment
 import java.util.*
 
 class DpsFragment : Fragment() {
     var mActivity: MainActivity? = null
-    var loadoutFragment: LoadoutFragment? = null
+    var buildsFragment: BuildsFragment? = null
     var dpsDataTable: MutableList<MutableList<DpsEntry>> = ArrayList()
     var dpsViewMenu: BottomNavigationView? = null
     var emptyText: TextView? = null
@@ -40,7 +40,7 @@ class DpsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        loadoutFragment = mActivity.getLoadoutFragment()
+        buildsFragment = mActivity.getLoadoutFragment()
         val view = inflater.inflate(R.layout.fragment_dps, container, false)
         emptyText = view.findViewById(R.id.empty_dps)
         dpsViewMenu = view.findViewById(R.id.dps_view_menu)
@@ -90,7 +90,7 @@ class DpsFragment : Fragment() {
     }
 
     private val isEmpty: Boolean
-        private get() = if (loadoutFragment!!.isEmpty) {
+        private get() = if (buildsFragment!!.isEmpty) {
             true
         } else {
             false
@@ -122,7 +122,7 @@ class DpsFragment : Fragment() {
         if (dpsGraphView != null) {
             dpsGraphView!!.removeAllSeries()
             detailView!!.removeAllViews()
-            populateMatrix(loadoutFragment!!.loadouts)
+            populateMatrix(buildsFragment!!.loadouts)
             for (i in dpsDataTable[0].indices) {
                 val series = LineGraphSeries<DataPoint>()
                 for (j in dpsDataTable.indices) {
